@@ -39,16 +39,14 @@
   </xs:complexType>
 
   <xs:complexType name="statementWrapper">
-    <xs:sequence>
-      <xs:choice minOccurs="0">
-        <xs:element name="block" type="blockStatement"/>
-        <xs:element name="if" type="ifStatement"/>
-        <xs:element name="while" type="whileStatement"/>
-        <xs:element name="sysout" type="sysoutStatement"/>
-        <xs:element name="assign" type="assignStatement"/>
-        <xs:element name="assign-array" type="assignArrayStatement"/>
-      </xs:choice>
-    </xs:sequence>
+    <xs:choice>
+      <xs:element name="block" type="blockStatement"/>
+      <xs:element name="if" type="ifStatement"/>
+      <xs:element name="while" type="whileStatement"/>
+      <xs:element name="sysout" type="sysoutStatement"/>
+      <xs:element name="assign" type="assignStatement"/>
+      <xs:element name="assign-array" type="assignArrayStatement"/>
+    </xs:choice>
   </xs:complexType>
 
   <xs:complexType name="blockStatement">
@@ -58,7 +56,7 @@
           <xs:element name="statements">
             <xs:complexType>
               <xs:sequence>
-                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:choice maxOccurs="unbounded">
                   <xs:element name="block" type="blockStatement"/>
                   <xs:element name="if" type="ifStatement"/>
                   <xs:element name="while" type="whileStatement"/>
@@ -95,26 +93,24 @@
   </xs:complexType>
 
   <xs:complexType name="exprWrapper">
-    <xs:sequence>
-      <xs:choice minOccurs="0">
-        <xs:element name="and" type="andExpr"/>
-        <xs:element name="lt" type="ltExpr"/>
-        <xs:element name="add" type="addExpr"/>
-        <xs:element name="subtract" type="subtractExpr"/>
-        <xs:element name="mult" type="multExpr"/>
-        <xs:element name="array-access" type="arrayAccessExpr"/>
-        <xs:element name="array-length" type="arrayLengthExpr"/>
-        <xs:element name="call" type="methodCallExpr"/>
-        <xs:element name="int-literal" type="integerLiteralExpr"/>
-        <xs:element name="true" type="trueExpr"/>
-        <xs:element name="false" type="falseExpr"/>
-        <xs:element name="ref-id" type="identifierExpr"/>
-        <xs:element name="this" type="thisExpr"/>
-        <xs:element name="new-int-array" type="newIntArrayExpr"/>
-        <xs:element name="new-object" type="newObjectExpr"/>
-        <xs:element name="not" type="notExpr"/>
-      </xs:choice>
-    </xs:sequence>
+    <xs:choice>
+      <xs:element name="and" type="andExpr"/>
+      <xs:element name="lt" type="ltExpr"/>
+      <xs:element name="add" type="addExpr"/>
+      <xs:element name="subtract" type="subtractExpr"/>
+      <xs:element name="mult" type="multExpr"/>
+      <xs:element name="array-access" type="arrayAccessExpr"/>
+      <xs:element name="array-length" type="arrayLengthExpr"/>
+      <xs:element name="call" type="methodCallExpr"/>
+      <xs:element name="int-literal" type="integerLiteralExpr"/>
+      <xs:element name="true" type="trueExpr"/>
+      <xs:element name="false" type="falseExpr"/>
+      <xs:element name="ref-id" type="identifierExpr"/>
+      <xs:element name="this" type="thisExpr"/>
+      <xs:element name="new-int-array" type="newIntArrayExpr"/>
+      <xs:element name="new-object" type="newObjectExpr"/>
+      <xs:element name="not" type="notExpr"/>
+    </xs:choice>
   </xs:complexType>
 
   <xs:complexType name="andExpr">
@@ -339,14 +335,14 @@
         <xs:sequence>
           <xs:element name="name" type="xs:string"/>
           <xs:element name="superName" type="xs:string" minOccurs="0"/>
-          <xs:element name="fields" minOccurs="0">
+          <xs:element name="fields">
             <xs:complexType>
               <xs:sequence>
                 <xs:element name="field" type="varDecl" minOccurs="0" maxOccurs="unbounded"/>
               </xs:sequence>
             </xs:complexType>
           </xs:element>
-          <xs:element name="methoddecls" minOccurs="0">
+          <xs:element name="methoddecls">
             <xs:complexType>
               <xs:sequence>
                 <xs:element name="methoddecl" type="methodDecl" minOccurs="0" maxOccurs="unbounded"/>
@@ -378,14 +374,12 @@
   </xs:complexType>
 
   <xs:complexType name="astTypeWrapper">
-    <xs:sequence>
-      <xs:choice minOccurs="0">
-        <xs:element name="int" type="intAstType"/>
-        <xs:element name="bool" type="boolAstType"/>
-        <xs:element name="int-array" type="intArrayAstType"/>
-        <xs:element name="ref" type="refType"/>
-      </xs:choice>
-    </xs:sequence>
+    <xs:choice>
+      <xs:element name="int" type="intAstType"/>
+      <xs:element name="bool" type="boolAstType"/>
+      <xs:element name="int-array" type="intArrayAstType"/>
+      <xs:element name="ref" type="refType"/>
+    </xs:choice>
   </xs:complexType>
 
   <xs:complexType name="intAstType">
@@ -461,7 +455,7 @@
           <xs:element name="body">
             <xs:complexType>
               <xs:sequence>
-                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:choice maxOccurs="unbounded">
                   <xs:element name="block" type="blockStatement"/>
                   <xs:element name="if" type="ifStatement"/>
                   <xs:element name="while" type="whileStatement"/>

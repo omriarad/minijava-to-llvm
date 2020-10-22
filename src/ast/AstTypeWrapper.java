@@ -5,10 +5,10 @@ import javax.xml.bind.annotation.XmlElements;
 
 public class AstTypeWrapper {
     @XmlElements({
-            @XmlElement(name="int", type=IntAstType.class),
-            @XmlElement(name="bool", type=BoolAstType.class),
-            @XmlElement(name="int-array", type=IntArrayAstType.class),
-            @XmlElement(name="ref", type= RefType.class)
+            @XmlElement(name="int", type=IntAstType.class, required = true),
+            @XmlElement(name="bool", type=BoolAstType.class, required = true),
+            @XmlElement(name="int-array", type=IntArrayAstType.class, required = true),
+            @XmlElement(name="ref", type= RefType.class, required = true)
     })
     public AstType t;
 

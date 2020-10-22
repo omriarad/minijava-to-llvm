@@ -10,11 +10,11 @@ public class ClassDecl extends AstNode {
     @XmlElement(required = false)
     private String superName;
 
-    @XmlElementWrapper(name="fields")
+    @XmlElementWrapper(name="fields", required=true)
     @XmlElement(name="field")
     private List<VarDecl> fields;
 
-    @XmlElementWrapper(name="methoddecls")
+    @XmlElementWrapper(name="methoddecls", required=true)
     @XmlElement(name="methoddecl")
     private List<MethodDecl> methoddecls;
 
