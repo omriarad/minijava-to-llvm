@@ -9,12 +9,12 @@ public class BlockStatement extends Statement {
 
     @XmlElementWrapper(name="statements", required = true)
     @XmlElements({
-            @XmlElement(name="block", type=BlockStatement.class, required = true),
-            @XmlElement(name="if", type=IfStatement.class, required = true),
-            @XmlElement(name="while", type=WhileStatement.class, required = true),
-            @XmlElement(name="sysout", type=SysoutStatement.class, required = true),
-            @XmlElement(name="assign", type=AssignStatement.class, required = true),
-            @XmlElement(name="assign-array", type=AssignArrayStatement.class, required = true)
+            @XmlElement(name="block", type=BlockStatement.class, required = false),
+            @XmlElement(name="if", type=IfStatement.class, required = false),
+            @XmlElement(name="while", type=WhileStatement.class, required = false),
+            @XmlElement(name="sysout", type=SysoutStatement.class, required = false),
+            @XmlElement(name="assign", type=AssignStatement.class, required = false),
+            @XmlElement(name="assign-array", type=AssignArrayStatement.class, required = false)
     })
     private List<Statement> statements;
 

@@ -56,7 +56,7 @@
           <xs:element name="statements">
             <xs:complexType>
               <xs:sequence>
-                <xs:choice maxOccurs="unbounded">
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
                   <xs:element name="block" type="blockStatement"/>
                   <xs:element name="if" type="ifStatement"/>
                   <xs:element name="while" type="whileStatement"/>
@@ -455,7 +455,7 @@
           <xs:element name="body">
             <xs:complexType>
               <xs:sequence>
-                <xs:choice maxOccurs="unbounded">
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
                   <xs:element name="block" type="blockStatement"/>
                   <xs:element name="if" type="ifStatement"/>
                   <xs:element name="while" type="whileStatement"/>
