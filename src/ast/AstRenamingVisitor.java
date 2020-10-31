@@ -6,6 +6,17 @@ public class AstRenamingVisitor implements Visitor {
 	private Set<String> susClasses;
 	private Map<String,String> fieldToType;
 	private Map<String,String> scopeToType;
+	private Map<String,String> currentMap;
+	private String currentTypeName;
+
+	private String originalName;
+	private String newName;
+
+	public AstRenamingVisitor(String originalName, String newName, Set<String> susClasses) {
+		this.originalName = originalName;
+		this.newName = newName;
+		this.susClasses = susClasses;
+	}
 
 	private void visitBinaryExpr(BinaryExpr e, String infixSymbol) {
 		e.e1().accept(this);
@@ -22,6 +33,9 @@ public class AstRenamingVisitor implements Visitor {
 
 	@Override
 	public void visit(ClassDecl classDecl) {
+		this.currentClass = classDecl.name();
+		this.fieldToType = new HashMap<String, String>();
+		this.currentMap = this.fieldToType;
 		for (var fieldDecl : classDecl.fields()) {
 				fieldDecl.accept(this);
 		}
@@ -33,11 +47,16 @@ public class AstRenamingVisitor implements Visitor {
 
 	@Override
 	public void visit(MainClass mainClass) {
+		this.currentClass = mainClass.name();
+		this.fieldToType = null;
+		this.scopeToType = null;
 		mainClass.mainStatement().accept(this);
 	}
 
 	@Override
 	public void visit(MethodDecl methodDecl) {
+		this.scopeToType = new HashMap<String, String>();
+		this.currentMap = this.scopeToType;
 		methodDecl.returnType().accept(this);
 
 		for (var formal : methodDecl.formals()) {
@@ -57,11 +76,13 @@ public class AstRenamingVisitor implements Visitor {
 	@Override
 	public void visit(FormalArg formalArg) {
 		formalArg.type().accept(this);
+		this.currentMap.put(formalArg.name(), this.currentTypeName);
 	}
 
 	@Override
 	public void visit(VarDecl varDecl) {
 		varDecl.type().accept(this);
+		this.currentMap.put(varDecl.name(), this.currentTypeName);
 	}
 
 	@Override
@@ -180,17 +201,21 @@ public class AstRenamingVisitor implements Visitor {
 
 	@Override
 	public void visit(IntAstType t) {
+		this.currentTypeName = "int";
 	}
 
 	@Override
 	public void visit(BoolAstType t) {
+		this.currentTypeName = "boolean";
 	}
 
 	@Override
 	public void visit(IntArrayAstType t) {
+		this.currentTypeName = "int[]";
 	}
 
 	@Override
 	public void visit(RefType t) {
+		this.currentTypeName = t.id();
 	}
 }
