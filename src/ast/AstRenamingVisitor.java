@@ -6,6 +6,7 @@ public class AstRenamingVisitor implements Visitor {
 	private Set<String> susClasses;
 	private Map<String,String> fieldToType;
 	private Map<String,String> scopeToType;
+	private String staticClassReference;
 	private Map<String,String> currentMap;
 	private String currentTypeName;
 
@@ -34,7 +35,7 @@ public class AstRenamingVisitor implements Visitor {
 	@Override
 	public void visit(ClassDecl classDecl) {
 		this.currentClass = classDecl.name();
-		this.fieldToType = new HashMap<String, String>();
+		this.fieldToType = new HashMap<>();
 		this.currentMap = this.fieldToType;
 		for (var fieldDecl : classDecl.fields()) {
 				fieldDecl.accept(this);
@@ -55,10 +56,14 @@ public class AstRenamingVisitor implements Visitor {
 
 	@Override
 	public void visit(MethodDecl methodDecl) {
-		this.scopeToType = new HashMap<String, String>();
+		this.scopeToType = new HashMap<>();
 		this.currentMap = this.scopeToType;
 		methodDecl.returnType().accept(this);
-
+		//
+		if(methodDecl.name().equals(this.originalName)  && this.susClasses.contains(this.currentClass)){
+            methodDecl.setName(this.newName);
+        }
+        //
 		for (var formal : methodDecl.formals()) {
 				formal.accept(this);
 		}
@@ -128,12 +133,12 @@ public class AstRenamingVisitor implements Visitor {
 
 	@Override
 	public void visit(LtExpr e) {
-		visitBinaryExpr(e, "<");;
+		visitBinaryExpr(e, "<");
 	}
 
 	@Override
 	public void visit(AddExpr e) {
-		visitBinaryExpr(e, "+");;
+		visitBinaryExpr(e, "+");
 	}
 
 	@Override
@@ -160,7 +165,11 @@ public class AstRenamingVisitor implements Visitor {
 	@Override
 	public void visit(MethodCallExpr e) {
 		e.ownerExpr().accept(this);
-
+        //
+            if(e.methodId().equals(this.originalName) && this.susClasses.contains(this.staticClassReference)){
+                e.setMethodId(this.newName);
+            }
+        //
 		for (Expr arg : e.actuals()) {
 				arg.accept(this);
 		}
@@ -180,9 +189,21 @@ public class AstRenamingVisitor implements Visitor {
 
 	@Override
 	public void visit(IdentifierExpr e) {
+	    //
+	    String identifiersID = e.id();
+        String identifiersClass;
+        if(this.scopeToType.containsKey(identifiersID)){
+            identifiersClass = this.scopeToType.get(identifiersID);
+        }
+	    else{
+            identifiersClass = this.fieldToType.get(identifiersID);
+        }
+	    this.staticClassReference = identifiersClass;
+	    //
 	}
 
 	public void visit(ThisExpr e) {
+	    this.staticClassReference = this.currentClass;
 	}
 
 	@Override
