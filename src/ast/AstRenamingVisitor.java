@@ -162,11 +162,15 @@ public class AstRenamingVisitor implements Visitor {
 	@Override
 	public void visit(MethodCallExpr e) {
 		e.ownerExpr().accept(this);
-		if(e.methodId().equals(this.originalName) && this.susClasses.contains(this.staticClassReference)){
-				e.setMethodId(this.newName);
-		}
 		for (Expr arg : e.actuals()) {
 				arg.accept(this);
+		}
+		System.out.println(e.methodId());
+		System.out.println(this.staticClassReference);
+		if(e.methodId().equals(this.originalName)){
+			if(this.susClasses.contains(this.staticClassReference)) {
+				e.setMethodId(this.newName);
+			}
 		}
 	}
 
@@ -207,6 +211,7 @@ public class AstRenamingVisitor implements Visitor {
 
 	@Override
 	public void visit(NewObjectExpr e) {
+		this.staticClassReference = e.classId();
 	}
 
 	@Override

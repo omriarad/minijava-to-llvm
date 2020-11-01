@@ -64,11 +64,13 @@ public class Main {
                         if(mfv.getFoundClass() != null) {
                         	System.out.println("Method found in class: "+mfv.getFoundClass());
                         }
+                        var visitor = new AstRenamingVisitor(originalName, newName, sus);
+                        visitor.visit(prog);
                     } else {
                         throw new IllegalArgumentException("unknown rename type " + type);
                     }
 
-                    throw new UnsupportedOperationException("TODO - Ex. 1");
+
 
                 } else {
                     throw new IllegalArgumentException("unknown command line action " + action);
