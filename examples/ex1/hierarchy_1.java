@@ -1,8 +1,8 @@
 class Main {
     public static void main(String[] args) {
-        System.out.println(new PremuimUser().getName());
+        System.out.println(new PremuimUser().getAge());
     }
-} 
+}
 
 class User {
     boolean active;
