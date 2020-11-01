@@ -59,11 +59,9 @@ public class AstRenamingVisitor implements Visitor {
 		this.scopeToType = new HashMap<>();
 		this.currentMap = this.scopeToType;
 		methodDecl.returnType().accept(this);
-		//
-		if(methodDecl.name().equals(this.originalName)  && this.susClasses.contains(this.currentClass)){
-            methodDecl.setName(this.newName);
+		if(methodDecl.name().equals(this.originalName) && this.susClasses.contains(this.currentClass)){
+				methodDecl.setName(this.newName);
         }
-        //
 		for (var formal : methodDecl.formals()) {
 				formal.accept(this);
 		}
@@ -74,7 +72,6 @@ public class AstRenamingVisitor implements Visitor {
 		for (var stmt : methodDecl.body()) {
 				stmt.accept(this);
 		}
-
 		methodDecl.ret().accept(this);
 	}
 
@@ -165,11 +162,9 @@ public class AstRenamingVisitor implements Visitor {
 	@Override
 	public void visit(MethodCallExpr e) {
 		e.ownerExpr().accept(this);
-        //
-            if(e.methodId().equals(this.originalName) && this.susClasses.contains(this.staticClassReference)){
-                e.setMethodId(this.newName);
-            }
-        //
+		if(e.methodId().equals(this.originalName) && this.susClasses.contains(this.staticClassReference)){
+				e.setMethodId(this.newName);
+		}
 		for (Expr arg : e.actuals()) {
 				arg.accept(this);
 		}
@@ -189,14 +184,13 @@ public class AstRenamingVisitor implements Visitor {
 
 	@Override
 	public void visit(IdentifierExpr e) {
-	    //
 	    String identifiersID = e.id();
         String identifiersClass;
         if(this.scopeToType.containsKey(identifiersID)){
-            identifiersClass = this.scopeToType.get(identifiersID);
+            	identifiersClass = this.scopeToType.get(identifiersID);
         }
 	    else{
-            identifiersClass = this.fieldToType.get(identifiersID);
+            	identifiersClass = this.fieldToType.get(identifiersID);
         }
 	    this.staticClassReference = identifiersClass;
 	    //
