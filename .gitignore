@@ -5,3 +5,7 @@ src/sym.java
 *.class
 build/
 out/
+.classpath
+.project
+bin/
+

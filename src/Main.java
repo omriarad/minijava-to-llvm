@@ -1,6 +1,7 @@
 import ast.*;
 
 import java.io.*;
+import java.util.Set;
 
 public class Main {
     public static void main(String[] args) {
@@ -49,6 +50,20 @@ public class Main {
                         isMethod = false;
                     } else if (type.equals("method")) {
                         isMethod = true;
+                        // Example of using MethodFinderVisitor
+                        MethodFinderVisitor mfv = new MethodFinderVisitor(prog,originalName,Integer.valueOf(originalLine));
+                        mfv.visit(prog);
+                        // imported Set
+                        Set<String> sus = mfv.getSusClasses();
+                        if(sus != null) {
+                        	System.out.println("Suspected Classes:");
+                        	for(String s : sus) {
+                        		System.out.println(s);
+                        	}
+                        }
+                        if(mfv.getFoundClass() != null) {
+                        	System.out.println("Method found in class: "+mfv.getFoundClass());
+                        }
                     } else {
                         throw new IllegalArgumentException("unknown rename type " + type);
                     }
