@@ -84,7 +84,7 @@
                         <vardecl>
                             <lineNumber>19</lineNumber>
                             <type>
-                                <ref>A</ref>
+                                <ref><id>A</id></ref>
                             </type>
                             <name>a</name>
                         </vardecl>

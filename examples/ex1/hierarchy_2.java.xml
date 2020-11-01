@@ -91,7 +91,7 @@
                         <vardecl>
                             <lineNumber>21</lineNumber>
                             <type>
-                                <ref>A</ref>
+                                <ref><id>A</id></ref>
                             </type>
                             <name>a</name>
                         </vardecl>
@@ -214,14 +214,14 @@
                         <vardecl>
                             <lineNumber>48</lineNumber>
                             <type>
-                                <ref>B</ref>
+                                <ref><id>B</id></ref>
                             </type>
                             <name>b</name>
                         </vardecl>
                         <vardecl>
                             <lineNumber>49</lineNumber>
                             <type>
-                                <ref>E</ref>
+                                <ref><id>E</id></ref>
                             </type>
                             <name>e</name>
                         </vardecl>

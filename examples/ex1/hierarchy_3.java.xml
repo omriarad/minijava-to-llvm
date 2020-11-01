@@ -91,7 +91,7 @@
                         <vardecl>
                             <lineNumber>21</lineNumber>
                             <type>
-                                <ref>A</ref>
+                                <ref><id>A</id></ref>
                             </type>
                             <name>a</name>
                         </vardecl>
@@ -221,7 +221,7 @@
                         <vardecl>
                             <lineNumber>48</lineNumber>
                             <type>
-                                <ref>B</ref>
+                                <ref><id>B</id></ref>
                             </type>
                             <name>b</name>
                         </vardecl>
@@ -360,21 +360,21 @@
                         <vardecl>
                             <lineNumber>77</lineNumber>
                             <type>
-                                <ref>A</ref>
+                                <ref><id>A</id></ref>
                             </type>
                             <name>a</name>
                         </vardecl>
                         <vardecl>
                             <lineNumber>78</lineNumber>
                             <type>
-                                <ref>B</ref>
+                                <ref><id>B</id></ref>
                             </type>
                             <name>b</name>
                         </vardecl>
                         <vardecl>
                             <lineNumber>79</lineNumber>
                             <type>
-                                <ref>D</ref>
+                                <ref><id>D</id></ref>
                             </type>
                             <name>d</name>
                         </vardecl>
