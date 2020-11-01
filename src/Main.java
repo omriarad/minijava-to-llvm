@@ -69,9 +69,8 @@ public class Main {
                     } else {
                         throw new IllegalArgumentException("unknown rename type " + type);
                     }
-
-
-
+                    AstXMLSerializer xmlSerializer = new AstXMLSerializer();
+                    xmlSerializer.serialize(prog, outfilename);
                 } else {
                     throw new IllegalArgumentException("unknown command line action " + action);
                 }
