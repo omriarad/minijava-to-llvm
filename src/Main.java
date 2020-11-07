@@ -1,6 +1,7 @@
 import ast.*;
 
 import java.io.*;
+import java.util.Map;
 import java.util.Set;
 
 public class Main {
@@ -51,19 +52,28 @@ public class Main {
                     } else if (type.equals("method")) {
                         isMethod = true;
                         // Example of using MethodFinderVisitor
-                        MethodFinderVisitor mfv = new MethodFinderVisitor(prog,originalName,Integer.valueOf(originalLine));
-                        mfv.visit(prog);
+                        FinderVisitor fv = new FinderVisitor(prog,originalName,Integer.valueOf(originalLine));
+                        fv.visit(prog);
                         // imported Set
-                        Set<String> sus = mfv.getSusClasses();
-                        if(sus != null) {
-                        	System.out.println("Suspected Classes:");
-                        	for(String s : sus) {
-                        		System.out.println(s);
+                        Set<String> sus = fv.getSusClasses();
+//                        if(sus != null) {
+//                        	System.out.println("Suspected Classes:");
+//                        	for(String s : sus) {
+//                        		System.out.println(s);
+//                        	}
+//                        }
+//                        if(mfv.getFoundClass() != null) {
+//                        	System.out.println("Method found in class: "+mfv.getFoundClass());
+//                        }
+                        var classToScopes = fv.getClassToScopes();
+                        System.out.println("----------------------");
+                        for (Map.Entry<String,Map<String,SymbolTable>> classScopes : classToScopes.entrySet()) {
+                        	System.out.println("Scopes for class: "+classScopes.getKey());
+                        	for(Map.Entry<String,SymbolTable> scope : classScopes.getValue().entrySet()) {
+                        		System.out.println(scope.getValue());
                         	}
                         }
-                        if(mfv.getFoundClass() != null) {
-                        	System.out.println("Method found in class: "+mfv.getFoundClass());
-                        }
+                        System.out.println("----------------------");
                         var visitor = new AstRenamingVisitor(originalName, newName, sus);
                         visitor.visit(prog);
                     } else {
@@ -88,3 +98,4 @@ public class Main {
         }
     }
 }
+

@@ -6,26 +6,37 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class MethodFinderVisitor implements Visitor {
+public class FinderVisitor implements Visitor {
     
+	// General fields
     private Program program;
     private String searchTerm;
     private Integer searchLineNumber;
-    private String currentClass;
-    private String foundClass;
-    private Set<String> susClasses;
-    private boolean found = false;
     
-    public MethodFinderVisitor(Program program,String searchTerm,Integer searchLineNumber){
+    // Context fields
+    private String currentClass;
+    private boolean found = false;
+    private SymbolTable currentSymbolTable;
+
+    //  Find a method
+    private Set<String> susClasses;
+    private String foundClass;
+    
+    //Find a variable
+    private SymbolTable foundSymbolTable; // <- up for debate
+    private Map<String,Map<String,SymbolTable>> classToScopes;
+    
+    public FinderVisitor(Program program,String searchTerm,Integer searchLineNumber){
     	this.program = program;
     	this.searchTerm = searchTerm;
     	this.searchLineNumber = searchLineNumber;
     	this.currentClass = "Main";
     	this.susClasses = new HashSet<String>();
+    	this.classToScopes = new HashMap<String,Map<String,SymbolTable>>();
+    	// currentSymbolTable will be initialized when calling mainClass.accept()
     }
     
     private void generateSusSet() {
-		// TODO Auto-generated method stub
     	List<ClassDecl> classes = program.classDecls();
     	Map<String,ClassDecl> potSupers = new HashMap<>();
     	int len = classes.size();
@@ -43,7 +54,6 @@ public class MethodFinderVisitor implements Visitor {
     		foundIndex++;
     	}
     	// looking for super classes
-    	// comapre
     	for(int i=foundIndex-1;i>=0;i--) {
     		ClassDecl cd = classes.get(i);
     		String foundSuper = potSupers.get(this.foundClass).superName();
@@ -82,34 +92,88 @@ public class MethodFinderVisitor implements Visitor {
     	else return null;
     }
 
+    public SymbolTable getFoundSymbolTable() {
+    	return this.foundSymbolTable;
+    }
+    
+    public Map<String,Map<String,SymbolTable>> getClassToScopes() {
+    	return this.classToScopes;
+    }
 
     private void visitBinaryExpr(BinaryExpr e, String infixSymbol) {
         e.e1().accept(this);
         e.e2().accept(this);
     }
+    
+    public void addClassScope(ClassDecl classdecl) {
+    	Map<String,SymbolTable> classScopes =  new HashMap<String,SymbolTable>();
+    	SymbolTable classSymbolTable = new SymbolTable(classdecl.name());
+    	String className = classdecl.name();
+    	String superName = classdecl.superName();
+    	
+    	/* set new class symbol table's parent pointer to the super class' symbol table.
+    	if no super class exists then set to null
+    	if one exists, minJava rules that it's class scope was previously defined in classToScopes, hence we can fetch it.*/
+    	if(superName == null) {
+    		classSymbolTable.setParentTable(null);
+    	} else {
+    		SymbolTable parentSymbolTable = this.classToScopes.get(superName).get(superName);
+    		classSymbolTable.setParentTable(parentSymbolTable);
+    	}
+    	// add the new class SymbolTable to it's scopes
+    	classScopes.put(className, classSymbolTable);
+    	// add class scopes to the general map.
+    	this.classToScopes.put(className,classScopes);
+    }
+    
+    private void addMethodScope(Map<String, SymbolTable> classScopes, MethodDecl methodDecl,SymbolTable parentScope) {
+		SymbolTable methodSymbolTable = new SymbolTable(methodDecl.name());
+		methodSymbolTable.setParentTable(parentScope);
+		classScopes.put(methodDecl.name(),methodSymbolTable);
+	}
 
 
     @Override
     public void visit(Program program) {
+    	
     	this.currentClass = program.mainClass().name();
+    	// add main Scope (little different than a regular class)
+    	Map<String,SymbolTable> mainScopes =  new HashMap<String,SymbolTable>();
+    	mainScopes.put(program.mainClass().name(),new SymbolTable(program.mainClass().name()));
+    	this.classToScopes.put(program.mainClass().name(),mainScopes);
+    	this.currentSymbolTable = this.classToScopes.get(this.currentClass).get(this.currentClass);
         program.mainClass().accept(this);
+        
         for (ClassDecl classdecl : program.classDecls()) {
         	this.currentClass = classdecl.name();
+        	this.addClassScope(classdecl);
+        	this.currentSymbolTable = this.classToScopes.get(this.currentClass).get(this.currentClass);
             classdecl.accept(this);
         }
     }
 
     @Override
     public void visit(ClassDecl classDecl) {
+    	Map<String,SymbolTable> classScopes = this.classToScopes.get(classDecl.name());
+    	/* currClassScope equals this.currentSymbolTable up until we're done with fieldDecls, 
+    	 * but is kept to pass as parent when changing currentSymbolTable when dealing with methods.
+    	 */
+    	SymbolTable currClassScope = classScopes.get(classDecl.name()); 
+    	
         for (var fieldDecl : classDecl.fields()) {
+        	// TODO - add fields to currClassScope // this.currentSymbolTable !
+        	//this.currentSymbolTable.addEntry(fieldDecl.name(),new Symbol(fieldDecl.name(),"variable",fieldDecl));
             fieldDecl.accept(this);
         }
         for (var methodDecl : classDecl.methoddecls()) {
+        	addMethodScope(classScopes,methodDecl,currClassScope);
+        	this.currentSymbolTable = classScopes.get(methodDecl.name());
             methodDecl.accept(this);
         }
     }
 
-    @Override
+
+	@Override
     public void visit(MainClass mainClass) {
         mainClass.mainStatement().accept(this);
     }
