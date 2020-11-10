@@ -243,12 +243,7 @@ public class VariableRenamingVisitor implements Visitor {
 
     @Override
     public void visit(RefType t) {
-        if(t.id().equals(this.originalName)){
-            SymbolTable curSymbolTable = this.symbolTableLookup.lookup(this.currentClass, this.currentMethod, "variable", t.id());
-            if(curSymbolTable == this.foundSymbolTable){
-                t.setId(newName);
-            }
-        }
+
     }
 }
 
