@@ -74,8 +74,8 @@ public class Main {
                         	}
                         }
                         System.out.println("----------------------");
-                        var visitor = new AstRenamingVisitor(originalName, newName, sus);
-                        visitor.visit(prog);
+                        // var visitor = new AstRenamingVisitor(originalName, newName, sus);
+                        // visitor.visit(prog);
                     } else {
                         throw new IllegalArgumentException("unknown rename type " + type);
                     }

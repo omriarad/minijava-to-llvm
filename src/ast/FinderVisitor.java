@@ -18,15 +18,17 @@ public class FinderVisitor implements Visitor {
 	private boolean found = false;
 	private SymbolTable currentSymbolTable;
 
-	//  Find a method
+	// For method finding
 	private Set<String> susClasses;
 	private String foundClass;
 
-	//Find a variable
-	private SymbolTable foundSymbolTable; // <- up for debate, plz debate me
-	private Map<String,Map<String,SymbolTable>> classToScopes;
+	// For variable finding
+	private SymbolTable foundSymbolTable;
 
-	public FinderVisitor(Program program,String searchTerm,Integer searchLineNumber){
+	// Symbol tables
+	private Map<String, Map<String, SymbolTable>> classToScopes;
+
+	public FinderVisitor(Program program, String searchTerm, Integer searchLineNumber) {
 		this.program = program;
 		this.searchTerm = searchTerm;
 		this.searchLineNumber = searchLineNumber;
@@ -34,7 +36,7 @@ public class FinderVisitor implements Visitor {
 		this.susClasses = new HashSet<String>();
 		this.classToScopes = new HashMap<String,Map<String,SymbolTable>>();
 		// currentSymbolTable will be initialized when calling mainClass.accept()
-        this.currentSymbolTable = null;
+		this.currentSymbolTable = null;
 	}
 
 	private void generateSusSet() {
@@ -80,19 +82,24 @@ public class FinderVisitor implements Visitor {
 				children.add(cd.name());
 			}
 		}
+
 		this.susClasses.addAll(supers);
 		this.susClasses.addAll(children);
 		this.susClasses.add(this.foundClass);
 	}
 
 	public Set<String> getSusClasses(){
-		if(found) 	return this.susClasses;
-		else return null;
+		if (found)
+			return this.susClasses;
+		else
+			return null;
 	}
 
 	public String getFoundClass(){
-		if(found) return this.foundClass;
-		else return null;
+		if (found)
+			return this.foundClass;
+		else
+			return null;
 	}
 
 	public SymbolTable getFoundSymbolTable() {
@@ -114,9 +121,12 @@ public class FinderVisitor implements Visitor {
 		String className = classdecl.name();
 		String superName = classdecl.superName();
 
-		/* set new class symbol table's parent pointer to the super class' symbol table.
-		if no super class exists then set to null
-		if one exists, minJava rules that it's class scope was previously defined in classToScopes, hence we can fetch it.*/
+		/*
+		 * set new class symbol table's parent pointer to the super class' symbol table.
+		 * if no super class exists then set to null
+		 * if one exists, minJava rules that it's class scope was previously defined in classToScopes,
+		 * hence we can fetch it.
+		 */
 		if(superName == null) {
 			classSymbolTable.setParentTable(null);
 		} else {
@@ -157,7 +167,7 @@ public class FinderVisitor implements Visitor {
 	public void visit(ClassDecl classDecl) {
 		Map<String,SymbolTable> classScopes = this.classToScopes.get(classDecl.name());
 		/*
-         * currClassScope equals this.currentSymbolTable up until we're done with fieldDecls,
+		 * currClassScope equals this.currentSymbolTable up until we're done with fieldDecls,
 		 * but is kept to pass as parent when changing currentSymbolTable when dealing with methods.
 		 */
 		SymbolTable currClassScope = classScopes.get(classDecl.name());
@@ -165,21 +175,31 @@ public class FinderVisitor implements Visitor {
 		for (var fieldDecl : classDecl.fields()) {
 			fieldDecl.accept(this);
 		}
+
 		for (var methodDecl : classDecl.methoddecls()) {
-			addMethodScope(classScopes,methodDecl,currClassScope);
+			addMethodScope(classScopes, methodDecl, currClassScope);
 			this.currentSymbolTable = classScopes.get(methodDecl.name());
 			methodDecl.accept(this);
 		}
 	}
-
 
 	@Override
 	public void visit(MainClass mainClass) {
 		mainClass.mainStatement().accept(this);
 	}
 
+	private SymbolTable getCurrentClassTable() {
+		Map<String,SymbolTable> classScopes = this.classToScopes.get(this.currentClass);
+		SymbolTable currClassScope = classScopes.get(this.currentClass);
+
+		return currClassScope;
+	}
+
 	@Override
 	public void visit(MethodDecl methodDecl) {
+		Symbol symbol = new Symbol(methodDecl.name(), "method", methodDecl);
+
+		this.getCurrentClassTable().addEntry(symbol.getName(), symbol);
 		methodDecl.returnType().accept(this);
 		if(methodDecl.name().compareTo(this.searchTerm) == 0
 				&& methodDecl.lineNumber == this.searchLineNumber
@@ -204,14 +224,26 @@ public class FinderVisitor implements Visitor {
 		methodDecl.ret().accept(this);
 	}
 
+	private void checkSusVariable(VariableIntroduction variable) {
+		if(variable.name().compareTo(this.searchTerm) == 0
+				&& variable.lineNumber == this.searchLineNumber) {
+			this.foundSymbolTable = this.currentSymbolTable;
+		}
+	}
 
 	@Override
 	public void visit(FormalArg formalArg) {
+		Symbol symbol = new Symbol(formalArg.name(), "variable", formalArg);
+		this.currentSymbolTable.addEntry(symbol.getName(), symbol);
+		this.checkSusVariable(formalArg);
 		formalArg.type().accept(this);
 	}
 
 	@Override
 	public void visit(VarDecl varDecl) {
+		Symbol symbol = new Symbol(varDecl.name(), "variable", varDecl);
+		this.currentSymbolTable.addEntry(symbol.getName(), symbol);
+		this.checkSusVariable(varDecl);
 		varDecl.type().accept(this);
 	}
 
@@ -307,6 +339,7 @@ public class FinderVisitor implements Visitor {
 	@Override
 	public void visit(IdentifierExpr e) {}
 
+	@Override
 	public void visit(ThisExpr e) {}
 
 	@Override

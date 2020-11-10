@@ -38,7 +38,7 @@ public class SymbolTable {
 		return this.scopeName;
 	}
 
-	public void addEntry(String scopeName,Symbol symbol) {
+	public void addEntry(String scopeName, Symbol symbol) {
 		this.entries.put(scopeName,symbol);
 	}
 
