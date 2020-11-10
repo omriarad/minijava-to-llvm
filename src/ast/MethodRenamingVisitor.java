@@ -3,20 +3,20 @@ import java.util.*;
 
 public class MethodRenamingVisitor implements Visitor {
 	private String currentClass;
+	private String currentMethod;
 	private Set<String> susClasses;
-	private Map<String,String> fieldToType;
-	private Map<String,String> scopeToType;
 	private String staticClassReference;
-	private Map<String,String> currentMap;
-	private String currentTypeName;
 
 	private String originalName;
 	private String newName;
 
-	public MethodRenamingVisitor(String originalName, String newName, Set<String> susClasses) {
+	private SymbolTableLookup symbolTables;
+
+	public MethodRenamingVisitor(String originalName, String newName, Set<String> susClasses, Map<String, Map<String, SymbolTable>> symbolTables) {
 		this.originalName = originalName;
 		this.newName = newName;
 		this.susClasses = susClasses;
+		this.symbolTables = new SymbolTableLookup(symbolTables);
 	}
 
 	private void visitBinaryExpr(BinaryExpr e, String infixSymbol) {
@@ -35,8 +35,6 @@ public class MethodRenamingVisitor implements Visitor {
 	@Override
 	public void visit(ClassDecl classDecl) {
 		this.currentClass = classDecl.name();
-		this.fieldToType = new HashMap<>();
-		this.currentMap = this.fieldToType;
 		for (var fieldDecl : classDecl.fields()) {
 				fieldDecl.accept(this);
 		}
@@ -49,19 +47,17 @@ public class MethodRenamingVisitor implements Visitor {
 	@Override
 	public void visit(MainClass mainClass) {
 		this.currentClass = mainClass.name();
-		this.fieldToType = null;
-		this.scopeToType = null;
 		mainClass.mainStatement().accept(this);
 	}
 
 	@Override
 	public void visit(MethodDecl methodDecl) {
-		this.scopeToType = new HashMap<>();
-		this.currentMap = this.scopeToType;
+		// Note: must be set before renaming, symbol table name isn't changed!
+		this.currentMethod = methodDecl.name();
 		methodDecl.returnType().accept(this);
 		if(methodDecl.name().equals(this.originalName) && this.susClasses.contains(this.currentClass)){
 				methodDecl.setName(this.newName);
-        }
+		}
 		for (var formal : methodDecl.formals()) {
 				formal.accept(this);
 		}
@@ -69,6 +65,7 @@ public class MethodRenamingVisitor implements Visitor {
 		for (var varDecl : methodDecl.vardecls()) {
 				varDecl.accept(this);
 		}
+
 		for (var stmt : methodDecl.body()) {
 				stmt.accept(this);
 		}
@@ -78,13 +75,11 @@ public class MethodRenamingVisitor implements Visitor {
 	@Override
 	public void visit(FormalArg formalArg) {
 		formalArg.type().accept(this);
-		this.currentMap.put(formalArg.name(), this.currentTypeName);
 	}
 
 	@Override
 	public void visit(VarDecl varDecl) {
 		varDecl.type().accept(this);
-		this.currentMap.put(varDecl.name(), this.currentTypeName);
 	}
 
 	@Override
@@ -165,8 +160,7 @@ public class MethodRenamingVisitor implements Visitor {
 		for (Expr arg : e.actuals()) {
 				arg.accept(this);
 		}
-		System.out.println(e.methodId());
-		System.out.println(this.staticClassReference);
+
 		if(e.methodId().equals(this.originalName)){
 			if(this.susClasses.contains(this.staticClassReference)) {
 				e.setMethodId(this.newName);
@@ -188,20 +182,23 @@ public class MethodRenamingVisitor implements Visitor {
 
 	@Override
 	public void visit(IdentifierExpr e) {
-	    String identifiersID = e.id();
-        String identifiersClass;
-        if(this.scopeToType.containsKey(identifiersID)){
-            	identifiersClass = this.scopeToType.get(identifiersID);
-        }
-	    else{
-            	identifiersClass = this.fieldToType.get(identifiersID);
-        }
-	    this.staticClassReference = identifiersClass;
-	    //
+		System.out.println(this.currentClass + " " + this.currentMethod+ " " + "variable"+ " " + e.id());
+		SymbolTable symbolTable = symbolTables.lookup(this.currentClass, this.currentMethod, "variable", e.id());
+		SymbolTableEntry symbol = symbolTable.getEntries().get(e.id());
+		VariableIntroduction variable = (VariableIntroduction)symbol.getDeclRef();
+		AstType type = variable.type();
+
+		// if this isn't a RefType we don't need to change it's method calls
+		if (!RefType.class.isInstance(type)) {
+			this.staticClassReference = "irrelevant";
+			return;
+		}
+
+		this.staticClassReference = ((RefType)type).id();
 	}
 
 	public void visit(ThisExpr e) {
-	    this.staticClassReference = this.currentClass;
+		this.staticClassReference = this.currentClass;
 	}
 
 	@Override
@@ -220,22 +217,14 @@ public class MethodRenamingVisitor implements Visitor {
 	}
 
 	@Override
-	public void visit(IntAstType t) {
-		this.currentTypeName = "int";
-	}
+	public void visit(IntAstType t) {}
 
 	@Override
-	public void visit(BoolAstType t) {
-		this.currentTypeName = "boolean";
-	}
+	public void visit(BoolAstType t) {}
 
 	@Override
-	public void visit(IntArrayAstType t) {
-		this.currentTypeName = "int[]";
-	}
+	public void visit(IntArrayAstType t) {}
 
 	@Override
-	public void visit(RefType t) {
-		this.currentTypeName = t.id();
-	}
+	public void visit(RefType t) {}
 }

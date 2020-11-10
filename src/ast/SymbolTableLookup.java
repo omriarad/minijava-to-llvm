@@ -18,7 +18,7 @@ public class SymbolTableLookup {
             curSymbolTable = scopeToSymbolTable.get(curCalss);
         }
         Map<String,SymbolTableEntry> curSymbolTableEntries = curSymbolTable.getEntries();
-        while(!curSymbolTableEntries.containsKey(name) || curSymbolTableEntries.get(name).getType().equals(type)){
+        while(!curSymbolTableEntries.containsKey(name) || !curSymbolTableEntries.get(name).getType().equals(type)){
             curSymbolTable = curSymbolTable.getParentSymbolTable();
             curSymbolTableEntries = curSymbolTable.getEntries();
         }
