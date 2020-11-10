@@ -5,19 +5,19 @@ import java.util.Map;
 
 public class SymbolTable {
 
-	private Map<String,Symbol> entries;
+	private Map<String,SymbolTableEntry> entries;
 	private SymbolTable parentTable;
 	// debugging variable
 	private String scopeName;
 
 	public SymbolTable(){
-		this.entries = new HashMap<String,Symbol>();
+		this.entries = new HashMap<String,SymbolTableEntry>();
 		this.parentTable = null;
 		this.scopeName = "N/A";
 	}
 
 	public SymbolTable(String scopeName){
-		this.entries = new HashMap<String,Symbol>();
+		this.entries = new HashMap<String,SymbolTableEntry>();
 		this.parentTable = null;
 		this.scopeName = scopeName;
 	}
@@ -26,7 +26,7 @@ public class SymbolTable {
 		this.parentTable = parent;
 	}
 
-	public Map<String,Symbol> getEntries(){
+	public Map<String,SymbolTableEntry> getEntries(){
 		return this.entries;
 	}
 
@@ -38,7 +38,7 @@ public class SymbolTable {
 		return this.scopeName;
 	}
 
-	public void addEntry(String scopeName, Symbol symbol) {
+	public void addEntry(String scopeName, SymbolTableEntry symbol) {
 		this.entries.put(scopeName,symbol);
 	}
 
@@ -51,7 +51,7 @@ public class SymbolTable {
 		} else {
 			sb.append("Parent Scope:  N/A \n");
 		}
-		for(Symbol s : entries.values()) {
+		for(SymbolTableEntry s : entries.values()) {
 			sb.append(s.toString() + "\n");
 		}
 		return sb.toString();

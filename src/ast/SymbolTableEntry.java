@@ -1,11 +1,11 @@
 package ast;
 
-public class Symbol {
+public class SymbolTableEntry {
 	private String name;
 	private String type;
 	private AstNode declRef;
 
-	public Symbol(String name, String type, AstNode declRef) {
+	public SymbolTableEntry(String name, String type, AstNode declRef) {
 		this.name = name;
 		this.declRef = declRef;
 		if(type.equals("method") || type.equals("variable")) {

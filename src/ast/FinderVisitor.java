@@ -197,7 +197,7 @@ public class FinderVisitor implements Visitor {
 
 	@Override
 	public void visit(MethodDecl methodDecl) {
-		Symbol symbol = new Symbol(methodDecl.name(), "method", methodDecl);
+		SymbolTableEntry symbol = new SymbolTableEntry(methodDecl.name(), "method", methodDecl);
 
 		this.getCurrentClassTable().addEntry(symbol.getName(), symbol);
 		methodDecl.returnType().accept(this);
@@ -233,7 +233,7 @@ public class FinderVisitor implements Visitor {
 
 	@Override
 	public void visit(FormalArg formalArg) {
-		Symbol symbol = new Symbol(formalArg.name(), "variable", formalArg);
+		SymbolTableEntry symbol = new SymbolTableEntry(formalArg.name(), "variable", formalArg);
 		this.currentSymbolTable.addEntry(symbol.getName(), symbol);
 		this.checkSusVariable(formalArg);
 		formalArg.type().accept(this);
@@ -241,7 +241,7 @@ public class FinderVisitor implements Visitor {
 
 	@Override
 	public void visit(VarDecl varDecl) {
-		Symbol symbol = new Symbol(varDecl.name(), "variable", varDecl);
+		SymbolTableEntry symbol = new SymbolTableEntry(varDecl.name(), "variable", varDecl);
 		this.currentSymbolTable.addEntry(symbol.getName(), symbol);
 		this.checkSusVariable(varDecl);
 		varDecl.type().accept(this);
