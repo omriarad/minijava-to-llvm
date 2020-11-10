@@ -1,7 +1,7 @@
 package ast;
 import java.util.*;
 
-public class AstRenamingVisitor implements Visitor {
+public class MethodRenamingVisitor implements Visitor {
 	private String currentClass;
 	private Set<String> susClasses;
 	private Map<String,String> fieldToType;
@@ -13,7 +13,7 @@ public class AstRenamingVisitor implements Visitor {
 	private String originalName;
 	private String newName;
 
-	public AstRenamingVisitor(String originalName, String newName, Set<String> susClasses) {
+	public MethodRenamingVisitor(String originalName, String newName, Set<String> susClasses) {
 		this.originalName = originalName;
 		this.newName = newName;
 		this.susClasses = susClasses;
