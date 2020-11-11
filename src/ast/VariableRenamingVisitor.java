@@ -22,6 +22,16 @@ public class VariableRenamingVisitor implements Visitor {
         this.currentClass = "Main";
     }
 
+    private boolean rename(String curName){
+        if(curName.equals(this.originalName)) {
+            SymbolTable curSymbolTable = this.symbolTableLookup.lookup(this.currentClass, this.currentMethod, "variable", curName);
+            if (curSymbolTable == this.foundSymbolTable) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private void visitBinaryExpr(BinaryExpr e, String infixSymbol) { //not interesting
         e.e1().accept(this);
         e.e2().accept(this);
@@ -73,22 +83,16 @@ public class VariableRenamingVisitor implements Visitor {
 
     @Override
     public void visit(FormalArg formalArg) {
-        if(formalArg.name().equals(this.originalName)){
-            SymbolTable curSymbolTable = this.symbolTableLookup.lookup(this.currentClass, this.currentMethod, "variable", formalArg.name());
-            if(curSymbolTable == this.foundSymbolTable){
-                formalArg.setName(newName);
-            }
+        if(this.rename(formalArg.name())){
+            formalArg.setName(this.newName);
         }
         formalArg.type().accept(this);
     }
 
     @Override
     public void visit(VarDecl varDecl) {
-        if(varDecl.name().equals(this.originalName)){
-            SymbolTable curSymbolTable = this.symbolTableLookup.lookup(this.currentClass, this.currentMethod, "variable", varDecl.name());
-            if(curSymbolTable == this.foundSymbolTable){
-                varDecl.setName(newName);
-            }
+        if(this.rename(varDecl.name())){
+            varDecl.setName(this.newName);
         }
         varDecl.type().accept(this);
 
@@ -121,22 +125,16 @@ public class VariableRenamingVisitor implements Visitor {
 
     @Override
     public void visit(AssignStatement assignStatement) {
-        if(assignStatement.lv().equals(this.originalName)){
-            SymbolTable curSymbolTable = this.symbolTableLookup.lookup(this.currentClass, this.currentMethod, "variable", assignStatement.lv());
-            if(curSymbolTable == this.foundSymbolTable){
-                assignStatement.setLv(newName);
-            }
+        if(this.rename(assignStatement.lv())){
+            assignStatement.setLv(this.newName);
         }
         assignStatement.rv().accept(this);
     }
 
     @Override
     public void visit(AssignArrayStatement assignArrayStatement) {
-        if(assignArrayStatement.lv().equals(this.originalName)){
-            SymbolTable curSymbolTable = this.symbolTableLookup.lookup(this.currentClass, this.currentMethod, "variable", assignArrayStatement.lv());
-            if(curSymbolTable == this.foundSymbolTable){
-                assignArrayStatement.setLv(newName);
-            }
+        if(this.rename(assignArrayStatement.lv())){
+            assignArrayStatement.setLv(this.newName);
         }
         assignArrayStatement.index().accept(this);
         assignArrayStatement.rv().accept(this);
@@ -200,11 +198,8 @@ public class VariableRenamingVisitor implements Visitor {
 
     @Override
     public void visit(IdentifierExpr e) {
-        if(e.id().equals(this.originalName)){
-            SymbolTable curSymbolTable = this.symbolTableLookup.lookup(this.currentClass, this.currentMethod, "variable", e.id());
-            if(curSymbolTable == this.foundSymbolTable){
-                e.setId(newName);
-            }
+        if(this.rename(e.id())){
+            e.setId(newName);
         }
     }
 
