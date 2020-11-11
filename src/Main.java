@@ -49,6 +49,13 @@ public class Main {
                     boolean isMethod;
                     if (type.equals("var")) {
                         isMethod = false;
+                        FinderVisitor fv = new FinderVisitor(prog,originalName,Integer.valueOf(originalLine));
+                        fv.visit(prog);
+                        var classToScopes = fv.getClassToScopes();
+                        var foundSymbolTable= fv.getFoundSymbolTable();
+                        var visitor = new VariableRenamingVisitor(originalName, newName, classToScopes, foundSymbolTable);
+                        visitor.visit(prog);
+
                     } else if (type.equals("method")) {
                         isMethod = true;
                         // Example of using MethodFinderVisitor
