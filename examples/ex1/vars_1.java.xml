@@ -93,6 +93,7 @@
                     <name>run</name>
                     <formals>
                         <formal>
+                            <lineNumber>20</lineNumber>
                             <type> <int/> </type>
                             <name>a</name>
                         </formal>
@@ -207,6 +208,7 @@
                     <name>run</name>
                     <formals>
                         <formal>
+                            <lineNumber>40</lineNumber>
                             <type> <int/> </type>
                             <name>a</name>
                         </formal>
