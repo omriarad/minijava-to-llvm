@@ -182,7 +182,6 @@ public class MethodRenamingVisitor implements Visitor {
 
 	@Override
 	public void visit(IdentifierExpr e) {
-		System.out.println(this.currentClass + " " + this.currentMethod+ " " + "variable"+ " " + e.id());
 		SymbolTable symbolTable = symbolTables.lookup(this.currentClass, this.currentMethod, "variable", e.id());
 		SymbolTableEntry symbol = symbolTable.getEntries().get(e.id());
 		VariableIntroduction variable = (VariableIntroduction)symbol.getDeclRef();

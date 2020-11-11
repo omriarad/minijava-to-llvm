@@ -63,24 +63,7 @@ public class Main {
                         fv.visit(prog);
                         // imported Set
                         Set<String> sus = fv.getSusClasses();
-//                        if(sus != null) {
-//                        	System.out.println("Suspected Classes:");
-//                        	for(String s : sus) {
-//                        		System.out.println(s);
-//                        	}
-//                        }
-//                        if(mfv.getFoundClass() != null) {
-//                        	System.out.println("Method found in class: "+mfv.getFoundClass());
-//                        }
                         var classToScopes = fv.getClassToScopes();
-                        System.out.println("----------------------");
-                        for (Map.Entry<String,Map<String,SymbolTable>> classScopes : classToScopes.entrySet()) {
-                        	System.out.println("Scopes for class: "+classScopes.getKey());
-                        	for(Map.Entry<String,SymbolTable> scope : classScopes.getValue().entrySet()) {
-                        		System.out.println(scope.getValue());
-                        	}
-                        }
-                        System.out.println("----------------------");
                         var visitor = new MethodRenamingVisitor(originalName, newName, sus, classToScopes);
                         visitor.visit(prog);
                     } else {

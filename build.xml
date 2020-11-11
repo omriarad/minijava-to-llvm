@@ -8,7 +8,7 @@
 
     <taskdef  name="jflex" classname="jflex.anttask.JFlexTask"   classpath="${tools}/JFlex.jar"   />
     <taskdef  name="cup"   classname="java_cup.anttask.CUPTask"  classpath="${tools}/java-cup-11b.jar"  />
-    
+
     <target name="init">
         <!-- Create the time stamp -->
         <tstamp/>
@@ -47,5 +47,12 @@
         <delete dir="${build}"/>
         <delete file="${src}/Lexer.java"/>
         <delete file="${src}/Parser.java"/>
+    </target>
+
+    <target name="test" depends="dist">
+        <exec executable="/bin/sh">
+            <arg value="-c"/>
+            <arg value="make -C tests"/>
+        </exec>
     </target>
 </project>
