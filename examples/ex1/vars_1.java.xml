@@ -40,6 +40,7 @@
                     <name>run</name>
                     <formals>
                         <formal>
+                            <lineNumber>10</lineNumber>
                             <type> <int/> </type>
                             <name>a</name>
                         </formal>
@@ -179,6 +180,7 @@
                     <name>run</name>
                     <formals>
                         <formal>
+                            <lineNumber>32</lineNumber>
                             <type> <int/> </type>
                             <name>c</name>
                         </formal>
@@ -282,6 +284,7 @@
                     <name>run</name>
                     <formals>
                         <formal>
+                            <lineNumber>49</lineNumber>
                             <type> <int/> </type>
                             <name>z</name>
                         </formal>

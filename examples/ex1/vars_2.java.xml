@@ -212,10 +212,12 @@
                     <name>getSalary</name>
                     <formals>
                         <formal>
+                            <lineNumber>43</lineNumber>
                             <type> <int/> </type>
                             <name>a</name>
                         </formal>
                         <formal>
+                            <lineNumber>43</lineNumber>
                             <type> <int/> </type>
                             <name>b</name>
                         </formal>
