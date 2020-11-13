@@ -11,7 +11,7 @@ class C {
 }
 
 class A {
-	C somefield;
+	C something;
 	public int method() {
 		return 0;
 	}
