@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<program>
+    <mainclass>
+        <name>Main</name>
+        <argsName>args</argsName>
+        <mainStatement>
+            <sysout>
+                <arg>
+                    <call>
+                        <ownerExpr>
+                            <new-object>
+<classId>C</classId>
+                            </new-object>
+                        </ownerExpr>
+                        <methodId>stop</methodId>
+                        <actuals/>
+                    </call>
+                </arg>
+            </sysout>
+        </mainStatement>
+    </mainclass>
+    <classdecls>
+        <classdecl>
+            <name>A</name>
+            <fields>
+                <field>
+                    <lineNumber>8</lineNumber>
+                    <type>
+                        <int/>
+                    </type>
+                    <name>x</name>
+                </field>
+            </fields>
+            <methoddecls>
+                <methoddecl>
+                    <lineNumber>10</lineNumber>
+                    <returnType>
+                        <int/>
+                    </returnType>
+                    <name>run</name>
+                    <formals/>
+                    <vardecls/>
+                    <body>
+                        <assign>
+                            <lv>x</lv>
+                            <rv>
+<int-literal>
+    <num>10</num>
+</int-literal>
+                            </rv>
+                        </assign>
+                    </body>
+                    <ret>
+                        <mult>
+                            <e1>
+<ref-id>
+    <id>x</id>
+</ref-id>
+                            </e1>
+                            <e2>
+<ref-id>
+    <id>x</id>
+</ref-id>
+                            </e2>
+                        </mult>
+                    </ret>
+                </methoddecl>
+            </methoddecls>
+        </classdecl>
+        <classdecl>
+            <name>B</name>
+            <superName>A</superName>
+            <fields/>
+            <methoddecls>
+                <methoddecl>
+                    <lineNumber>18</lineNumber>
+                    <returnType>
+                        <int/>
+                    </returnType>
+                    <name>run</name>
+                    <formals/>
+                    <vardecls>
+                        <vardecl>
+                            <lineNumber>19</lineNumber>
+                            <type>
+<ref>
+    <id>A</id>
+</ref>
+                            </type>
+                            <name>a</name>
+                        </vardecl>
+                    </vardecls>
+                    <body>
+                        <assign>
+                            <lv>a</lv>
+                            <rv>
+<new-object>
+    <classId>A</classId>
+</new-object>
+                            </rv>
+                        </assign>
+                    </body>
+                    <ret>
+                        <call>
+                            <ownerExpr>
+<ref-id>
+    <id>a</id>
+</ref-id>
+                            </ownerExpr>
+                            <methodId>run</methodId>
+                            <actuals/>
+                        </call>
+                    </ret>
+                </methoddecl>
+                <methoddecl>
+                    <lineNumber>24</lineNumber>
+                    <returnType>
+                        <int/>
+                    </returnType>
+                    <name>other</name>
+                    <formals/>
+                    <vardecls>
+                        <vardecl>
+                            <lineNumber>25</lineNumber>
+                            <type>
+<int/>
+                            </type>
+                            <name>res</name>
+                        </vardecl>
+                    </vardecls>
+                    <body>
+                        <assign>
+                            <lv>res</lv>
+                            <rv>
+<call>
+    <ownerExpr>
+        <new-object>
+            <classId>A</classId>
+        </new-object>
+    </ownerExpr>
+    <methodId>run</methodId>
+    <actuals/>
+</call>
+                            </rv>
+                        </assign>
+                    </body>
+                    <ret>
+                        <ref-id>
+                            <id>res</id>
+                        </ref-id>
+                    </ret>
+                </methoddecl>
+            </methoddecls>
+        </classdecl>
+        <classdecl>
+            <name>C</name>
+            <fields/>
+            <methoddecls>
+                <methoddecl>
+                    <lineNumber>32</lineNumber>
+                    <returnType>
+                        <int/>
+                    </returnType>
+                    <name>stop</name>
+                    <formals/>
+                    <vardecls/>
+                    <body/>
+                    <ret>
+                        <int-literal>
+                            <num>55</num>
+                        </int-literal>
+                    </ret>
+                </methoddecl>
+                <methoddecl>
+                    <lineNumber>36</lineNumber>
+                    <returnType>
+                        <int/>
+                    </returnType>
+                    <name>other</name>
+                    <formals/>
+                    <vardecls>
+                        <vardecl>
+                            <lineNumber>37</lineNumber>
+                            <type>
+<int/>
+                            </type>
+                            <name>resA</name>
+                        </vardecl>
+                        <vardecl>
+                            <lineNumber>38</lineNumber>
+                            <type>
+<int/>
+                            </type>
+                            <name>resB</name>
+                        </vardecl>
+                        <vardecl>
+                            <lineNumber>39</lineNumber>
+                            <type>
+<int/>
+                            </type>
+                            <name>resC</name>
+                        </vardecl>
+                    </vardecls>
+                    <body>
+                        <assign>
+                            <lv>resA</lv>
+                            <rv>
+<call>
+    <ownerExpr>
+        <new-object>
+            <classId>A</classId>
+        </new-object>
+    </ownerExpr>
+    <methodId>run</methodId>
+    <actuals/>
+</call>
+                            </rv>
+                        </assign>
+                        <assign>
+                            <lv>resB</lv>
+                            <rv>
+<call>
+    <ownerExpr>
+        <new-object>
+            <classId>B</classId>
+        </new-object>
+    </ownerExpr>
+    <methodId>run</methodId>
+    <actuals/>
+</call>
+                            </rv>
+                        </assign>
+                        <assign>
+                            <lv>resC</lv>
+                            <rv>
+<call>
+    <ownerExpr>
+        <this/>
+    </ownerExpr>
+    <methodId>stop</methodId>
+    <actuals/>
+</call>
+                            </rv>
+                        </assign>
+                    </body>
+                    <ret>
+                        <add>
+                            <e1>
+<ref-id>
+    <id>resA</id>
+</ref-id>
+                            </e1>
+                            <e2>
+<add>
+    <e1>
+        <ref-id>
+            <id>resB</id>
+        </ref-id>
+    </e1>
+    <e2>
+        <ref-id>
+            <id>resC</id>
+        </ref-id>
+    </e2>
+</add>
+                            </e2>
+                        </add>
+                    </ret>
+                </methoddecl>
+            </methoddecls>
+        </classdecl>
+    </classdecls>
+</program>
