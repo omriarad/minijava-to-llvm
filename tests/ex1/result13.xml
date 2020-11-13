@@ -194,14 +194,14 @@
                             <type>
 <int/>
                             </type>
-                            <name>c</name>
+                            <name>run</name>
                         </formal>
                     </formals>
                     <vardecls/>
                     <body/>
                     <ret>
                         <ref-id>
-                            <id>c</id>
+                            <id>run</id>
                         </ref-id>
                     </ret>
                 </methoddecl>
