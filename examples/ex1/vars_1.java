@@ -1,6 +1,6 @@
 class Main {
     public static void main(String[] args) {
-        System.out.println(new C().run());
+        System.out.println(new C().run(5));
     }
 } 
 
@@ -29,8 +29,8 @@ class B extends A{
 class D{
     int x;
 
-    public int run(int c){
-        return c;
+    public int run(int run){
+        return run;
     }
 }
 

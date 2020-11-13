@@ -1,0 +1,1 @@
+java -jar ../../mjavac.jar unmarshal rename var run 32 notMethodRun ../../examples/ex1/vars_1.java.xml result.xml

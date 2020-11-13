@@ -9,15 +9,15 @@
                     <call>
                         <ownerExpr>
                             <new-object>
-                                <classId>C</classId>
+<classId>C</classId>
                             </new-object>
                         </ownerExpr>
                         <methodId>run</methodId>
                         <actuals>
                             <actual>
-                                <int-literal>
-                                    <num>5</num>
-                                </int-literal>
+<int-literal>
+    <num>5</num>
+</int-literal>
                             </actual>
                         </actuals>
                     </call>
@@ -47,32 +47,34 @@
                     <formals>
                         <formal>
                             <lineNumber>10</lineNumber>
-                            <type> <int/> </type>
+                            <type>
+<int/>
+                            </type>
                             <name>a</name>
                         </formal>
                     </formals>
-                    <vardecls></vardecls>
+                    <vardecls/>
                     <body>
                         <assign>
                             <lv>x</lv>
                             <rv>
-                                <int-literal>
-                                    <num>1</num>
-                                </int-literal>
+<int-literal>
+    <num>1</num>
+</int-literal>
                             </rv>
                         </assign>
                     </body>
                     <ret>
                         <mult>
                             <e1>
-                                <ref-id>
-                                    <id>x</id>
-                                </ref-id>
+<ref-id>
+    <id>x</id>
+</ref-id>
                             </e1>
                             <e2>
-                                <ref-id>
-                                    <id>a</id>
-                                </ref-id>
+<ref-id>
+    <id>a</id>
+</ref-id>
                             </e2>
                         </mult>
                     </ret>
@@ -101,7 +103,9 @@
                     <formals>
                         <formal>
                             <lineNumber>20</lineNumber>
-                            <type> <int/> </type>
+                            <type>
+<int/>
+                            </type>
                             <name>a</name>
                         </formal>
                     </formals>
@@ -109,7 +113,7 @@
                         <vardecl>
                             <lineNumber>21</lineNumber>
                             <type>
-                               <int/>
+<int/>
                             </type>
                             <name>b</name>
                         </vardecl>
@@ -118,48 +122,48 @@
                         <assign>
                             <lv>b</lv>
                             <rv>
-                                <int-literal>
-                                    <num>7</num>
-                                </int-literal>
+<int-literal>
+    <num>7</num>
+</int-literal>
                             </rv>
                         </assign>
                         <assign>
                             <lv>x</lv>
                             <rv>
-                                <int-literal>
-                                    <num>9</num>
-                                </int-literal>
+<int-literal>
+    <num>9</num>
+</int-literal>
                             </rv>
                         </assign>
                         <assign>
                             <lv>y</lv>
                             <rv>
-                                <mult>
-                                    <e1>
-                                        <ref-id>
-                                            <id>x</id>
-                                        </ref-id>
-                                    </e1>
-                                    <e2>
-                                        <ref-id>
-                                            <id>b</id>
-                                        </ref-id>
-                                    </e2>
-                                </mult>
+<mult>
+    <e1>
+        <ref-id>
+            <id>x</id>
+        </ref-id>
+    </e1>
+    <e2>
+        <ref-id>
+            <id>b</id>
+        </ref-id>
+    </e2>
+</mult>
                             </rv>
                         </assign>
                     </body>
                     <ret>
                         <subtract>
                             <e1>
-                                <ref-id>
-                                    <id>y</id>
-                                </ref-id>
+<ref-id>
+    <id>y</id>
+</ref-id>
                             </e1>
                             <e2>
-                                <ref-id>
-                                    <id>a</id>
-                                </ref-id>
+<ref-id>
+    <id>a</id>
+</ref-id>
                             </e2>
                         </subtract>
                     </ret>
@@ -178,7 +182,7 @@
                 </field>
             </fields>
             <methoddecls>
-                    <methoddecl>
+                <methoddecl>
                     <lineNumber>32</lineNumber>
                     <returnType>
                         <int/>
@@ -187,16 +191,17 @@
                     <formals>
                         <formal>
                             <lineNumber>32</lineNumber>
-                            <type> <int/> </type>
-                            <name>run</name>
+                            <type>
+<int/>
+                            </type>
+                            <name>c</name>
                         </formal>
                     </formals>
-                    <vardecls></vardecls>
-                    <body>
-                    </body>
+                    <vardecls/>
+                    <body/>
                     <ret>
                         <ref-id>
-                            <id>run</id>
+                            <id>c</id>
                         </ref-id>
                     </ret>
                 </methoddecl>
@@ -205,8 +210,7 @@
         <classdecl>
             <name>E</name>
             <superName>D</superName>
-            <fields>
-            </fields>
+            <fields/>
             <methoddecls>
                 <methoddecl>
                     <lineNumber>40</lineNumber>
@@ -217,7 +221,9 @@
                     <formals>
                         <formal>
                             <lineNumber>40</lineNumber>
-                            <type> <int/> </type>
+                            <type>
+<int/>
+                            </type>
                             <name>a</name>
                         </formal>
                     </formals>
@@ -225,7 +231,9 @@
                         <vardecl>
                             <lineNumber>41</lineNumber>
                             <type>
-                                <ref><id>B</id></ref>
+<ref>
+    <id>B</id>
+</ref>
                             </type>
                             <name>b</name>
                         </vardecl>
@@ -234,35 +242,35 @@
                         <assign>
                             <lv>b</lv>
                             <rv>
-                                <new-object>
-                                    <classId>B</classId>
-                                </new-object>
+<new-object>
+    <classId>B</classId>
+</new-object>
                             </rv>
                         </assign>
                     </body>
                     <ret>
                         <add>
                             <e1>
-                                <call>
-                                    <ownerExpr>
-                                        <ref-id>
-                                            <id>a</id>
-                                        </ref-id>
-                                    </ownerExpr>
-                                    <methodId>run</methodId>
-                                    <actuals>
-                                        <actual>
-                                            <int-literal>
-                                                <num>24</num>
-                                            </int-literal>
-                                        </actual>
-                                    </actuals>
-                                </call>
+<call>
+    <ownerExpr>
+        <ref-id>
+            <id>a</id>
+        </ref-id>
+    </ownerExpr>
+    <methodId>run</methodId>
+    <actuals>
+        <actual>
+            <int-literal>
+                <num>24</num>
+            </int-literal>
+        </actual>
+    </actuals>
+</call>
                             </e1>
                             <e2>
-                                <ref-id>
-                                    <id>a</id>
-                                </ref-id>
+<ref-id>
+    <id>a</id>
+</ref-id>
                             </e2>
                         </add>
                     </ret>
@@ -282,7 +290,7 @@
                 </field>
             </fields>
             <methoddecls>
-                    <methoddecl>
+                <methoddecl>
                     <lineNumber>49</lineNumber>
                     <returnType>
                         <int/>
@@ -291,50 +299,51 @@
                     <formals>
                         <formal>
                             <lineNumber>49</lineNumber>
-                            <type> <int/> </type>
-                            <name>z</name>
+                            <type>
+<int/>
+                            </type>
+                            <name>notFieldZ</name>
                         </formal>
                     </formals>
-                    <vardecls>
-                    </vardecls>
+                    <vardecls/>
                     <body>
                         <assign>
                             <lv>x</lv>
                             <rv>
-                                <int-literal>
-                                    <num>5</num>
-                                </int-literal>
+<int-literal>
+    <num>5</num>
+</int-literal>
                             </rv>
                         </assign>
                         <assign>
                             <lv>y</lv>
                             <rv>
-                                <add>
-                                    <e1>
-                                        <ref-id>
-                                            <id>z</id>
-                                        </ref-id>
-                                    </e1>
-                                    <e2>
-                                        <ref-id>
-                                            <id>x</id>
-                                        </ref-id>
-                                    </e2>
-                                </add>
+<add>
+    <e1>
+        <ref-id>
+            <id>notFieldZ</id>
+        </ref-id>
+    </e1>
+    <e2>
+        <ref-id>
+            <id>x</id>
+        </ref-id>
+    </e2>
+</add>
                             </rv>
                         </assign>
                     </body>
                     <ret>
                         <subtract>
                             <e1>
-                                <ref-id>
-                                    <id>y</id>
-                                </ref-id>
+<ref-id>
+    <id>y</id>
+</ref-id>
                             </e1>
                             <e2>
-                                <ref-id>
-                                    <id>z</id>
-                                </ref-id>
+<ref-id>
+    <id>notFieldZ</id>
+</ref-id>
                             </e2>
                         </subtract>
                     </ret>
