@@ -17,10 +17,21 @@ public class SymbolTableLookup {
         else{
             curSymbolTable = scopeToSymbolTable.get(curClass);
         }
-        Map<String,SymbolTableEntry> curSymbolTableEntries = curSymbolTable.getEntries();
+        Map<String,SymbolTableEntry> curSymbolTableEntries;
+        if(type.equals("variable")){
+            curSymbolTableEntries = curSymbolTable.getVarEntries();
+        }
+        else{
+            curSymbolTableEntries = curSymbolTable.getMethodEntries();
+        }
         while(!curSymbolTableEntries.containsKey(name) || !curSymbolTableEntries.get(name).getType().equals(type)){
             curSymbolTable = curSymbolTable.getParentSymbolTable();
-            curSymbolTableEntries = curSymbolTable.getEntries();
+            if(type.equals("variable")){
+                curSymbolTableEntries = curSymbolTable.getVarEntries();
+            }
+            else{
+                curSymbolTableEntries = curSymbolTable.getMethodEntries();
+            }
         }
         return curSymbolTable;
     }
