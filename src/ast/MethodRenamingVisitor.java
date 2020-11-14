@@ -183,13 +183,13 @@ public class MethodRenamingVisitor implements Visitor {
 	@Override
 	public void visit(IdentifierExpr e) {
 		SymbolTable symbolTable = symbolTables.lookup(this.currentClass, this.currentMethod, "variable", e.id());
-		SymbolTableEntry symbol = symbolTable.getEntries().get(e.id());
+		SymbolTableEntry symbol = symbolTable.getVarEntries().get(e.id());
 		VariableIntroduction variable = (VariableIntroduction)symbol.getDeclRef();
 		AstType type = variable.type();
 
 		// if this isn't a RefType we don't need to change it's method calls
 		if (!RefType.class.isInstance(type)) {
-			this.staticClassReference = "irrelevant";
+			this.staticClassReference = "";
 			return;
 		}
 
