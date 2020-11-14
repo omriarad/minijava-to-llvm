@@ -52,6 +52,14 @@ public class Main {
                         FinderVisitor fv = new FinderVisitor(prog,originalName,Integer.valueOf(originalLine));
                         fv.visit(prog);
                         var classToScopes = fv.getClassToScopes();
+                        // Checking FinderVisitor scope building skills
+                        // for(var entry : classToScopes.entrySet()){
+                        //     System.out.println("Scopes for class: "+entry.getKey());
+                        //     for(var st : entry.getValue().values()){
+                        //         System.out.println(st);
+                        //     }
+                        // }
+                        //
                         var foundSymbolTable= fv.getFoundSymbolTable();
                         var visitor = new VariableRenamingVisitor(originalName, newName, classToScopes, foundSymbolTable);
                         visitor.visit(prog);
