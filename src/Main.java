@@ -72,7 +72,8 @@ public class Main {
                         // imported Set
                         Set<String> sus = fv.getSusClasses();
                         var classToScopes = fv.getClassToScopes();
-                        var visitor = new MethodRenamingVisitor(originalName, newName, sus, classToScopes);
+                        var susClass = fv.getFoundClass();
+                        var visitor = new MethodRenamingVisitor(originalName, newName, sus, susClass, classToScopes);
                         visitor.visit(prog);
                     } else {
                         throw new IllegalArgumentException("unknown rename type " + type);

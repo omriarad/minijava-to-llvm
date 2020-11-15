@@ -5,6 +5,7 @@ public class MethodRenamingVisitor implements Visitor {
 	private String currentClass;
 	private String currentMethod;
 	private Set<String> susClasses;
+	private String susClass;
 	private String staticClassReference;
 
 	private String originalName;
@@ -12,10 +13,11 @@ public class MethodRenamingVisitor implements Visitor {
 
 	private SymbolTableLookup symbolTables;
 
-	public MethodRenamingVisitor(String originalName, String newName, Set<String> susClasses, Map<String, Map<String, SymbolTable>> symbolTables) {
+	public MethodRenamingVisitor(String originalName, String newName, Set<String> susClasses, String susClass, Map<String, Map<String, SymbolTable>> symbolTables) {
 		this.originalName = originalName;
 		this.newName = newName;
 		this.susClasses = susClasses;
+		this.susClass = susClass;
 		this.symbolTables = new SymbolTableLookup(symbolTables);
 	}
 
@@ -54,7 +56,7 @@ public class MethodRenamingVisitor implements Visitor {
 	public void visit(MethodDecl methodDecl) {
 		// Note: must be set before renaming, symbol table name isn't changed!
 		this.currentMethod = methodDecl.name();
-		boolean isSus = this.symbolTables.isAncestorSus(this.currentClass, this.originalName, this.susClasses);
+		boolean isSus = this.symbolTables.isAncestorSus(this.currentClass, this.originalName, this.susClasses, this.susClass);
 		methodDecl.returnType().accept(this);
 		if(methodDecl.name().equals(this.originalName) && isSus) {
 				methodDecl.setName(this.newName);
@@ -167,7 +169,8 @@ public class MethodRenamingVisitor implements Visitor {
 			boolean isSus = this.symbolTables.isAncestorSus(
 				this.staticClassReference,
 				this.originalName,
-				this.susClasses);
+				this.susClasses,
+				this.susClass);
 			if(isSus) {
 				e.setMethodId(this.newName);
 			}

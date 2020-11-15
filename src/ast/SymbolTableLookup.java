@@ -27,17 +27,19 @@ public class SymbolTableLookup {
 		}
 		while(!curSymbolTableEntries.containsKey(name) || !curSymbolTableEntries.get(name).getType().equals(type)){
 			curSymbolTable = curSymbolTable.getParentSymbolTable();
-			if(type.equals("variable")){
-				curSymbolTableEntries = curSymbolTable.getVarEntries();
+			if (curSymbolTable == null) {
+				break;
 			}
-			else{
+			if(type.equals("variable")) {
+				curSymbolTableEntries = curSymbolTable.getVarEntries();
+			} else {
 				curSymbolTableEntries = curSymbolTable.getMethodEntries();
 			}
 		}
 		return curSymbolTable;
 	}
 
-	boolean isAncestorSus(String curClass, String methodName, Set<String> susClasses) {
+	boolean isAncestorSus(String curClass, String methodName, Set<String> susClasses, String susClass) {
 		Map<String,SymbolTable> scopeToSymbolTable = this.classToScopes.get(curClass);
 		if (scopeToSymbolTable == null) {
 			return false;
@@ -47,7 +49,16 @@ public class SymbolTableLookup {
 
 		while (curSymbolTable != null) {
 			if (susClasses.contains(curSymbolTable.getScopeName())) {
-				return true;
+				SymbolTable result = this.lookup(
+					curSymbolTable.getScopeName(),
+					null,
+					"method",
+					methodName);
+				if (result != null) {
+					return true;
+				}
+
+				break;
 			}
 
 			curSymbolTable = curSymbolTable.getParentSymbolTable();
