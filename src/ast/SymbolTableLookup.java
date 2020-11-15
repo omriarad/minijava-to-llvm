@@ -38,7 +38,12 @@ public class SymbolTableLookup {
 	}
 
 	boolean isAncestorSus(String curClass, String methodName, Set<String> susClasses) {
-		SymbolTable curSymbolTable = this.classToScopes.get(curClass).get(curClass);
+		Map<String,SymbolTable> scopeToSymbolTable = this.classToScopes.get(curClass);
+		if (scopeToSymbolTable == null) {
+			return false;
+		}
+
+		SymbolTable curSymbolTable = scopeToSymbolTable.get(curClass);
 
 		while (curSymbolTable != null) {
 			if (susClasses.contains(curSymbolTable.getScopeName())) {
