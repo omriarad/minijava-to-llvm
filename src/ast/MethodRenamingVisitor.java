@@ -54,10 +54,12 @@ public class MethodRenamingVisitor implements Visitor {
 	public void visit(MethodDecl methodDecl) {
 		// Note: must be set before renaming, symbol table name isn't changed!
 		this.currentMethod = methodDecl.name();
+		boolean isSus = this.symbolTables.isAncestorSus(this.currentClass, this.currentMethod, this.susClasses);
 		methodDecl.returnType().accept(this);
-		if(methodDecl.name().equals(this.originalName) && this.susClasses.contains(this.currentClass)){
+		if(methodDecl.name().equals(this.originalName) && isSus) {
 				methodDecl.setName(this.newName);
 		}
+
 		for (var formal : methodDecl.formals()) {
 				formal.accept(this);
 		}
