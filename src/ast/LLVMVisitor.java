@@ -177,9 +177,11 @@ public class LLVMVisitor implements Visitor {
 
 	@Override
 	public void visit(IdentifierExpr e) {
+		throw new java.lang.UnsupportedOperationException("Not supported yet.");
 	}
 
 	public void visit(ThisExpr e) {
+		throw new java.lang.UnsupportedOperationException("Not supported yet.");
 	}
 
 	@Override
@@ -189,6 +191,7 @@ public class LLVMVisitor implements Visitor {
 
 	@Override
 	public void visit(NewObjectExpr e) {
+		throw new java.lang.UnsupportedOperationException("Not supported yet.");
 	}
 
 	@Override
