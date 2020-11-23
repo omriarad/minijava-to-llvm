@@ -38,8 +38,9 @@ public class Main {
                     throw new UnsupportedOperationException("TODO - Ex. 3");
 
                 } else if (action.equals("compile")) {
-                    var symbolTables = new FinderVisitor(prog, "", 0).getClassToScopes();
-                    var compiler = new LLVMVisitor(symbolTables);
+                    var fv = new FinderVisitor(prog, "", 0);
+                    fv.visit(prog);
+                    var compiler = new LLVMVisitor(fv.getClassToScopes());
                     compiler.visit(prog);
                     System.out.println(compiler.getCode());
                 } else if (action.equals("rename")) {
