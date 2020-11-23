@@ -4,13 +4,17 @@ import java.util.*;
 public class LLVMVisitor implements Visitor {
 
 	private int registerCount;
+	private int labelCount;
 	private String LLVMType;
 	private SymbolTableLookup symbolTables;
 	private boolean isField;
 	private StringBuilder builder = new StringBuilder();
 
+
 	public LLVMVisitor(Map<String, Map<String, SymbolTable>> symbolTables) {
 		this.symbolTables = new SymbolTableLookup(symbolTables);
+		this.registerCount = -1;
+		this.labelCount = 0;
 	}
 
 	public String getCode() {
@@ -18,8 +22,29 @@ public class LLVMVisitor implements Visitor {
 	}
 
 	private void visitBinaryExpr(BinaryExpr e, String infixSymbol) {
+		boolean curContextIsAnd = infixSymbol.equals("&&");
+		int startLabelNo = -1;
 		e.e1().accept(this);
+		int registerForPhi = -1;
+		if(curContextIsAnd) {
+			startLabelNo = this.labelCount;
+			this.labelCount += 4;
+			builder.append("\tbr label %andcond" + startLabelNo + "\n");
+			builder.append("andcond" + startLabelNo + ":\n");
+			builder.append("\tbr i1 %_" +  this.registerCount + ", label %andcond" + (startLabelNo + 1) + ", label %andcond" + (startLabelNo + 3) + "\n");
+			builder.append("andcond" + (startLabelNo + 1) + ":\n");
+		}
 		e.e2().accept(this);
+		if(curContextIsAnd) {
+			registerForPhi = this.registerCount;
+			builder.append("\tbr label %andcond" + (startLabelNo + 2) + "\n");
+			builder.append("andcond" + (startLabelNo + 2) + ":\n");
+			builder.append("\tbr label %andcond" + (startLabelNo + 3) + "\n");
+			builder.append("andcond" + (startLabelNo + 3) + ":\n");
+			this.registerCount++;
+			builder.append("\t%_" +  this.registerCount + " = phi i1 [0, %andcond" + (startLabelNo) + "], [%_" + registerForPhi + ", %andcond" + (startLabelNo + 2) + "]\n");
+
+		}
 	}
 
 	@Override
@@ -97,8 +122,16 @@ public class LLVMVisitor implements Visitor {
 	@Override
 	public void visit(IfStatement ifStatement) {
 		ifStatement.cond().accept(this);
+		int startLabelNo = this.labelCount;
+		this.labelCount += 3;
+		builder.append("\tbr i1 %_" +  this.registerCount + ", label %if" + startLabelNo + ", label %if" + (startLabelNo + 1) + "\n");
+		builder.append("if" + startLabelNo + ":\n");
 		ifStatement.thencase().accept(this);
+		builder.append("\tbr label %if" + (startLabelNo + 2) + "\n");
+		builder.append("if" + (startLabelNo + 1) + ":\n");
 		ifStatement.elsecase().accept(this);
+		builder.append("\tbr label %if" + (startLabelNo + 2) + "\n");
+		builder.append("if" + (startLabelNo + 2) + ":\n");
 	}
 
 	@Override
