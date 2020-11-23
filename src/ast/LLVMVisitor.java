@@ -6,6 +6,7 @@ public class LLVMVisitor implements Visitor {
 	private int registerCount;
 	private String LLVMType;
 	private SymbolTableLookup symbolTables;
+	private boolean isField;
 	private StringBuilder builder = new StringBuilder();
 
 	public LLVMVisitor(Map<String, Map<String, SymbolTable>> symbolTables) {
@@ -31,10 +32,12 @@ public class LLVMVisitor implements Visitor {
 
 	@Override
 	public void visit(ClassDecl classDecl) {
+		this.isField = true;
 		for (var fieldDecl : classDecl.fields()) {
 				fieldDecl.accept(this);
 		}
 
+		this.isField = false;
 		for (var methodDecl : classDecl.methoddecls()) {
 				methodDecl.accept(this);
 		}
@@ -48,16 +51,13 @@ public class LLVMVisitor implements Visitor {
 	@Override
 	public void visit(MethodDecl methodDecl) {
 		this.registerCount = 0;
-		this.LLVMType = null;
-		methodDecl.ret().accept(this);
-		if (this.LLVMType == null) {
-			this.LLVMType = "void";
-		}
-
+		methodDecl.returnType().accept(this);
+		builder.append("\ndefine " + this.LLVMType + " @" + methodDecl.name() + "(");
 		for (var formal : methodDecl.formals()) {
 				formal.accept(this);
 		}
 
+		builder.append(") {\n");
 		for (var varDecl : methodDecl.vardecls()) {
 				varDecl.accept(this);
 		}
@@ -65,6 +65,9 @@ public class LLVMVisitor implements Visitor {
 		for (var stmt : methodDecl.body()) {
 				stmt.accept(this);
 		}
+
+		builder.append("}\n");
+		methodDecl.ret().accept(this);
 	}
 
 	@Override
@@ -76,7 +79,12 @@ public class LLVMVisitor implements Visitor {
 	@Override
 	public void visit(VarDecl varDecl) {
 		// TODO
+		if (this.isField) {
+			return;
+		}
+
 		varDecl.type().accept(this);
+		builder.append("\t%" + varDecl.name() + " = alloca " + this.LLVMType + "\n");
 	}
 
 	@Override
@@ -177,11 +185,9 @@ public class LLVMVisitor implements Visitor {
 
 	@Override
 	public void visit(IdentifierExpr e) {
-		throw new java.lang.UnsupportedOperationException("Not supported yet.");
 	}
 
 	public void visit(ThisExpr e) {
-		throw new java.lang.UnsupportedOperationException("Not supported yet.");
 	}
 
 	@Override
@@ -191,7 +197,6 @@ public class LLVMVisitor implements Visitor {
 
 	@Override
 	public void visit(NewObjectExpr e) {
-		throw new java.lang.UnsupportedOperationException("Not supported yet.");
 	}
 
 	@Override
@@ -204,7 +209,8 @@ public class LLVMVisitor implements Visitor {
 
 	@Override
 	public void visit(BoolAstType t) {
-		this.LLVMType = "i1";}
+		this.LLVMType = "i1";
+	}
 
 	@Override
 	public void visit(IntArrayAstType t) {
