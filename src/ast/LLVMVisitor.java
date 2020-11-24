@@ -123,7 +123,12 @@ public class LLVMVisitor implements Visitor {
 		ifStatement.cond().accept(this);
 		int startLabelNo = this.labelCount;
 		this.labelCount += 3;
-		builder.append("\tbr i1 %_" +  this.registerCount + ", label %if" + startLabelNo + ", label %if" + (startLabelNo + 1) + "\n");
+		if(this.isLiteral()){
+			builder.append("\tbr i1 " +  this.LLVMType + ", label %if" + startLabelNo + ", label %if" + (startLabelNo + 1) + "\n");
+		}
+		else{
+			builder.append("\tbr i1 %_" +  this.registerCount + ", label %if" + startLabelNo + ", label %if" + (startLabelNo + 1) + "\n");
+		}
 		builder.append("if" + startLabelNo + ":\n");
 		ifStatement.thencase().accept(this);
 		builder.append("\tbr label %if" + (startLabelNo + 2) + "\n");
@@ -193,7 +198,12 @@ public class LLVMVisitor implements Visitor {
 		this.labelCount += 4;
 		builder.append("\tbr label %andcond" + startLabelNo + "\n");
 		builder.append("andcond" + startLabelNo + ":\n");
-		builder.append("\tbr i1 %_" +  this.registerCount + ", label %andcond" + (startLabelNo + 1) + ", label %andcond" + (startLabelNo + 3) + "\n");
+		if(this.isLiteral()){
+			builder.append("\tbr i1 " +  this.LLVMType + ", label %andcond" + (startLabelNo + 1) + ", label %andcond" + (startLabelNo + 3) + "\n");
+		}
+		else{
+			builder.append("\tbr i1 %_" +  this.registerCount + ", label %andcond" + (startLabelNo + 1) + ", label %andcond" + (startLabelNo + 3) + "\n");
+		}
 		builder.append("andcond" + (startLabelNo + 1) + ":\n");
 		e.e2().accept(this);
 		registerForPhi = this.registerCount;
@@ -202,7 +212,13 @@ public class LLVMVisitor implements Visitor {
 		builder.append("\tbr label %andcond" + (startLabelNo + 3) + "\n");
 		builder.append("andcond" + (startLabelNo + 3) + ":\n");
 		this.registerCount++;
-		builder.append("\t%_" +  this.registerCount + " = phi i1 [0, %andcond" + (startLabelNo) + "], [%_" + registerForPhi + ", %andcond" + (startLabelNo + 2) + "]\n");
+		if(this.isLiteral()){
+			builder.append("\t%_" +  this.registerCount + " = phi i1 [0, %andcond" + (startLabelNo) + "], [" + this.LLVMType + ", %andcond" + (startLabelNo + 2) + "]\n");
+		}
+		else {
+			builder.append("\t%_" +  this.registerCount + " = phi i1 [0, %andcond" + (startLabelNo) + "], [%_" + registerForPhi + ", %andcond" + (startLabelNo + 2) + "]\n");
+		}
+		this.LLVMType = "i1";
 	}
 
 	@Override
