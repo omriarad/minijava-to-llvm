@@ -71,7 +71,7 @@ public class LLVMVisitor implements Visitor {
 		this.currentMethod = methodDecl.name();
 		methodDecl.returnType().accept(this);
 		retType = this.LLVMType;
-		builder.append("\ndefine " + retType + " @" + methodDecl.name() + "(");
+		builder.append("\ndefine " + retType + " @" + this.currentClass + "." + methodDecl.name() + "(");
 		for (var formal : methodDecl.formals()) {
 				formal.accept(this);
 		}
@@ -234,7 +234,9 @@ public class LLVMVisitor implements Visitor {
 	}
 
 	@Override
-	public void visit(LtExpr e) {}
+	public void visit(LtExpr e) {
+		visitBinaryMathExpr(e, "icmp slt");
+	}
 
 	private void visitBinaryMathExpr(BinaryExpr e, String command) {
 		String lvalue, rvalue, type = "";
