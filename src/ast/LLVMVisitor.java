@@ -148,7 +148,7 @@ public class LLVMVisitor implements Visitor {
 			builder.append("\tbr i1 " +  this.LLVMType + ", label %while" + (startLabelNo + 1) + ", label %if" + (startLabelNo + 2) + "\n");
 		}
 		else{
-			builder.append("\tbr i1 %_" +  this.registerCount + ", label %while" + (startLabelNo + 1) + ", label %if" + (startLabelNo + 2) + "\n");
+			builder.append("\tbr i1 %_" +  this.registerCount + ", label %while" + (startLabelNo + 1) + ", label %while" + (startLabelNo + 2) + "\n");
 		}
 		builder.append("while" + (startLabelNo + 1) + ":\n");
 		whileStatement.body().accept(this);
