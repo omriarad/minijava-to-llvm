@@ -19,7 +19,6 @@ public class LLVMVisitor implements Visitor {
 		this.symbolTables = new SymbolTableLookup(symbolTables);
 		this.registerCount = -1;
 		this.labelCount = 0;
-		// TODO: fix this ugliness better
 		this.builder.append("declare i8* @calloc(i32, i32)\ndeclare i32 @printf(i8*, ...)\ndeclare void @exit(i32)\n\n@_cint = constant [4 x i8] c\"%d\\0a\\00\"\n@_cOOB = constant [15 x i8] c\"Out of bounds\\0a\\00\"\ndefine void @print_int(i32 %i) {\n\t%_str = bitcast [4 x i8]* @_cint to i8*\n\tcall i32 (i8*, ...) @printf(i8* %_str, i32 %i)\n\tret void\n}\n\ndefine void @throw_oob() {\n\t%_str = bitcast [15 x i8]* @_cOOB to i8*\n\tcall i32 (i8*, ...) @printf(i8* %_str)\n\tcall void @exit(i32 1)\n\tret void\n}\n");
 	}
 
@@ -38,8 +37,7 @@ public class LLVMVisitor implements Visitor {
 
 	@Override
 	public void visit(Program program) {
-		// Handle this
-		//program.mainClass().accept(this);
+		program.mainClass().accept(this);
 		for (ClassDecl classdecl : program.classDecls()) {
 				classdecl.accept(this);
 		}
@@ -61,7 +59,9 @@ public class LLVMVisitor implements Visitor {
 
 	@Override
 	public void visit(MainClass mainClass) {
+		builder.append("\ndefine i32 @main() {\n");
 		mainClass.mainStatement().accept(this);
+		builder.append("\tret i32 0\n}\n");
 	}
 
 	@Override
@@ -71,18 +71,23 @@ public class LLVMVisitor implements Visitor {
 		this.currentMethod = methodDecl.name();
 		methodDecl.returnType().accept(this);
 		retType = this.LLVMType;
-		builder.append("\ndefine " + retType + " @" + this.currentClass + "." + methodDecl.name() + "(");
+		builder.append("\ndefine " + retType + " @" + this.currentClass + "." + methodDecl.name() + "(i8* %this");
 		for (var formal : methodDecl.formals()) {
-				formal.accept(this);
+			formal.type().accept(this);
+			builder.append(", " + this.LLVMType + " %." + formal.name());
 		}
 
 		builder.append(") {\n");
+		for (var formal : methodDecl.formals()) {
+			formal.accept(this);
+		}
+
 		for (var varDecl : methodDecl.vardecls()) {
-				varDecl.accept(this);
+			varDecl.accept(this);
 		}
 
 		for (var stmt : methodDecl.body()) {
-				stmt.accept(this);
+			stmt.accept(this);
 		}
 
 		methodDecl.ret().accept(this);
@@ -96,18 +101,18 @@ public class LLVMVisitor implements Visitor {
 
 	@Override
 	public void visit(FormalArg formalArg) {
-		// TODO: handle formals
 		formalArg.type().accept(this);
+		builder.append("\t%" + formalArg.name() + " = alloca " + this.LLVMType + "\n");
+		builder.append("\tstore " + this.LLVMType + " %." + formalArg.name() + ", " + this. LLVMType + "* %" + formalArg.name() + "\n");
 	}
 
 	@Override
 	public void visit(VarDecl varDecl) {
-		// TODO
+		varDecl.type().accept(this);
 		if (this.isField) {
 			return;
 		}
 
-		varDecl.type().accept(this);
 		builder.append("\t%" + varDecl.name() + " = alloca " + this.LLVMType + "\n");
 	}
 
@@ -187,18 +192,67 @@ public class LLVMVisitor implements Visitor {
 		if (isLiteral) {
 			this.builder.append("store " + this.LLVMType + " " + literalValue + ", " + this. LLVMType + "* %" + variable);
 		} else {
-			int lastRegister = this.registerCount;
-			this.registerCount++;
-			this.builder.append("store " + this.LLVMType + " " + lastRegister + ", " + this. LLVMType + "* %" + variable);
+			this.builder.append("store " + this.LLVMType + " %_" + this.registerCount + ", " + this. LLVMType + "* %" + variable);
 		}
 
 		this.builder.append("\n");
 	}
 
+	private String arrayAccessSetup(String variable, String index) {
+		String arrayPtr;
+		int startLabelNo = this.labelCount;
+
+		this.labelCount += 4;
+		this.registerCount++;
+		this.builder.append("\t%_" + this.registerCount + " = load i32*, i32** %" + variable + "\n");
+		arrayPtr = "%_" + this.registerCount;
+		this.registerCount++;
+		this.builder.append("\t%_" + this.registerCount + " = icmp slt i32 " + index + ", 0\n");
+		this.builder.append("\tbr i1 %_" + this.registerCount + ", label %arr_alloc" + startLabelNo);
+		this.builder.append(", label %arr_alloc" + (startLabelNo + 1) + "\n");
+		this.builder.append("arr_alloc" + startLabelNo + ":\n");
+		this.builder.append("\tcall void @throw_oob()\n");
+		this.builder.append("\tbr label %arr_alloc" + (startLabelNo + 1) + "\n");
+		this.builder.append("arr_alloc" + (startLabelNo + 1) + ":\n");
+		this.registerCount++;
+		this.builder.append("\t%_" + this.registerCount + " = getelementptr i32, i32* " + arrayPtr + ", i32 0\n");
+		this.registerCount++;
+		this.builder.append("\t%_" + this.registerCount + " = load i32, i32* %_" + (this.registerCount - 1) + "\n");
+		this.registerCount++;
+		this.builder.append("\t%_" + this.registerCount + " = icmp sle i32 %_" + (this.registerCount - 1) + ", " + index + "\n");
+		this.builder.append("\tbr i1 %_" + this.registerCount + ", label %arr_alloc" + (startLabelNo + 2));
+		this.builder.append(", label %arr_alloc" + (startLabelNo + 3) + "\n");
+		this.builder.append("arr_alloc" + (startLabelNo + 2) + ":\n");
+		this.builder.append("\tcall void @throw_oob()\n");
+		this.builder.append("\tbr label %arr_alloc" + (startLabelNo + 3) + "\n");
+		this.builder.append("arr_alloc" + (startLabelNo + 3) + ":\n");
+		this.registerCount++;
+		this.builder.append("\t%_" + this.registerCount + " = add i32 " + index + ", 1\n");
+		this.registerCount++;
+		this.builder.append("\t%_" + this.registerCount + " = getelementptr i32, i32* " + arrayPtr + ", i32 %_" + (this.registerCount - 1) + "\n");
+		return "%_" + this.registerCount;
+	}
+
 	@Override
 	public void visit(AssignArrayStatement assignArrayStatement) {
+		String index;
+		String indexPtr;
+		String variable = assignArrayStatement.lv();
+
 		assignArrayStatement.index().accept(this);
+		if (this.isLiteral()) {
+			index = this.LLVMType;
+		} else {
+			index = "%_" + this.registerCount;
+		}
+
+		indexPtr = this.arrayAccessSetup(assignArrayStatement.lv(), index);
 		assignArrayStatement.rv().accept(this);
+		if (this.isLiteral()) {
+			this.builder.append("\tstore i32 " + this.LLVMType + ", i32* " + indexPtr + "\n");
+		} else {
+			this.builder.append("\tstore i32 %_" + this.registerCount + ", i32* " + indexPtr + "\n");
+		}
 	}
 
 	@Override
@@ -236,6 +290,7 @@ public class LLVMVisitor implements Visitor {
 	@Override
 	public void visit(LtExpr e) {
 		visitBinaryMathExpr(e, "icmp slt");
+		this.LLVMType = "i1";
 	}
 
 	private void visitBinaryMathExpr(BinaryExpr e, String command) {
@@ -278,8 +333,21 @@ public class LLVMVisitor implements Visitor {
 
 	@Override
 	public void visit(ArrayAccessExpr e) {
-		e.arrayExpr().accept(this);
+		String index;
+		String indexPtr;
+		IdentifierExpr variable = (IdentifierExpr)e.arrayExpr();
+
 		e.indexExpr().accept(this);
+		if (this.isLiteral()) {
+			index = this.LLVMType;
+		} else {
+			index = "%_" + this.registerCount;
+		}
+
+		indexPtr = this.arrayAccessSetup(variable.id(), index);
+		this.registerCount++;
+		this.builder.append("\t%_" + this.registerCount + " = load i32, i32* " + indexPtr + "\n");
+		this.LLVMType = "i32";
 	}
 
 	@Override
@@ -325,7 +393,34 @@ public class LLVMVisitor implements Visitor {
 
 	@Override
 	public void visit(NewIntArrayExpr e) {
+		String size;
+		int startLabelNo;
+
 		e.lengthExpr().accept(this);
+		if (this.isLiteral()) {
+			size = this.LLVMType;
+		} else {
+			size = "%_" + this.registerCount;
+		}
+
+		startLabelNo = this.labelCount;
+		this.labelCount += 2;
+		this.registerCount++;
+		this.builder.append("\t%_" + this.registerCount + " = icmp slt i32 " + size + ", 0\n");
+		this.builder.append("\tbr i1 %_" + this.registerCount + ", label %arr_alloc" + startLabelNo);
+		this.builder.append(", label %arr_alloc" + (startLabelNo + 1) + "\n");
+		this.builder.append("arr_alloc" + startLabelNo + ":\n");
+		this.builder.append("\tcall void @throw_oob()\n");
+		this.builder.append("\tbr label %arr_alloc" + (startLabelNo + 1) + "\n");
+		this.builder.append("arr_alloc" + (startLabelNo + 1) + ":\n");
+		this.registerCount++;
+		this.builder.append("\t%_" + this.registerCount + " = add i32 " + size + ", 1\n");
+		this.registerCount++;
+		this.builder.append("\t%_" + this.registerCount + " = call i8* @calloc(i32 %_" + (this.registerCount -1) + ", i32 4)\n");
+		this.registerCount++;
+		this.builder.append("\t%_" + this.registerCount + " = bitcast i8* %_" + (this.registerCount - 1) + " to i32*\n");
+		this.builder.append("\tstore i32 " + size + ", i32* %_" + this.registerCount + "\n");
+		this.LLVMType = "i32*";
 	}
 
 	@Override
@@ -333,7 +428,14 @@ public class LLVMVisitor implements Visitor {
 	}
 
 	@Override
-	public void visit(NotExpr e) {}
+	public void visit(NotExpr e) {
+		int originalRegister;
+
+		e.e().accept(this);
+		originalRegister = this.registerCount;
+		this.registerCount++;
+		this.builder.append("\t%_" + this.registerCount + " = sub i1 1, %_" + originalRegister + "\n");
+	}
 
 	@Override
 	public void visit(IntAstType t) {
@@ -347,8 +449,7 @@ public class LLVMVisitor implements Visitor {
 
 	@Override
 	public void visit(IntArrayAstType t) {
-		this.LLVMType = "?";
-		throw new java.lang.UnsupportedOperationException("Not supported yet.");
+		this.LLVMType = "i32*";
 	}
 
 	@Override
