@@ -20,7 +20,6 @@ public class LLVMVisitor implements Visitor {
 		this.symbolTables = new SymbolTableLookup(symbolTables);
 		this.registerCount = -1;
 		this.labelCount = 0;
-		this.builder.append("declare i8* @calloc(i32, i32)\ndeclare i32 @printf(i8*, ...)\ndeclare void @exit(i32)\n\n@_cint = constant [4 x i8] c\"%d\\0a\\00\"\n@_cOOB = constant [15 x i8] c\"Out of bounds\\0a\\00\"\ndefine void @print_int(i32 %i) {\n\t%_str = bitcast [4 x i8]* @_cint to i8*\n\tcall i32 (i8*, ...) @printf(i8* %_str, i32 %i)\n\tret void\n}\n\ndefine void @throw_oob() {\n\t%_str = bitcast [15 x i8]* @_cOOB to i8*\n\tcall i32 (i8*, ...) @printf(i8* %_str)\n\tcall void @exit(i32 1)\n\tret void\n}\n");
 	}
 
 	public String getCode() {
@@ -36,11 +35,12 @@ public class LLVMVisitor implements Visitor {
 		return false;
 	}
 
-	
+
 	private void buildVTables(Program program) {
 		// We do not build a vtable for main class
 		for(ClassDecl classdecl : program.classDecls()){
 			printVTable(symbolTables.getClassVTable(classdecl.name()));
+			this.builder.append("\n");
 		}
 	}
 
@@ -65,6 +65,7 @@ public class LLVMVisitor implements Visitor {
 	@Override
 	public void visit(Program program) {
 		buildVTables(program);
+		this.builder.append("declare i8* @calloc(i32, i32)\ndeclare i32 @printf(i8*, ...)\ndeclare void @exit(i32)\n\n@_cint = constant [4 x i8] c\"%d\\0a\\00\"\n@_cOOB = constant [15 x i8] c\"Out of bounds\\0a\\00\"\ndefine void @print_int(i32 %i) {\n\t%_str = bitcast [4 x i8]* @_cint to i8*\n\tcall i32 (i8*, ...) @printf(i8* %_str, i32 %i)\n\tret void\n}\n\ndefine void @throw_oob() {\n\t%_str = bitcast [15 x i8]* @_cOOB to i8*\n\tcall i32 (i8*, ...) @printf(i8* %_str)\n\tcall void @exit(i32 1)\n\tret void\n}\n");
 		program.mainClass().accept(this);
 		for (ClassDecl classdecl : program.classDecls()) {
 				classdecl.accept(this);
