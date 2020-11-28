@@ -175,27 +175,22 @@ public class LLVMVisitor implements Visitor {
 
 	@Override
 	public void visit(AssignStatement assignStatement) {
-		int literalValue = 0;
 		boolean isLiteral = false;
+		String src = null;
 		String variable = assignStatement.lv();
 		AstType type = this.symbolTables.lookupVariableType(this.currentClass, this.currentMethod, variable);
 
 		assignStatement.rv().accept(this);
 		if (this.isLiteral()) {
-			literalValue = Integer.parseInt(this.LLVMType);
-			isLiteral = true;
+			src = this.LLVMType;
+		} else if (this.LLVMType.compareTo("i8*") == 0) {
+			src = "%_" + (this.registerCount - 2);
+		} else {
+			src = "%_" + this.registerCount;
 		}
 
 		type.accept(this);
-
-		this.builder.append("\t");
-		if (isLiteral) {
-			this.builder.append("store " + this.LLVMType + " " + literalValue + ", " + this. LLVMType + "* %" + variable);
-		} else {
-			this.builder.append("store " + this.LLVMType + " %_" + this.registerCount + ", " + this. LLVMType + "* %" + variable);
-		}
-
-		this.builder.append("\n");
+		this.builder.append("\tstore " + this.LLVMType + " " + src + ", " + this. LLVMType + "* %" + variable + "\n");
 	}
 
 	private String arrayAccessSetup(String variable, String index) {
