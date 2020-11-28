@@ -420,6 +420,19 @@ public class LLVMVisitor implements Visitor {
 
 	@Override
 	public void visit(NewObjectExpr e) {
+		this.registerCount++;
+		String newObjectClass = e.classId();
+		int instanceSize = this.symbolTables.getInstanceSize(newObjectClass);
+		this.builder.append("\t%_" + this.registerCount + " = call i8* @calloc(i32 1, i32 " + instanceSize + ")");
+		this.registerCount++;
+		this.builder.append("\t%_" + this.registerCount + " = bitcast i8* %_" + (this.registerCount - 1) + "to i8***");
+		this.registerCount++;
+		VTable newObjectVtable = this.symbolTables.getClassVTable(e.classId());
+		int numOfVTableEntrues = newObjectVtable.getVTableEntries().size();
+		this.builder.append("\t%_" + this.registerCount + " = getelementptr [" + numOfVTableEntrues + " x i8*]* @." + e.classId() + "_vtable, i32 0, i32 0");
+		this.builder.append("\tstore i8** %_" + this.registerCount + ", i8*** %_" + (this.registerCount - 1));
+		this.LLVMType = "i8*";
+
 	}
 
 	@Override
