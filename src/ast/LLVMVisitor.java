@@ -13,6 +13,7 @@ public class LLVMVisitor implements Visitor {
 	private SymbolTableLookup symbolTables;
 	private boolean isField;
 	private StringBuilder builder = new StringBuilder();
+	private String methodCallClass;
 
 
 	public LLVMVisitor(Map<String, Map<String, SymbolTable>> symbolTables) {
@@ -381,9 +382,45 @@ public class LLVMVisitor implements Visitor {
 	@Override
 	public void visit(MethodCallExpr e) {
 		e.ownerExpr().accept(this);
+		String thisRegister  = String.valueOf("%_" + this.registerCount);
+		this.registerCount++;
+		this.builder.append("\t%_" + this.registerCount + " = bitcast i8* %_" + (this.registerCount - 1) + " to i8***\n");
+		this.registerCount++;
+		this.builder.append("\t%_" + this.registerCount + " = load i8**, i8*** %_" + (this.registerCount - 1) + "\n");
+		this.registerCount++;
+		VTable curVTable = this.symbolTables.getClassVTable(this.methodCallClass);
+		this.builder.append("\t%_" + this.registerCount + " =  getelementptr i8*, i8** %_" + (this.registerCount - 1) + ", i32 " + curVTable.getIndexOfMethod(e.methodId()) + "\n");
+		this.registerCount++;
+		this.builder.append("\t%_" + this.registerCount + " = load i8*, i8** %_" + (this.registerCount - 1) + "\n");
+		this.registerCount++;
+		this.builder.append("\t%_" + this.registerCount + " = bitcast i8* %_" + (this.registerCount - 1) + " to i32 (i8*, " + curVTable.getMethodReturnType(e.methodId()) + ")*" + "\n");
+		List<String> formalTypes = curVTable.getMethodFormalTypesList(e.methodId());
+		List<String> registers = new ArrayList<>();
+		registers.add(thisRegister);
+		int methodCallRegister = this.registerCount;
 		for (Expr arg : e.actuals()) {
 				arg.accept(this);
+				if(this.isLiteral()){
+					registers.add(this.LLVMType);
+				}
+				else{
+					registers.add("%_" + String.valueOf(this.registerCount));
+				}
 		}
+		this.registerCount++;
+		String methodReturnType = curVTable.getMethodReturnType(e.methodId());
+		this.builder.append("\t%_" + this.registerCount + " = call " + methodReturnType + " %_" + methodCallRegister + "(");
+		for(int i = 0; i < formalTypes.size(); i++){
+			if(i != 0){
+				this.builder.append(" ");
+			}
+			this.builder.append(formalTypes.get(i) + " " + registers.get(i));
+			if(i != formalTypes.size() - 1){
+				this.builder.append(",");
+			}
+		}
+		this.builder.append(")\n");
+		this.LLVMType = methodReturnType;
 	}
 
 	@Override
@@ -412,6 +449,7 @@ public class LLVMVisitor implements Visitor {
 	}
 
 	public void visit(ThisExpr e) {
+		this.methodCallClass = this.currentClass;
 	}
 
 	@Override
@@ -451,16 +489,16 @@ public class LLVMVisitor implements Visitor {
 		this.registerCount++;
 		String newObjectClass = e.classId();
 		int instanceSize = this.symbolTables.getInstanceSize(newObjectClass);
-		this.builder.append("\t%_" + this.registerCount + " = call i8* @calloc(i32 1, i32 " + instanceSize + ")");
+		this.builder.append("\t%_" + this.registerCount + " = call i8* @calloc(i32 1, i32 " + instanceSize + ")\n");
 		this.registerCount++;
-		this.builder.append("\t%_" + this.registerCount + " = bitcast i8* %_" + (this.registerCount - 1) + "to i8***");
+		this.builder.append("\t%_" + this.registerCount + " = bitcast i8* %_" + (this.registerCount - 1) + " to i8***\n");
 		this.registerCount++;
 		VTable newObjectVtable = this.symbolTables.getClassVTable(e.classId());
 		int numOfVTableEntrues = newObjectVtable.getVTableEntries().size();
-		this.builder.append("\t%_" + this.registerCount + " = getelementptr [" + numOfVTableEntrues + " x i8*]* @." + e.classId() + "_vtable, i32 0, i32 0");
-		this.builder.append("\tstore i8** %_" + this.registerCount + ", i8*** %_" + (this.registerCount - 1));
+		this.builder.append("\t%_" + this.registerCount + " = getelementptr [" + numOfVTableEntrues + " x i8*], [" + numOfVTableEntrues + " x i8*]*  @." + e.classId() + "_vtable, i32 0, i32 0\n");
+		this.builder.append("\tstore i8** %_" + this.registerCount + ", i8*** %_" + (this.registerCount - 1) + "\n");
 		this.LLVMType = "i8*";
-
+		this.methodCallClass = e.classId();
 	}
 
 	@Override
@@ -490,7 +528,7 @@ public class LLVMVisitor implements Visitor {
 
 	@Override
 	public void visit(RefType t) {
-		this.LLVMType = "?";
-		throw new java.lang.UnsupportedOperationException("Not supported yet.");
+		this.LLVMType = "i8*";
+		this.methodCallClass = t.id();
 	}
 }
