@@ -14,6 +14,7 @@ public class LLVMVisitor implements Visitor {
 	private boolean isField;
 	private StringBuilder builder = new StringBuilder();
 	private String methodCallClass;
+	private boolean newObjectOwner;
 
 
 	public LLVMVisitor(Map<String, Map<String, SymbolTable>> symbolTables) {
@@ -205,11 +206,10 @@ public class LLVMVisitor implements Visitor {
 
 	@Override
 	public void visit(AssignStatement assignStatement) {
-		boolean isLiteral = false;
 		String src = null;
 		String variable = assignStatement.lv();
 		AstType type = this.symbolTables.lookupVariableType(this.currentClass, this.currentMethod, variable);
-
+		boolean lvIsField = this.symbolTables.isField(this.currentClass, this.currentMethod, variable);
 		assignStatement.rv().accept(this);
 		if (this.isLiteral()) {
 			src = this.LLVMType;
@@ -220,7 +220,17 @@ public class LLVMVisitor implements Visitor {
 		}
 
 		type.accept(this);
-		this.builder.append("\tstore " + this.LLVMType + " " + src + ", " + this. LLVMType + "* %" + variable + "\n");
+		if(lvIsField){
+			this.registerCount++;
+			this.builder.append("\t%_" + this.registerCount + " = getelementptr i8, i8* %this, i32 " + this.symbolTables.getFieldOffset(this.currentClass, variable) + "\n");
+			this.registerCount++;
+			this.builder.append("\t%_" + this.registerCount + " = bitcast i8* %_" + (this.registerCount - 1) + " to " + this.LLVMType + "*\n");
+			this.builder.append("\tstore " + this.LLVMType + " " + src + ", " + this.LLVMType + "* %_" + this.registerCount + "\n");
+		}
+		else{
+			this.builder.append("\tstore " + this.LLVMType + " " + src + ", " + this.LLVMType + "* %" + variable + "\n");
+		}
+		this.newObjectOwner = false;
 	}
 
 	private String arrayAccessSetup(String variable, String index) {
@@ -383,7 +393,13 @@ public class LLVMVisitor implements Visitor {
 	@Override
 	public void visit(MethodCallExpr e) {
 		e.ownerExpr().accept(this);
-		String thisRegister  = String.valueOf("%_" + this.registerCount);
+		String thisRegister;
+		if(this.newObjectOwner){
+			thisRegister  = "%_" + String.valueOf(this.registerCount - 2);
+		}
+		else{
+			thisRegister  = "%_" + String.valueOf(this.registerCount);
+		}
 		this.registerCount++;
 		this.builder.append("\t%_" + this.registerCount + " = bitcast i8* %_" + (this.registerCount - 1) + " to i8***\n");
 		this.registerCount++;
@@ -394,8 +410,18 @@ public class LLVMVisitor implements Visitor {
 		this.registerCount++;
 		this.builder.append("\t%_" + this.registerCount + " = load i8*, i8** %_" + (this.registerCount - 1) + "\n");
 		this.registerCount++;
-		this.builder.append("\t%_" + this.registerCount + " = bitcast i8* %_" + (this.registerCount - 1) + " to i32 (i8*, " + curVTable.getMethodReturnType(e.methodId()) + ")*" + "\n");
 		List<String> formalTypes = curVTable.getMethodFormalTypesList(e.methodId());
+		this.builder.append("\t%_" + this.registerCount + " = bitcast i8* %_" + (this.registerCount - 1) + " to " + curVTable.getMethodReturnType(e.methodId()) + " (");
+		for(int i = 0; i < formalTypes.size(); i++){
+			if(i != 0){
+				this.builder.append(" ");
+			}
+			this.builder.append(formalTypes.get(i));
+			if(i != formalTypes.size() - 1){
+				this.builder.append(",");
+			}
+		}
+		this.builder.append(")*" + "\n");
 		List<String> registers = new ArrayList<>();
 		registers.add(thisRegister);
 		int methodCallRegister = this.registerCount;
@@ -439,14 +465,25 @@ public class LLVMVisitor implements Visitor {
 		this.LLVMType = "0";
 	}
 
+
 	@Override
 	public void visit(IdentifierExpr e) {
 		AstType type = this.symbolTables.lookupVariableType(this.currentClass, this.currentMethod, e.id());
+		boolean isField = this.symbolTables.isField(this.currentClass, this.currentMethod, e.id());
 		type.accept(this);
 		this.registerCount++;
-		this.builder.append("\t");
-		this.builder.append("%_" + this.registerCount + " = load " + this.LLVMType + ", " + this.LLVMType + "* %" + e.id());
-		this.builder.append("\n");
+		if(isField){
+			this.builder.append("\t%_" + this.registerCount + " = getelementptr i8, i8* %this, i32 " + this.symbolTables.getFieldOffset(this.currentClass, e.id()) + "\n");
+			this.registerCount++;
+			this.builder.append("\t%_" + this.registerCount + " = bitcast i8* %_" + (this.registerCount - 1) + " to " + this.LLVMType + "*\n");
+			this.registerCount++;
+			this.builder.append("\t%_" + this.registerCount + " = load " + this.LLVMType + ", " + this.LLVMType + "* %_" + (this.registerCount - 1) + "\n");
+		}
+		else {
+			this.builder.append("\t");
+			this.builder.append("%_" + this.registerCount + " = load " + this.LLVMType + ", " + this.LLVMType + "* %" + e.id());
+			this.builder.append("\n");
+		}
 	}
 
 	public void visit(ThisExpr e) {
@@ -500,6 +537,7 @@ public class LLVMVisitor implements Visitor {
 		this.builder.append("\tstore i8** %_" + this.registerCount + ", i8*** %_" + (this.registerCount - 1) + "\n");
 		this.LLVMType = "i8*";
 		this.methodCallClass = e.classId();
+		this.newObjectOwner = true;
 	}
 
 	@Override
