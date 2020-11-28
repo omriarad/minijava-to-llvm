@@ -12,7 +12,8 @@ public class VTableEntry {
     VTableEntry(String className,String methodName,AstNode method){
         this.className = className;
         this.methodName = methodName;
-        this.returnType = getType(method);
+        AstType returnType = ((MethodDecl)method).returnType();
+        this.returnType = getType(returnType);
         this.formalList = getFormalList(method);
     }
 
@@ -58,21 +59,17 @@ public class VTableEntry {
         return res;
 	}
 
-    private String getType(AstNode method) {
-        AstType returnType = ((MethodDecl)method).returnType();
-        if(returnType instanceof IntAstType){
+    private String getType(AstType type) {
+        if(type instanceof IntAstType){
             return "i32";
-        } else if (returnType instanceof BoolAstType){
+        } else if (type instanceof BoolAstType){
             return "i1";
-        } else if (returnType instanceof IntArrayAstType){
+        } else if (type instanceof IntArrayAstType){
             return "i32*";
         } else {
             //refType - I need to return a simple byte pointer, right ?
             return "i8*";
         }
     }
-
-
-
 
 }

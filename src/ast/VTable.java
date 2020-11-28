@@ -35,6 +35,10 @@ public class VTable {
         this.entries.add(vte);
     }
 
+    String getClassName(){
+        return this.className;
+    }
+
 
     /* VTable utility functions */
     /* Main exmaple of usage:
@@ -54,6 +58,10 @@ public class VTable {
             }
         }
         return -1;
+    }
+
+    int getSize(){
+        return this.entries.size();
     }
     
     // FOR ALL FUNCTIONS BELOW -- If methodName was not found returns null !!!!!
@@ -158,6 +166,17 @@ public class VTable {
     // M.E. ("foo") : i32 (i8*, i32, i1)* @Base.foo
     String getMethodFullSignature(String methodName){
         return getMethodReturnType(methodName)+" "+getMethodFormalsShortString(methodName)+" "+getMethodFullName(methodName);
+    }
+
+    @Override
+    public String toString() {
+        String res = "VTable [className=" + className + "]\n";
+        for(VTableEntry entry : this.entries){
+            res += entry.getMethodName()+"\n";
+            res += getMethodFullSignature(entry.getMethodName());
+            res += "\n";
+        }
+        return res;
     }
 
     

@@ -35,13 +35,41 @@ public class LLVMVisitor implements Visitor {
 		return false;
 	}
 
+	
+	private void buildVTables(Program program) {
+		// We do not build a vtable for main class
+		for(ClassDecl classdecl : program.classDecls()){
+			printVTable(symbolTables.getClassVTable(classdecl.name()));
+		}
+	}
+
+	private void printVTable(VTable vtable) {
+		// Header
+		builder.append("@."+vtable.getClassName()+"_vtable = global ["+vtable.getSize()+" x i8*] [\n");
+		// fuction declarations
+		String funcSig;
+		List<VTableEntry> entries = vtable.getVTableEntries();
+		if(entries.size() >= 2){
+			for(int i=0;i<entries.size()-1;i++){
+				funcSig = vtable.getMethodFullSignature(entries.get(i).getMethodName());
+				builder.append("\ti8* bitcast ("+funcSig+" to i8*),\n");
+			}
+		}
+		funcSig = vtable.getMethodFullSignature(entries.get(entries.size()-1).getMethodName());
+		builder.append("\ti8* bitcast ("+funcSig+" to i8*)\n");
+		// Footer
+		builder.append("]\n");
+	}
+
 	@Override
 	public void visit(Program program) {
+		buildVTables(program);
 		program.mainClass().accept(this);
 		for (ClassDecl classdecl : program.classDecls()) {
 				classdecl.accept(this);
 		}
 	}
+
 
 	@Override
 	public void visit(ClassDecl classDecl) {
