@@ -8,19 +8,25 @@ public class SymbolTable {
 	private Map<String,SymbolTableEntry> variableEntries;
 	private Map<String,SymbolTableEntry> methodEntries;
 	private SymbolTable parentTable;
+	private boolean isClassScope;
 	// debugging variable
 	private String scopeName;
 
 	
-	public SymbolTable(String scopeName){
+	public SymbolTable(String scopeName,boolean isClassScope){
 		this.variableEntries = new LinkedHashMap<String,SymbolTableEntry>();
 		this.methodEntries = new LinkedHashMap<String,SymbolTableEntry>();
 		this.parentTable = null;
 		this.scopeName = scopeName;
+		this.isClassScope = isClassScope;
+	}
+
+	public SymbolTable(String scopeName){
+		this(scopeName,false);
 	}
 
 	public SymbolTable(){
-		this("N/A");
+		this("N/A",false);
 	}
 
 
@@ -42,6 +48,10 @@ public class SymbolTable {
 
 	public String getScopeName() {
 		return this.scopeName;
+	}
+
+	public boolean isClassScope(){
+		return this.isClassScope;
 	}
 
 	public void addEntry(String scopeName, SymbolTableEntry symbol) {

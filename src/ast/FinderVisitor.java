@@ -118,7 +118,7 @@ public class FinderVisitor implements Visitor {
 
 	public void addClassScope(ClassDecl classdecl) {
 		Map<String,SymbolTable> classScopes =  new HashMap<String,SymbolTable>();
-		SymbolTable classSymbolTable = new SymbolTable(classdecl.name());
+		SymbolTable classSymbolTable = new SymbolTable(classdecl.name(),true);
 		String className = classdecl.name();
 		String superName = classdecl.superName();
 
@@ -151,7 +151,7 @@ public class FinderVisitor implements Visitor {
 		this.currentClass = program.mainClass().name();
 		// add main Scope (little different than a regular class)
 		Map<String,SymbolTable> mainScopes =  new HashMap<String,SymbolTable>();
-		mainScopes.put(program.mainClass().name(),new SymbolTable(program.mainClass().name()));
+		mainScopes.put(program.mainClass().name(),new SymbolTable(program.mainClass().name(),true));
 		this.classToScopes.put(program.mainClass().name(),mainScopes);
 		this.currentSymbolTable = this.classToScopes.get(this.currentClass).get(this.currentClass);
 		program.mainClass().accept(this);
