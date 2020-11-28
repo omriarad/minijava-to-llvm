@@ -203,27 +203,22 @@ public class LLVMVisitor implements Visitor {
 
 	@Override
 	public void visit(AssignStatement assignStatement) {
-		int literalValue = 0;
 		boolean isLiteral = false;
+		String src = null;
 		String variable = assignStatement.lv();
 		AstType type = this.symbolTables.lookupVariableType(this.currentClass, this.currentMethod, variable);
 
 		assignStatement.rv().accept(this);
 		if (this.isLiteral()) {
-			literalValue = Integer.parseInt(this.LLVMType);
-			isLiteral = true;
+			src = this.LLVMType;
+		} else if (this.LLVMType.compareTo("i8*") == 0) {
+			src = "%_" + (this.registerCount - 2);
+		} else {
+			src = "%_" + this.registerCount;
 		}
 
 		type.accept(this);
-
-		this.builder.append("\t");
-		if (isLiteral) {
-			this.builder.append("store " + this.LLVMType + " " + literalValue + ", " + this. LLVMType + "* %" + variable);
-		} else {
-			this.builder.append("store " + this.LLVMType + " %_" + this.registerCount + ", " + this. LLVMType + "* %" + variable);
-		}
-
-		this.builder.append("\n");
+		this.builder.append("\tstore " + this.LLVMType + " " + src + ", " + this. LLVMType + "* %" + variable + "\n");
 	}
 
 	private String arrayAccessSetup(String variable, String index) {
@@ -453,6 +448,19 @@ public class LLVMVisitor implements Visitor {
 
 	@Override
 	public void visit(NewObjectExpr e) {
+		this.registerCount++;
+		String newObjectClass = e.classId();
+		int instanceSize = this.symbolTables.getInstanceSize(newObjectClass);
+		this.builder.append("\t%_" + this.registerCount + " = call i8* @calloc(i32 1, i32 " + instanceSize + ")");
+		this.registerCount++;
+		this.builder.append("\t%_" + this.registerCount + " = bitcast i8* %_" + (this.registerCount - 1) + "to i8***");
+		this.registerCount++;
+		VTable newObjectVtable = this.symbolTables.getClassVTable(e.classId());
+		int numOfVTableEntrues = newObjectVtable.getVTableEntries().size();
+		this.builder.append("\t%_" + this.registerCount + " = getelementptr [" + numOfVTableEntrues + " x i8*]* @." + e.classId() + "_vtable, i32 0, i32 0");
+		this.builder.append("\tstore i8** %_" + this.registerCount + ", i8*** %_" + (this.registerCount - 1));
+		this.LLVMType = "i8*";
+
 	}
 
 	@Override
