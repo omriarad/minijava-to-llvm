@@ -1,6 +1,6 @@
 package ast;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class SymbolTable {
@@ -13,8 +13,8 @@ public class SymbolTable {
 
 	
 	public SymbolTable(String scopeName){
-		this.variableEntries = new HashMap<String,SymbolTableEntry>();
-		this.methodEntries = new HashMap<String,SymbolTableEntry>();
+		this.variableEntries = new LinkedHashMap<String,SymbolTableEntry>();
+		this.methodEntries = new LinkedHashMap<String,SymbolTableEntry>();
 		this.parentTable = null;
 		this.scopeName = scopeName;
 	}

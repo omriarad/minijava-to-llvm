@@ -2,6 +2,7 @@ package ast;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -34,7 +35,7 @@ public class FinderVisitor implements Visitor {
 		this.searchLineNumber = searchLineNumber;
 		this.currentClass = "Main";
 		this.susClasses = new HashSet<String>();
-		this.classToScopes = new HashMap<String,Map<String,SymbolTable>>();
+		this.classToScopes = new LinkedHashMap<String,Map<String,SymbolTable>>();
 		// currentSymbolTable will be initialized when calling mainClass.accept()
 		this.currentSymbolTable = null;
 	}
