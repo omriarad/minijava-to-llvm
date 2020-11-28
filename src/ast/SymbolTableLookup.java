@@ -51,9 +51,7 @@ public class SymbolTableLookup {
 
 	boolean isField(String curClass, String curMethod, String name){
 		SymbolTable lvSymbolTable = this.lookup(curClass, curMethod, "variable", name);
-		Map<String,SymbolTable> scopeToSymbolTable = this.classToScopes.get(curClass);
-		SymbolTable classSymbolTable = scopeToSymbolTable.get(curClass);
-		return (lvSymbolTable == classSymbolTable);
+		return lvSymbolTable.isClassScope();
 	}
 
 	boolean isAncestorSus(String curClass, String methodName, Set<String> susClasses, String susClass) {
