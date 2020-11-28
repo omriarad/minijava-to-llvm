@@ -17,6 +17,13 @@ public class VTableEntry {
         this.formalList = getFormalList(method);
     }
 
+    VTableEntry(VTableEntry copiedEntry){
+        this.className = copiedEntry.getClassName();
+        this.methodName = copiedEntry.getMethodName();
+        this.returnType = copiedEntry.getReturnType();
+        this.formalList = copiedEntry.getFormals();
+    }
+
     String getFullName(){
         return "@"+className+"."+methodName;
     }
@@ -33,6 +40,10 @@ public class VTableEntry {
         return this.formalList;
     }
 
+    String getClassName() {
+        return this.className;
+    }
+    
     void setClassName(String currClassName) {
         this.className = currClassName;
 	}

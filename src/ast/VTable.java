@@ -14,7 +14,11 @@ public class VTable {
 
     VTable(String className,VTable prevTable){
         this.className = className;
-        this.entries = new ArrayList<VTableEntry>(prevTable.getVTableEntries());
+        ArrayList<VTableEntry> newEntries = new ArrayList<>();
+        for(VTableEntry vte : prevTable.getVTableEntries()){
+            newEntries.add(new VTableEntry(vte));
+        }
+        this.entries = newEntries;
     }
 
     List<VTableEntry> getVTableEntries(){
