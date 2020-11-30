@@ -150,7 +150,7 @@ public class LLVMVisitor implements Visitor {
 	@Override
 	public void visit(BlockStatement blockStatement) {
 		for (var s : blockStatement.statements()) {
-				s.accept(this);
+			s.accept(this);
 		}
 	}
 
