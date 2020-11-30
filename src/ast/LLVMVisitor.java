@@ -47,18 +47,18 @@ public class LLVMVisitor implements Visitor {
 
 	private void printVTable(VTable vtable) {
 		// Header
-		builder.append("@."+vtable.getClassName()+"_vtable = global ["+vtable.getSize()+" x i8*] [\n");
+		builder.append("@."+vtable.getClassName()+"_vtable = global ["+vtable.getSize()+" x i8*] [");
 		// fuction declarations
 		String funcSig;
 		List<VTableEntry> entries = vtable.getVTableEntries();
 		if(entries.size() >= 2){
 			for(int i=0;i<entries.size()-1;i++){
 				funcSig = vtable.getMethodFullSignature(entries.get(i).getMethodName());
-				builder.append("\ti8* bitcast ("+funcSig+" to i8*),\n");
+				builder.append("i8* bitcast ("+funcSig+" to i8*), ");
 			}
 		}
 		funcSig = vtable.getMethodFullSignature(entries.get(entries.size()-1).getMethodName());
-		builder.append("\ti8* bitcast ("+funcSig+" to i8*)\n");
+		builder.append("i8* bitcast ("+funcSig+" to i8*)");
 		// Footer
 		builder.append("]\n");
 	}
@@ -71,6 +71,8 @@ public class LLVMVisitor implements Visitor {
 		for (ClassDecl classdecl : program.classDecls()) {
 				classdecl.accept(this);
 		}
+
+		this.builder.append("\n");
 	}
 
 
@@ -90,7 +92,7 @@ public class LLVMVisitor implements Visitor {
 
 	@Override
 	public void visit(MainClass mainClass) {
-		builder.append("\ndefine i32 @main() {\n");
+		builder.append("\n\ndefine i32 @main() {\n");
 		mainClass.mainStatement().accept(this);
 		builder.append("\tret i32 0\n}\n");
 	}
@@ -406,7 +408,7 @@ public class LLVMVisitor implements Visitor {
 		this.builder.append("\t%_" + this.registerCount + " = load i8**, i8*** %_" + (this.registerCount - 1) + "\n");
 		this.registerCount++;
 		VTable curVTable = this.symbolTables.getClassVTable(this.methodCallClass);
-		this.builder.append("\t%_" + this.registerCount + " =  getelementptr i8*, i8** %_" + (this.registerCount - 1) + ", i32 " + curVTable.getIndexOfMethod(e.methodId()) + "\n");
+		this.builder.append("\t%_" + this.registerCount + " = getelementptr i8*, i8** %_" + (this.registerCount - 1) + ", i32 " + curVTable.getIndexOfMethod(e.methodId()) + "\n");
 		this.registerCount++;
 		this.builder.append("\t%_" + this.registerCount + " = load i8*, i8** %_" + (this.registerCount - 1) + "\n");
 		this.registerCount++;
@@ -533,7 +535,7 @@ public class LLVMVisitor implements Visitor {
 		this.registerCount++;
 		VTable newObjectVtable = this.symbolTables.getClassVTable(e.classId());
 		int numOfVTableEntrues = newObjectVtable.getVTableEntries().size();
-		this.builder.append("\t%_" + this.registerCount + " = getelementptr [" + numOfVTableEntrues + " x i8*], [" + numOfVTableEntrues + " x i8*]*  @." + e.classId() + "_vtable, i32 0, i32 0\n");
+		this.builder.append("\t%_" + this.registerCount + " = getelementptr [" + numOfVTableEntrues + " x i8*], [" + numOfVTableEntrues + " x i8*]* @." + e.classId() + "_vtable, i32 0, i32 0\n");
 		this.builder.append("\tstore i8** %_" + this.registerCount + ", i8*** %_" + (this.registerCount - 1) + "\n");
 		this.LLVMType = "i8*";
 		this.methodCallClass = e.classId();
