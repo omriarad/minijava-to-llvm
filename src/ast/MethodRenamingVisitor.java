@@ -161,10 +161,6 @@ public class MethodRenamingVisitor implements Visitor {
 	@Override
 	public void visit(MethodCallExpr e) {
 		e.ownerExpr().accept(this);
-		for (Expr arg : e.actuals()) {
-				arg.accept(this);
-		}
-
 		if(e.methodId().equals(this.originalName)){
 			boolean isSus = this.symbolTables.isAncestorSus(
 				this.staticClassReference,
@@ -175,6 +171,11 @@ public class MethodRenamingVisitor implements Visitor {
 				e.setMethodId(this.newName);
 			}
 		}
+		
+		for (Expr arg : e.actuals()) {
+				arg.accept(this);
+		}
+
 	}
 
 	@Override
