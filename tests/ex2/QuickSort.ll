@@ -118,34 +118,27 @@ arr_alloc6:
 	%_11 = add i32 %_6, 1
 	%_12 = getelementptr i32, i32* %_5, i32 %_11
 	%_13 = load i32, i32* %_12
-
 	store i32 %_13, i32* %v
-
 	%_14 = load i32, i32* %left
 	%_15 = sub i32 %_14, 1
 	store i32 %_15, i32* %i
-
 	%_16 = load i32, i32* %right
 	store i32 %_16, i32* %j
-
 	store i1 1, i1* %cont01
-
-	br label %loop7
-	loop7:
+	br label %while7
+while7:
 	%_17 = load i1, i1* %cont01
-	br i1 %_17, label %loop8, label %loop9
-	loop8:
+	br i1 %_17, label %while8, label %while9
+while8:
 	store i1 1, i1* %cont02
-
-	br label %loop10
-	loop10:
+	br label %while10
+while10:
 	%_18 = load i1, i1* %cont02
-	br i1 %_18, label %loop11, label %loop12
-	loop11:
+	br i1 %_18, label %while11, label %while12
+while11:
 	%_19 = load i32, i32* %i
 	%_20 = add i32 %_19, 1
 	store i32 %_20, i32* %i
-
 	%_21 = getelementptr i8, i8* %this, i32 8
 	%_22 = bitcast i8* %_21 to i32**
 	%_23 = load i32*, i32** %_22
@@ -167,9 +160,7 @@ arr_alloc16:
 	%_29 = add i32 %_24, 1
 	%_30 = getelementptr i32, i32* %_23, i32 %_29
 	%_31 = load i32, i32* %_30
-
 	store i32 %_31, i32* %aux03
-
 	%_32 = load i32, i32* %aux03
 	%_33 = load i32, i32* %v
 	%_34 = icmp slt i32 %_32, %_33
@@ -182,21 +173,17 @@ if18:
 	store i1 1, i1* %cont02
 	br label %if19
 if19:
-
-	br label %loop10
-	loop12:
-
+	br label %while10
+while12:
 	store i1 1, i1* %cont02
-
-	br label %loop20
-	loop20:
+	br label %while20
+while20:
 	%_36 = load i1, i1* %cont02
-	br i1 %_36, label %loop21, label %loop22
-	loop21:
+	br i1 %_36, label %while21, label %while22
+while21:
 	%_37 = load i32, i32* %j
 	%_38 = sub i32 %_37, 1
 	store i32 %_38, i32* %j
-
 	%_39 = getelementptr i8, i8* %this, i32 8
 	%_40 = bitcast i8* %_39 to i32**
 	%_41 = load i32*, i32** %_40
@@ -218,9 +205,7 @@ arr_alloc26:
 	%_47 = add i32 %_42, 1
 	%_48 = getelementptr i32, i32* %_41, i32 %_47
 	%_49 = load i32, i32* %_48
-
 	store i32 %_49, i32* %aux03
-
 	%_50 = load i32, i32* %v
 	%_51 = load i32, i32* %aux03
 	%_52 = icmp slt i32 %_50, %_51
@@ -233,10 +218,8 @@ if28:
 	store i1 1, i1* %cont02
 	br label %if29
 if29:
-
-	br label %loop20
-	loop22:
-
+	br label %while20
+while22:
 	%_54 = getelementptr i8, i8* %this, i32 8
 	%_55 = bitcast i8* %_54 to i32**
 	%_56 = load i32*, i32** %_55
@@ -258,9 +241,7 @@ arr_alloc33:
 	%_62 = add i32 %_57, 1
 	%_63 = getelementptr i32, i32* %_56, i32 %_62
 	%_64 = load i32, i32* %_63
-
 	store i32 %_64, i32* %t
-
 	%_65 = getelementptr i8, i8* %this, i32 8
 	%_66 = bitcast i8* %_65 to i32**
 	%_67 = load i32*, i32** %_66
@@ -286,7 +267,6 @@ arr_alloc37:
 	%_77 = add i32 %_72, 1
 	%_78 = getelementptr i32, i32* %_71, i32 %_77
 	%_79 = load i32, i32* %_78
-
 	%_80 = icmp slt i32 %_68, 0
 	br i1 %_80, label %arr_alloc38, label %arr_alloc39
 arr_alloc38:
@@ -304,7 +284,6 @@ arr_alloc41:
 	%_84 = add i32 %_68, 1
 	%_85 = getelementptr i32, i32* %_67, i32 %_84
 	store i32 %_79, i32* %_85
-
 	%_86 = getelementptr i8, i8* %this, i32 8
 	%_87 = bitcast i8* %_86 to i32**
 	%_88 = load i32*, i32** %_87
@@ -327,7 +306,6 @@ arr_alloc45:
 	%_95 = add i32 %_89, 1
 	%_96 = getelementptr i32, i32* %_88, i32 %_95
 	store i32 %_90, i32* %_96
-
 	%_97 = load i32, i32* %j
 	%_98 = load i32, i32* %i
 	%_99 = add i32 %_98, 1
@@ -340,10 +318,8 @@ if47:
 	store i1 1, i1* %cont01
 	br label %if48
 if48:
-
-	br label %loop7
-	loop9:
-
+	br label %while7
+while9:
 	%_101 = getelementptr i8, i8* %this, i32 8
 	%_102 = bitcast i8* %_101 to i32**
 	%_103 = load i32*, i32** %_102
@@ -369,7 +345,6 @@ arr_alloc52:
 	%_113 = add i32 %_108, 1
 	%_114 = getelementptr i32, i32* %_107, i32 %_113
 	%_115 = load i32, i32* %_114
-
 	%_116 = icmp slt i32 %_104, 0
 	br i1 %_116, label %arr_alloc53, label %arr_alloc54
 arr_alloc53:
@@ -387,7 +362,6 @@ arr_alloc56:
 	%_120 = add i32 %_104, 1
 	%_121 = getelementptr i32, i32* %_103, i32 %_120
 	store i32 %_115, i32* %_121
-
 	%_122 = getelementptr i8, i8* %this, i32 8
 	%_123 = bitcast i8* %_122 to i32**
 	%_124 = load i32*, i32** %_123
@@ -413,7 +387,6 @@ arr_alloc60:
 	%_134 = add i32 %_129, 1
 	%_135 = getelementptr i32, i32* %_128, i32 %_134
 	%_136 = load i32, i32* %_135
-
 	%_137 = icmp slt i32 %_125, 0
 	br i1 %_137, label %arr_alloc61, label %arr_alloc62
 arr_alloc61:
@@ -431,7 +404,6 @@ arr_alloc64:
 	%_141 = add i32 %_125, 1
 	%_142 = getelementptr i32, i32* %_124, i32 %_141
 	store i32 %_136, i32* %_142
-
 	%_143 = getelementptr i8, i8* %this, i32 8
 	%_144 = bitcast i8* %_143 to i32**
 	%_145 = load i32*, i32** %_144
@@ -454,7 +426,6 @@ arr_alloc68:
 	%_152 = add i32 %_146, 1
 	%_153 = getelementptr i32, i32* %_145, i32 %_152
 	store i32 %_147, i32* %_153
-
 	%_154 = bitcast i8* %this to i8***
 	%_155 = load i8**, i8*** %_154
 	%_156 = getelementptr i8*, i8** %_155, i32 1
@@ -465,7 +436,6 @@ arr_alloc68:
 	%_161 = sub i32 %_160, 1
 	%_162 = call i32 %_158(i8* %this, i32 %_159, i32 %_161)
 	store i32 %_162, i32* %nt
-
 	%_163 = bitcast i8* %this to i8***
 	%_164 = load i8**, i8*** %_163
 	%_165 = getelementptr i8*, i8** %_164, i32 1
@@ -476,7 +446,6 @@ arr_alloc68:
 	%_170 = load i32, i32* %right
 	%_171 = call i32 %_167(i8* %this, i32 %_169, i32 %_170)
 	store i32 %_171, i32* %nt
-
 	br label %if2
 if1:
 	store i32 0, i32* %nt
@@ -488,15 +457,15 @@ if2:
 define i32 @QS.Print(i8* %this) {
 	%j = alloca i32
 	store i32 0, i32* %j
-	br label %loop0
-	loop0:
+	br label %while0
+while0:
 	%_0 = load i32, i32* %j
 	%_1 = getelementptr i8, i8* %this, i32 16
 	%_2 = bitcast i8* %_1 to i32*
 	%_3 = load i32, i32* %_2
 	%_4 = icmp slt i32 %_0, %_3
-	br i1 %_4, label %loop1, label %loop2
-	loop1:
+	br i1 %_4, label %while1, label %while2
+while1:
 	%_5 = getelementptr i8, i8* %this, i32 8
 	%_6 = bitcast i8* %_5 to i32**
 	%_7 = load i32*, i32** %_6
@@ -518,15 +487,12 @@ arr_alloc6:
 	%_13 = add i32 %_8, 1
 	%_14 = getelementptr i32, i32* %_7, i32 %_13
 	%_15 = load i32, i32* %_14
-
 	call void (i32) @print_int(i32 %_15)
-
 	%_16 = load i32, i32* %j
 	%_17 = add i32 %_16, 1
 	store i32 %_17, i32* %j
-
-	br label %loop0
-	loop2:
+	br label %while0
+while2:
 	ret i32 0
 }
 

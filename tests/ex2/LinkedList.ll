@@ -1,5 +1,7 @@
 @.Element_vtable = global [6 x i8*] [i8* bitcast (i1 (i8*, i32, i32, i1)* @Element.Init to i8*), i8* bitcast (i32 (i8*)* @Element.GetAge to i8*), i8* bitcast (i32 (i8*)* @Element.GetSalary to i8*), i8* bitcast (i1 (i8*)* @Element.GetMarried to i8*), i8* bitcast (i1 (i8*, i8*)* @Element.Equal to i8*), i8* bitcast (i1 (i8*, i32, i32)* @Element.Compare to i8*)]
+
 @.List_vtable = global [10 x i8*] [i8* bitcast (i1 (i8*)* @List.Init to i8*), i8* bitcast (i1 (i8*, i8*, i8*, i1)* @List.InitNew to i8*), i8* bitcast (i8* (i8*, i8*)* @List.Insert to i8*), i8* bitcast (i1 (i8*, i8*)* @List.SetNext to i8*), i8* bitcast (i8* (i8*, i8*)* @List.Delete to i8*), i8* bitcast (i32 (i8*, i8*)* @List.Search to i8*), i8* bitcast (i1 (i8*)* @List.GetEnd to i8*), i8* bitcast (i8* (i8*)* @List.GetElem to i8*), i8* bitcast (i8* (i8*)* @List.GetNext to i8*), i8* bitcast (i1 (i8*)* @List.Print to i8*)]
+
 @.LL_vtable = global [1 x i8*] [i8* bitcast (i32 (i8*)* @LL.Start to i8*)]
 
 declare i8* @calloc(i32, i32)
@@ -120,7 +122,6 @@ if1:
 	%_23 = bitcast i8* %_22 to i32 (i8*)*
 	%_24 = call i32 %_23(i8* %_18)
 	store i32 %_24, i32* %aux02
-
 	%_25 = bitcast i8* %this to i8***
 	%_26 = load i8**, i8*** %_25
 	%_27 = getelementptr i8*, i8** %_26, i32 5
@@ -179,7 +180,6 @@ if14:
 if8:
 	br label %if5
 if5:
-
 	br label %if2
 if2:
 	%_54 = load i1, i1* %ret_val
@@ -222,7 +222,6 @@ if2:
 	%_9 = load i1, i1* %retval
 	ret i1 %_9
 }
-
 
 define i1 @List.Init(i8* %this) {
 	%_0 = getelementptr i8, i8* %this, i32 24
@@ -315,8 +314,8 @@ define i8* @List.Delete(i8* %this, i8* %.e) {
 	%_5 = bitcast i8* %_4 to i8**
 	%_6 = load i8*, i8** %_5
 	store i8* %_6, i8** %var_elem
-	br label %loop0
-	loop0:
+	br label %while0
+while0:
 	%_7 = load i1, i1* %var_end
 	%_8 = sub i1 1, %_7
 	br label %andcond3
@@ -330,9 +329,8 @@ andcond5:
 	br label %andcond6
 andcond6:
 	%_11 = phi i1 [0, %andcond3], [%_10, %andcond5]
-
-	br i1 %_11, label %loop1, label %loop2
-	loop1:
+	br i1 %_11, label %while1, label %while2
+while1:
 	%_12 = load i8*, i8** %e
 	%_13 = bitcast i8* %_12 to i8***
 	%_14 = load i8**, i8*** %_13
@@ -344,7 +342,6 @@ andcond6:
 	br i1 %_19, label %if7, label %if8
 if7:
 	store i1 1, i1* %ret_val
-
 	%_20 = load i32, i32* %aux04
 	%_21 = icmp slt i32 %_20, 0
 	br i1 %_21, label %if10, label %if11
@@ -357,12 +354,10 @@ if10:
 	%_27 = bitcast i8* %_26 to i8* (i8*)*
 	%_28 = call i8* %_27(i8* %_22)
 	store i8* %_28, i8** %my_head
-
 	br label %if12
 if11:
 	%_29 = sub i32 0, 555
 	call void (i32) @print_int(i32 %_29)
-
 	%_30 = load i8*, i8** %prev
 	%_31 = bitcast i8* %_30 to i8***
 	%_32 = load i8**, i8*** %_31
@@ -378,26 +373,21 @@ if11:
 	%_42 = call i8* %_41(i8* %_36)
 	%_43 = call i1 %_35(i8* %_30, i8* %_42)
 	store i1 %_43, i1* %aux05
-
 	%_44 = sub i32 0, 555
 	call void (i32) @print_int(i32 %_44)
-
 	br label %if12
 if12:
-
 	br label %if9
 if8:
 	store i32 0, i32* %nt
 	br label %if9
 if9:
-
 	%_45 = load i1, i1* %ret_val
 	%_46 = sub i1 1, %_45
 	br i1 %_46, label %if13, label %if14
 if13:
 	%_47 = load i8*, i8** %aux01
 	store i8* %_47, i8** %prev
-
 	%_48 = load i8*, i8** %aux01
 	%_49 = bitcast i8* %_48 to i8***
 	%_50 = load i8**, i8*** %_49
@@ -406,7 +396,6 @@ if13:
 	%_53 = bitcast i8* %_52 to i8* (i8*)*
 	%_54 = call i8* %_53(i8* %_48)
 	store i8* %_54, i8** %aux01
-
 	%_55 = load i8*, i8** %aux01
 	%_56 = bitcast i8* %_55 to i8***
 	%_57 = load i8**, i8*** %_56
@@ -415,7 +404,6 @@ if13:
 	%_60 = bitcast i8* %_59 to i1 (i8*)*
 	%_61 = call i1 %_60(i8* %_55)
 	store i1 %_61, i1* %var_end
-
 	%_62 = load i8*, i8** %aux01
 	%_63 = bitcast i8* %_62 to i8***
 	%_64 = load i8**, i8*** %_63
@@ -424,17 +412,14 @@ if13:
 	%_67 = bitcast i8* %_66 to i8* (i8*)*
 	%_68 = call i8* %_67(i8* %_62)
 	store i8* %_68, i8** %var_elem
-
 	store i32 1, i32* %aux04
-
 	br label %if15
 if14:
 	store i32 0, i32* %nt
 	br label %if15
 if15:
-
-	br label %loop0
-	loop2:
+	br label %while0
+while2:
 	%_69 = load i8*, i8** %my_head
 	ret i8* %_69
 }
@@ -457,12 +442,12 @@ define i32 @List.Search(i8* %this, i8* %.e) {
 	%_4 = bitcast i8* %_3 to i8**
 	%_5 = load i8*, i8** %_4
 	store i8* %_5, i8** %var_elem
-	br label %loop0
-	loop0:
+	br label %while0
+while0:
 	%_6 = load i1, i1* %var_end
 	%_7 = sub i1 1, %_6
-	br i1 %_7, label %loop1, label %loop2
-	loop1:
+	br i1 %_7, label %while1, label %while2
+while1:
 	%_8 = load i8*, i8** %e
 	%_9 = bitcast i8* %_8 to i8***
 	%_10 = load i8**, i8*** %_9
@@ -474,13 +459,11 @@ define i32 @List.Search(i8* %this, i8* %.e) {
 	br i1 %_15, label %if3, label %if4
 if3:
 	store i32 1, i32* %int_ret_val
-
 	br label %if5
 if4:
 	store i32 0, i32* %nt
 	br label %if5
 if5:
-
 	%_16 = load i8*, i8** %aux01
 	%_17 = bitcast i8* %_16 to i8***
 	%_18 = load i8**, i8*** %_17
@@ -489,7 +472,6 @@ if5:
 	%_21 = bitcast i8* %_20 to i8* (i8*)*
 	%_22 = call i8* %_21(i8* %_16)
 	store i8* %_22, i8** %aux01
-
 	%_23 = load i8*, i8** %aux01
 	%_24 = bitcast i8* %_23 to i8***
 	%_25 = load i8**, i8*** %_24
@@ -498,7 +480,6 @@ if5:
 	%_28 = bitcast i8* %_27 to i1 (i8*)*
 	%_29 = call i1 %_28(i8* %_23)
 	store i1 %_29, i1* %var_end
-
 	%_30 = load i8*, i8** %aux01
 	%_31 = bitcast i8* %_30 to i8***
 	%_32 = load i8**, i8*** %_31
@@ -507,9 +488,8 @@ if5:
 	%_35 = bitcast i8* %_34 to i8* (i8*)*
 	%_36 = call i8* %_35(i8* %_30)
 	store i8* %_36, i8** %var_elem
-
-	br label %loop0
-	loop2:
+	br label %while0
+while2:
 	%_37 = load i32, i32* %int_ret_val
 	ret i32 %_37
 }
@@ -548,12 +528,12 @@ define i1 @List.Print(i8* %this) {
 	%_4 = bitcast i8* %_3 to i8**
 	%_5 = load i8*, i8** %_4
 	store i8* %_5, i8** %var_elem
-	br label %loop0
-	loop0:
+	br label %while0
+while0:
 	%_6 = load i1, i1* %var_end
 	%_7 = sub i1 1, %_6
-	br i1 %_7, label %loop1, label %loop2
-	loop1:
+	br i1 %_7, label %while1, label %while2
+while1:
 	%_8 = load i8*, i8** %var_elem
 	%_9 = bitcast i8* %_8 to i8***
 	%_10 = load i8**, i8*** %_9
@@ -562,7 +542,6 @@ define i1 @List.Print(i8* %this) {
 	%_13 = bitcast i8* %_12 to i32 (i8*)*
 	%_14 = call i32 %_13(i8* %_8)
 	call void (i32) @print_int(i32 %_14)
-
 	%_15 = load i8*, i8** %aux01
 	%_16 = bitcast i8* %_15 to i8***
 	%_17 = load i8**, i8*** %_16
@@ -571,7 +550,6 @@ define i1 @List.Print(i8* %this) {
 	%_20 = bitcast i8* %_19 to i8* (i8*)*
 	%_21 = call i8* %_20(i8* %_15)
 	store i8* %_21, i8** %aux01
-
 	%_22 = load i8*, i8** %aux01
 	%_23 = bitcast i8* %_22 to i8***
 	%_24 = load i8**, i8*** %_23
@@ -580,7 +558,6 @@ define i1 @List.Print(i8* %this) {
 	%_27 = bitcast i8* %_26 to i1 (i8*)*
 	%_28 = call i1 %_27(i8* %_22)
 	store i1 %_28, i1* %var_end
-
 	%_29 = load i8*, i8** %aux01
 	%_30 = bitcast i8* %_29 to i8***
 	%_31 = load i8**, i8*** %_30
@@ -589,12 +566,10 @@ define i1 @List.Print(i8* %this) {
 	%_34 = bitcast i8* %_33 to i8* (i8*)*
 	%_35 = call i8* %_34(i8* %_29)
 	store i8* %_35, i8** %var_elem
-
-	br label %loop0
-	loop2:
+	br label %while0
+while2:
 	ret i1 1
 }
-
 
 define i32 @LL.Start(i8* %this) {
 	%head = alloca i8*

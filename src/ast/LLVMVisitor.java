@@ -469,8 +469,10 @@ public class LLVMVisitor implements Visitor {
 				arg.accept(this);
 				if(this.isLiteral()){
 					registers.add(this.LLVMType);
-				}
-				else{
+				} else if (this.isThis) {
+					registers.add("%this");
+					this.isThis = false;
+				} else {
 					registers.add("%_" + String.valueOf(this.registerCount));
 				}
 		}
