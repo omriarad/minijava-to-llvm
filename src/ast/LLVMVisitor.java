@@ -181,6 +181,7 @@ public class LLVMVisitor implements Visitor {
 	public void visit(WhileStatement whileStatement) {
 		int startLabelNo = this.labelCount;
 		this.labelCount += 3;
+        builder.append("branch " + startLabelNo + ":\n");
 		builder.append("while" + startLabelNo + ":\n");
 		whileStatement.cond().accept(this);
 		if(this.isLiteral()){
