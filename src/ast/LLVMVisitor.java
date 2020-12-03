@@ -404,7 +404,7 @@ public class LLVMVisitor implements Visitor {
 			thisRegister  = "%_" + String.valueOf(this.registerCount);
 		}
 		this.registerCount++;
-		this.builder.append("\t%_" + this.registerCount + " = bitcast i8* %_" + (this.registerCount - 1) + " to i8***\n");
+		this.builder.append("\t%_" + this.registerCount + " = bitcast i8* " + thisRegister + " to i8***\n");
 		this.registerCount++;
 		this.builder.append("\t%_" + this.registerCount + " = load i8**, i8*** %_" + (this.registerCount - 1) + "\n");
 		this.registerCount++;
