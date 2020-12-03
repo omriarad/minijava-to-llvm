@@ -216,7 +216,7 @@ public class LLVMVisitor implements Visitor {
 		assignStatement.rv().accept(this);
 		if (this.isLiteral()) {
 			src = this.LLVMType;
-		} else if (this.LLVMType.compareTo("i8*") == 0) {
+		} else if (this.newObjectOwner) {
 			src = "%_" + (this.registerCount - 2);
 		} else {
 			src = "%_" + this.registerCount;
