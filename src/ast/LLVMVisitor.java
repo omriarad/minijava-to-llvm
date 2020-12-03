@@ -241,14 +241,10 @@ public class LLVMVisitor implements Visitor {
 		this.isThis = false;
 	}
 
-	private String arrayAccessSetup(String variable, String index) {
-		String arrayPtr;
+	private String arrayAccessSetup(String variable, String index, String arrayPtr) {
 		int startLabelNo = this.labelCount;
 
 		this.labelCount += 4;
-		this.registerCount++;
-		this.builder.append("\t%_" + this.registerCount + " = load i32*, i32** %" + variable + "\n");
-		arrayPtr = "%_" + this.registerCount;
 		this.registerCount++;
 		this.builder.append("\t%_" + this.registerCount + " = icmp slt i32 " + index + ", 0\n");
 		this.builder.append("\tbr i1 %_" + this.registerCount + ", label %arr_alloc" + startLabelNo);
@@ -283,13 +279,6 @@ public class LLVMVisitor implements Visitor {
 		String variable = assignArrayStatement.lv();
 		boolean lvIsField = this.symbolTables.isField(this.currentClass, this.currentMethod, variable);
 
-		assignArrayStatement.index().accept(this);
-		if (this.isLiteral()) {
-			index = this.LLVMType;
-		} else {
-			index = "%_" + this.registerCount;
-		}
-
 		if (lvIsField) {
 			this.registerCount++;
 			this.builder.append("\t%_" + this.registerCount + " = getelementptr i8, i8* %this, i32 " + this.symbolTables.getFieldOffset(this.currentClass, variable) + "\n");
@@ -298,12 +287,24 @@ public class LLVMVisitor implements Visitor {
 			variable = "_" + this.registerCount;
 		}
 
-		indexPtr = this.arrayAccessSetup(variable, index);
+		this.registerCount++;
+		this.builder.append("\t%_" + this.registerCount + " = load i32*, i32** %" + variable + "\n");
+		var arrayPtr = "%_" + this.registerCount;
+
+		assignArrayStatement.index().accept(this);
+		if (this.isLiteral()) {
+			index = this.LLVMType;
+		} else {
+			index = "%_" + this.registerCount;
+		}
+
 		assignArrayStatement.rv().accept(this);
+		var rvReg = this.registerCount;
+		indexPtr = this.arrayAccessSetup(variable, index, arrayPtr);
 		if (this.isLiteral()) {
 			this.builder.append("\tstore i32 " + this.LLVMType + ", i32* " + indexPtr + "\n");
 		} else {
-			this.builder.append("\tstore i32 %_" + this.registerCount + ", i32* " + indexPtr + "\n");
+			this.builder.append("\tstore i32 %_" + rvReg + ", i32* " + indexPtr + "\n");
 		}
 	}
 
@@ -390,13 +391,6 @@ public class LLVMVisitor implements Visitor {
 		IdentifierExpr variable = (IdentifierExpr)e.arrayExpr();
 		String src = variable.id();
 
-		e.indexExpr().accept(this);
-		if (this.isLiteral()) {
-			index = this.LLVMType;
-		} else {
-			index = "%_" + this.registerCount;
-		}
-
 		if (this.symbolTables.isField(this.currentClass, this.currentMethod, variable.id())) {
 			this.registerCount++;
 			this.builder.append("\t%_" + this.registerCount + " = getelementptr i8, i8* %this, i32 " + this.symbolTables.getFieldOffset(this.currentClass, variable.id()) + "\n");
@@ -405,7 +399,18 @@ public class LLVMVisitor implements Visitor {
 			src = "_" + this.registerCount;
 		}
 
-		indexPtr = this.arrayAccessSetup(src, index);
+		this.registerCount++;
+		this.builder.append("\t%_" + this.registerCount + " = load i32*, i32** %" + src + "\n");
+		var arrayPtr = "%_" + this.registerCount;
+
+		e.indexExpr().accept(this);
+		if (this.isLiteral()) {
+			index = this.LLVMType;
+		} else {
+			index = "%_" + this.registerCount;
+		}
+
+		indexPtr = this.arrayAccessSetup(src, index, arrayPtr);
 		this.registerCount++;
 		this.builder.append("\t%_" + this.registerCount + " = load i32, i32* " + indexPtr + "\n");
 		this.LLVMType = "i32";
@@ -547,7 +552,7 @@ public class LLVMVisitor implements Visitor {
 		this.registerCount++;
 		this.builder.append("\t%_" + this.registerCount + " = add i32 " + size + ", 1\n");
 		this.registerCount++;
-		this.builder.append("\t%_" + this.registerCount + " = call i8* @calloc(i32 %_" + (this.registerCount -1) + ", i32 4)\n");
+		this.builder.append("\t%_" + this.registerCount + " = call i8* @calloc(i32 4, i32 %_" + (this.registerCount -1) + ")\n");
 		this.registerCount++;
 		this.builder.append("\t%_" + this.registerCount + " = bitcast i8* %_" + (this.registerCount - 1) + " to i32*\n");
 		this.builder.append("\tstore i32 " + size + ", i32* %_" + this.registerCount + "\n");

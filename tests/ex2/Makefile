@@ -1,7 +1,6 @@
 .PHONY: all
 
-# TARGETS = $(patsubst %.java.xml,%,$(wildcard *.java.xml))
-TARGETS = Simple Classes
+TARGETS = $(patsubst %.java.xml,%,$(wildcard *.java.xml))
 
 all:
 	@- $(foreach T,$(TARGETS), \
