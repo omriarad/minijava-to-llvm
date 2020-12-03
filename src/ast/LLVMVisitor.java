@@ -396,6 +396,8 @@ public class LLVMVisitor implements Visitor {
 	@Override
 	public void visit(ArrayLengthExpr e) {
 		e.arrayExpr().accept(this);
+		this.registerCount++;
+		this.builder.append("\t%_" + this.registerCount + " = load i32, i32* %_" + (this.registerCount - 1) + "\n");
 	}
 
 	@Override
