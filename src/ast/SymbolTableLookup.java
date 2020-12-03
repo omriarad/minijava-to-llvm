@@ -83,7 +83,6 @@ public class SymbolTableLookup {
 	}
 
 
-
 	AstType lookupVariableType(String curClass, String curMethod, String name) {
 		SymbolTable symbolTable = this.lookup(curClass, curMethod, "variable", name);
 		SymbolTableEntry symbol = symbolTable.getVarEntries().get(name);

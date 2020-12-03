@@ -13,7 +13,7 @@ public class LLVMVisitor implements Visitor {
 	private SymbolTableLookup symbolTables;
 	private boolean isField;
 	private StringBuilder builder = new StringBuilder();
-	private String methodCallClass;
+	private String refTypeClass;
 	private boolean newObjectOwner;
 
 
@@ -101,6 +101,7 @@ public class LLVMVisitor implements Visitor {
 	public void visit(MethodDecl methodDecl) {
 		String retType;
 		this.registerCount = -1;
+		this.labelCount = 0;
 		this.currentMethod = methodDecl.name();
 		methodDecl.returnType().accept(this);
 		retType = this.LLVMType;
@@ -407,7 +408,7 @@ public class LLVMVisitor implements Visitor {
 		this.registerCount++;
 		this.builder.append("\t%_" + this.registerCount + " = load i8**, i8*** %_" + (this.registerCount - 1) + "\n");
 		this.registerCount++;
-		VTable curVTable = this.symbolTables.getClassVTable(this.methodCallClass);
+		VTable curVTable = this.symbolTables.getClassVTable(this.refTypeClass);
 		this.builder.append("\t%_" + this.registerCount + " = getelementptr i8*, i8** %_" + (this.registerCount - 1) + ", i32 " + curVTable.getIndexOfMethod(e.methodId()) + "\n");
 		this.registerCount++;
 		this.builder.append("\t%_" + this.registerCount + " = load i8*, i8** %_" + (this.registerCount - 1) + "\n");
@@ -489,7 +490,7 @@ public class LLVMVisitor implements Visitor {
 	}
 
 	public void visit(ThisExpr e) {
-		this.methodCallClass = this.currentClass;
+		this.refTypeClass = this.currentClass;
 	}
 
 	@Override
@@ -538,7 +539,7 @@ public class LLVMVisitor implements Visitor {
 		this.builder.append("\t%_" + this.registerCount + " = getelementptr [" + numOfVTableEntrues + " x i8*], [" + numOfVTableEntrues + " x i8*]* @." + e.classId() + "_vtable, i32 0, i32 0\n");
 		this.builder.append("\tstore i8** %_" + this.registerCount + ", i8*** %_" + (this.registerCount - 1) + "\n");
 		this.LLVMType = "i8*";
-		this.methodCallClass = e.classId();
+		this.refTypeClass = e.classId();
 		this.newObjectOwner = true;
 	}
 
@@ -570,6 +571,7 @@ public class LLVMVisitor implements Visitor {
 	@Override
 	public void visit(RefType t) {
 		this.LLVMType = "i8*";
-		this.methodCallClass = t.id();
+        this.refTypeClass = t.id();
+
 	}
 }
