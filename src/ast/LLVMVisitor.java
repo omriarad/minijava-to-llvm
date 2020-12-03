@@ -404,8 +404,10 @@ public class LLVMVisitor implements Visitor {
 		String thisRegister;
 		if(this.newObjectOwner){
 			thisRegister  = "%_" + String.valueOf(this.registerCount - 2);
-		}
-		else{
+		} else if (this.isThis) {
+			thisRegister = "%this";
+			this.isThis = false;
+		} else {
 			thisRegister  = "%_" + String.valueOf(this.registerCount);
 		}
 		this.registerCount++;
