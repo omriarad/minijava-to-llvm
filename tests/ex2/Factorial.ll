@@ -44,7 +44,6 @@ define i32 @Fac.ComputeFac(i8* %this, i32 %.num) {
 	br i1 %_1, label %if0, label %if1
 if0:
 	store i32 1, i32* %num_aux
-
 	br label %if2
 if1:
 	%_2 = load i32, i32* %num
@@ -58,7 +57,6 @@ if1:
 	%_10 = call i32 %_7(i8* %this, i32 %_9)
 	%_11 = mul i32 %_2, %_10
 	store i32 %_11, i32* %num_aux
-
 	br label %if2
 if2:
 	%_12 = load i32, i32* %num_aux

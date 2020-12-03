@@ -89,27 +89,25 @@ define i32 @BBS.Sort(i8* %this) {
 	store i32 %_3, i32* %i
 	%_4 = sub i32 0, 1
 	store i32 %_4, i32* %aux02
-	br label %loop0
-	loop0:
+	br label %while0
+while0:
 	%_5 = load i32, i32* %aux02
 	%_6 = load i32, i32* %i
 	%_7 = icmp slt i32 %_5, %_6
-	br i1 %_7, label %loop1, label %loop2
-	loop1:
+	br i1 %_7, label %while1, label %while2
+while1:
 	store i32 1, i32* %j
-
-	br label %loop3
-	loop3:
+	br label %while3
+while3:
 	%_8 = load i32, i32* %j
 	%_9 = load i32, i32* %i
 	%_10 = add i32 %_9, 1
 	%_11 = icmp slt i32 %_8, %_10
-	br i1 %_11, label %loop4, label %loop5
-	loop4:
+	br i1 %_11, label %while4, label %while5
+while4:
 	%_12 = load i32, i32* %j
 	%_13 = sub i32 %_12, 1
 	store i32 %_13, i32* %aux07
-
 	%_14 = getelementptr i8, i8* %this, i32 8
 	%_15 = bitcast i8* %_14 to i32**
 	%_16 = load i32*, i32** %_15
@@ -131,9 +129,7 @@ arr_alloc9:
 	%_22 = add i32 %_17, 1
 	%_23 = getelementptr i32, i32* %_16, i32 %_22
 	%_24 = load i32, i32* %_23
-
 	store i32 %_24, i32* %aux04
-
 	%_25 = getelementptr i8, i8* %this, i32 8
 	%_26 = bitcast i8* %_25 to i32**
 	%_27 = load i32*, i32** %_26
@@ -155,9 +151,7 @@ arr_alloc13:
 	%_33 = add i32 %_28, 1
 	%_34 = getelementptr i32, i32* %_27, i32 %_33
 	%_35 = load i32, i32* %_34
-
 	store i32 %_35, i32* %aux05
-
 	%_36 = load i32, i32* %aux05
 	%_37 = load i32, i32* %aux04
 	%_38 = icmp slt i32 %_36, %_37
@@ -166,7 +160,6 @@ if14:
 	%_39 = load i32, i32* %j
 	%_40 = sub i32 %_39, 1
 	store i32 %_40, i32* %aux06
-
 	%_41 = getelementptr i8, i8* %this, i32 8
 	%_42 = bitcast i8* %_41 to i32**
 	%_43 = load i32*, i32** %_42
@@ -188,9 +181,7 @@ arr_alloc20:
 	%_49 = add i32 %_44, 1
 	%_50 = getelementptr i32, i32* %_43, i32 %_49
 	%_51 = load i32, i32* %_50
-
 	store i32 %_51, i32* %t
-
 	%_52 = getelementptr i8, i8* %this, i32 8
 	%_53 = bitcast i8* %_52 to i32**
 	%_54 = load i32*, i32** %_53
@@ -216,7 +207,6 @@ arr_alloc24:
 	%_64 = add i32 %_59, 1
 	%_65 = getelementptr i32, i32* %_58, i32 %_64
 	%_66 = load i32, i32* %_65
-
 	%_67 = icmp slt i32 %_55, 0
 	br i1 %_67, label %arr_alloc25, label %arr_alloc26
 arr_alloc25:
@@ -234,7 +224,6 @@ arr_alloc28:
 	%_71 = add i32 %_55, 1
 	%_72 = getelementptr i32, i32* %_54, i32 %_71
 	store i32 %_66, i32* %_72
-
 	%_73 = getelementptr i8, i8* %this, i32 8
 	%_74 = bitcast i8* %_73 to i32**
 	%_75 = load i32*, i32** %_74
@@ -257,41 +246,36 @@ arr_alloc32:
 	%_82 = add i32 %_76, 1
 	%_83 = getelementptr i32, i32* %_75, i32 %_82
 	store i32 %_77, i32* %_83
-
 	br label %if16
 if15:
 	store i32 0, i32* %nt
 	br label %if16
 if16:
-
 	%_84 = load i32, i32* %j
 	%_85 = add i32 %_84, 1
 	store i32 %_85, i32* %j
-
-	br label %loop3
-	loop5:
-
+	br label %while3
+while5:
 	%_86 = load i32, i32* %i
 	%_87 = sub i32 %_86, 1
 	store i32 %_87, i32* %i
-
-	br label %loop0
-	loop2:
+	br label %while0
+while2:
 	ret i32 0
 }
 
 define i32 @BBS.Print(i8* %this) {
 	%j = alloca i32
 	store i32 0, i32* %j
-	br label %loop0
-	loop0:
+	br label %while0
+while0:
 	%_0 = load i32, i32* %j
 	%_1 = getelementptr i8, i8* %this, i32 16
 	%_2 = bitcast i8* %_1 to i32*
 	%_3 = load i32, i32* %_2
 	%_4 = icmp slt i32 %_0, %_3
-	br i1 %_4, label %loop1, label %loop2
-	loop1:
+	br i1 %_4, label %while1, label %while2
+while1:
 	%_5 = getelementptr i8, i8* %this, i32 8
 	%_6 = bitcast i8* %_5 to i32**
 	%_7 = load i32*, i32** %_6
@@ -313,15 +297,12 @@ arr_alloc6:
 	%_13 = add i32 %_8, 1
 	%_14 = getelementptr i32, i32* %_7, i32 %_13
 	%_15 = load i32, i32* %_14
-
 	call void (i32) @print_int(i32 %_15)
-
 	%_16 = load i32, i32* %j
 	%_17 = add i32 %_16, 1
 	store i32 %_17, i32* %j
-
-	br label %loop0
-	loop2:
+	br label %while0
+while2:
 	ret i32 0
 }
 

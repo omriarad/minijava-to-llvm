@@ -364,6 +364,10 @@ public class LLVMVisitor implements Visitor {
 			rvalue = "%_" + this.registerCount;
 		}
 
+		if (type.compareTo("") == 0) {
+			type = "i32";
+		}
+
 		this.registerCount++;
 		this.builder.append("\t%_" + this.registerCount + " = " + command + " " + type + " " + lvalue +", " + rvalue + "\n");
 		this.LLVMType = type;
