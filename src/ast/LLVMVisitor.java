@@ -15,6 +15,7 @@ public class LLVMVisitor implements Visitor {
 	private StringBuilder builder = new StringBuilder();
 	private String refTypeClass;
 	private boolean newObjectOwner;
+	private boolean isThis;
 
 
 	public LLVMVisitor(Map<String, Map<String, SymbolTable>> symbolTables) {
@@ -181,6 +182,7 @@ public class LLVMVisitor implements Visitor {
 	public void visit(WhileStatement whileStatement) {
 		int startLabelNo = this.labelCount;
 		this.labelCount += 3;
+        builder.append("\tbr label %while" + startLabelNo + "\n");
 		builder.append("while" + startLabelNo + ":\n");
 		whileStatement.cond().accept(this);
 		if(this.isLiteral()){
@@ -218,6 +220,8 @@ public class LLVMVisitor implements Visitor {
 			src = this.LLVMType;
 		} else if (this.newObjectOwner) {
 			src = "%_" + (this.registerCount - 2);
+		} else if (this.isThis) {
+			src = "%this";
 		} else {
 			src = "%_" + this.registerCount;
 		}
@@ -234,6 +238,7 @@ public class LLVMVisitor implements Visitor {
 			this.builder.append("\tstore " + this.LLVMType + " " + src + ", " + this.LLVMType + "* %" + variable + "\n");
 		}
 		this.newObjectOwner = false;
+		this.isThis = false;
 	}
 
 	private String arrayAccessSetup(String variable, String index) {
@@ -399,8 +404,10 @@ public class LLVMVisitor implements Visitor {
 		String thisRegister;
 		if(this.newObjectOwner){
 			thisRegister  = "%_" + String.valueOf(this.registerCount - 2);
-		}
-		else{
+		} else if (this.isThis) {
+			thisRegister = "%this";
+			this.isThis = false;
+		} else {
 			thisRegister  = "%_" + String.valueOf(this.registerCount);
 		}
 		this.registerCount++;
@@ -490,6 +497,7 @@ public class LLVMVisitor implements Visitor {
 	}
 
 	public void visit(ThisExpr e) {
+		this.isThis = true;
 		this.refTypeClass = this.currentClass;
 	}
 
