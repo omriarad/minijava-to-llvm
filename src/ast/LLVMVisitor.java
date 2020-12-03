@@ -379,6 +379,7 @@ public class LLVMVisitor implements Visitor {
 		String index;
 		String indexPtr;
 		IdentifierExpr variable = (IdentifierExpr)e.arrayExpr();
+		String src = variable.id();
 
 		e.indexExpr().accept(this);
 		if (this.isLiteral()) {
@@ -387,7 +388,15 @@ public class LLVMVisitor implements Visitor {
 			index = "%_" + this.registerCount;
 		}
 
-		indexPtr = this.arrayAccessSetup(variable.id(), index);
+		if (this.symbolTables.isField(this.currentClass, this.currentMethod, variable.id())) {
+			this.registerCount++;
+			this.builder.append("\t%_" + this.registerCount + " = getelementptr i8, i8* %this, i32 " + this.symbolTables.getFieldOffset(this.currentClass, variable.id()) + "\n");
+			this.registerCount++;
+			this.builder.append("\t%_" + this.registerCount + " = bitcast i8* %_" + (this.registerCount - 1) + " to i32**\n");
+			src = "_" + this.registerCount;
+		}
+
+		indexPtr = this.arrayAccessSetup(src, index);
 		this.registerCount++;
 		this.builder.append("\t%_" + this.registerCount + " = load i32, i32* " + indexPtr + "\n");
 		this.LLVMType = "i32";
