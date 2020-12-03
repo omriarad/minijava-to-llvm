@@ -281,6 +281,7 @@ public class LLVMVisitor implements Visitor {
 		String index;
 		String indexPtr;
 		String variable = assignArrayStatement.lv();
+		boolean lvIsField = this.symbolTables.isField(this.currentClass, this.currentMethod, variable);
 
 		assignArrayStatement.index().accept(this);
 		if (this.isLiteral()) {
@@ -289,7 +290,15 @@ public class LLVMVisitor implements Visitor {
 			index = "%_" + this.registerCount;
 		}
 
-		indexPtr = this.arrayAccessSetup(assignArrayStatement.lv(), index);
+		if (lvIsField) {
+			this.registerCount++;
+			this.builder.append("\t%_" + this.registerCount + " = getelementptr i8, i8* %this, i32 " + this.symbolTables.getFieldOffset(this.currentClass, variable) + "\n");
+			this.registerCount++;
+			this.builder.append("\t%_" + this.registerCount + " = bitcast i8* %_" + (this.registerCount - 1) + " to i32**\n");
+			variable = "_" + this.registerCount;
+		}
+
+		indexPtr = this.arrayAccessSetup(variable, index);
 		assignArrayStatement.rv().accept(this);
 		if (this.isLiteral()) {
 			this.builder.append("\tstore i32 " + this.LLVMType + ", i32* " + indexPtr + "\n");
