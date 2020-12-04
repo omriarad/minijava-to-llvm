@@ -12,7 +12,7 @@
 <classId>PremuimUser</classId>
                             </new-object>
                         </ownerExpr>
-                        <methodId>getAgeNew</methodId>
+                        <methodId>getSalary</methodId>
                         <actuals/>
                     </call>
                 </arg>
@@ -81,10 +81,20 @@
         <classdecl>
             <name>PremuimUser</name>
             <superName>User</superName>
-            <fields/>
+            <fields>
+                <field>
+                    <lineNumber>23</lineNumber>
+                    <type>
+                        <ref>
+                            <id>Admin</id>
+                        </ref>
+                    </type>
+                    <name>adminField</name>
+                </field>
+            </fields>
             <methoddecls>
                 <methoddecl>
-                    <lineNumber>24</lineNumber>
+                    <lineNumber>26</lineNumber>
                     <returnType>
                         <int/>
                     </returnType>
@@ -108,7 +118,7 @@
                     </ret>
                 </methoddecl>
                 <methoddecl>
-                    <lineNumber>30</lineNumber>
+                    <lineNumber>32</lineNumber>
                     <returnType>
                         <bool/>
                     </returnType>
@@ -120,6 +130,56 @@
                         <true/>
                     </ret>
                 </methoddecl>
+                <methoddecl>
+                    <lineNumber>36</lineNumber>
+                    <returnType>
+                        <int/>
+                    </returnType>
+                    <name>getSalary</name>
+                    <formals/>
+                    <vardecls>
+                        <vardecl>
+                            <lineNumber>37</lineNumber>
+                            <type>
+<int/>
+                            </type>
+                            <name>x</name>
+                        </vardecl>
+                    </vardecls>
+                    <body>
+                        <assign>
+                            <lv>x</lv>
+                            <rv>
+<call>
+    <ownerExpr>
+        <ref-id>
+            <id>adminField</id>
+        </ref-id>
+    </ownerExpr>
+    <methodId>getSalary</methodId>
+    <actuals/>
+</call>
+                            </rv>
+                        </assign>
+                        <assign>
+                            <lv>x</lv>
+                            <rv>
+<call>
+    <ownerExpr>
+        <this/>
+    </ownerExpr>
+    <methodId>getSalary</methodId>
+    <actuals/>
+</call>
+                            </rv>
+                        </assign>
+                    </body>
+                    <ret>
+                        <int-literal>
+                            <num>1000</num>
+                        </int-literal>
+                    </ret>
+                </methoddecl>
             </methoddecls>
         </classdecl>
         <classdecl>
@@ -127,16 +187,25 @@
             <superName>User</superName>
             <fields>
                 <field>
-                    <lineNumber>37</lineNumber>
+                    <lineNumber>46</lineNumber>
                     <type>
                         <int/>
                     </type>
                     <name>salary</name>
                 </field>
+                <field>
+                    <lineNumber>47</lineNumber>
+                    <type>
+                        <ref>
+                            <id>PremuimUser</id>
+                        </ref>
+                    </type>
+                    <name>puField</name>
+                </field>
             </fields>
             <methoddecls>
                 <methoddecl>
-                    <lineNumber>39</lineNumber>
+                    <lineNumber>49</lineNumber>
                     <returnType>
                         <int/>
                     </returnType>
@@ -160,7 +229,7 @@
                     </ret>
                 </methoddecl>
                 <methoddecl>
-                    <lineNumber>45</lineNumber>
+                    <lineNumber>55</lineNumber>
                     <returnType>
                         <int/>
                     </returnType>
@@ -168,6 +237,165 @@
                     <formals/>
                     <vardecls/>
                     <body/>
+                    <ret>
+                        <int-literal>
+                            <num>50</num>
+                        </int-literal>
+                    </ret>
+                </methoddecl>
+                <methoddecl>
+                    <lineNumber>59</lineNumber>
+                    <returnType>
+                        <int/>
+                    </returnType>
+                    <name>test</name>
+                    <formals>
+                        <formal>
+                            <lineNumber>59</lineNumber>
+                            <type>
+<ref>
+    <id>PremuimUser</id>
+</ref>
+                            </type>
+                            <name>formalPremuimUser</name>
+                        </formal>
+                        <formal>
+                            <lineNumber>59</lineNumber>
+                            <type>
+<ref>
+    <id>Admin</id>
+</ref>
+                            </type>
+                            <name>formalAdmin</name>
+                        </formal>
+                    </formals>
+                    <vardecls>
+                        <vardecl>
+                            <lineNumber>60</lineNumber>
+                            <type>
+<ref>
+    <id>PremuimUser</id>
+</ref>
+                            </type>
+                            <name>puLocal</name>
+                        </vardecl>
+                        <vardecl>
+                            <lineNumber>61</lineNumber>
+                            <type>
+<ref>
+    <id>Admin</id>
+</ref>
+                            </type>
+                            <name>adminLocal</name>
+                        </vardecl>
+                        <vardecl>
+                            <lineNumber>62</lineNumber>
+                            <type>
+<int/>
+                            </type>
+                            <name>x</name>
+                        </vardecl>
+                    </vardecls>
+                    <body>
+                        <assign>
+                            <lv>puLocal</lv>
+                            <rv>
+<new-object>
+    <classId>PremuimUser</classId>
+</new-object>
+                            </rv>
+                        </assign>
+                        <assign>
+                            <lv>adminLocal</lv>
+                            <rv>
+<new-object>
+    <classId>Admin</classId>
+</new-object>
+                            </rv>
+                        </assign>
+                        <assign>
+                            <lv>x</lv>
+                            <rv>
+<call>
+    <ownerExpr>
+        <ref-id>
+            <id>puLocal</id>
+        </ref-id>
+    </ownerExpr>
+    <methodId>getSalary</methodId>
+    <actuals/>
+</call>
+                            </rv>
+                        </assign>
+                        <assign>
+                            <lv>x</lv>
+                            <rv>
+<call>
+    <ownerExpr>
+        <ref-id>
+            <id>adminLocal</id>
+        </ref-id>
+    </ownerExpr>
+    <methodId>getSalary</methodId>
+    <actuals/>
+</call>
+                            </rv>
+                        </assign>
+                        <assign>
+                            <lv>x</lv>
+                            <rv>
+<call>
+    <ownerExpr>
+        <this/>
+    </ownerExpr>
+    <methodId>getSalary</methodId>
+    <actuals/>
+</call>
+                            </rv>
+                        </assign>
+                        <assign>
+                            <lv>x</lv>
+                            <rv>
+<call>
+    <ownerExpr>
+        <ref-id>
+            <id>formalPremuimUser</id>
+        </ref-id>
+    </ownerExpr>
+    <methodId>getSalary</methodId>
+    <actuals/>
+</call>
+                            </rv>
+                        </assign>
+                        <assign>
+                            <lv>x</lv>
+                            <rv>
+<call>
+    <ownerExpr>
+        <ref-id>
+            <id>formalAdmin</id>
+        </ref-id>
+    </ownerExpr>
+    <methodId>getSalary</methodId>
+    <actuals/>
+</call>
+                            </rv>
+                        </assign>
+                        <assign>
+                            <lv>x</lv>
+                            <rv>
+<call>
+    <ownerExpr>
+        <ref-id>
+            <id>puField</id>
+        </ref-id>
+    </ownerExpr>
+    <methodId>getSalary</methodId>
+    <actuals/>
+</call>
+                            </rv>
+                        </assign>
+                    </body>
                     <ret>
                         <int-literal>
                             <num>50</num>
