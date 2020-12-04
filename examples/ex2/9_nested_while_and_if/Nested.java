@@ -15,7 +15,7 @@ class Simple {
         b = true;
         c = true;
         x = 0;
-        while(c){
+        while(c && true){
             i = 0;
             while(i < 10){
                 if(a && b && c){
