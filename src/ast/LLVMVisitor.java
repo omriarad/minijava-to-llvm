@@ -128,6 +128,9 @@ public class LLVMVisitor implements Visitor {
 		methodDecl.ret().accept(this);
 		if (this.isLiteral()) {
 			this.builder.append("\tret " + retType + " " + this.LLVMType);
+		} else if (this.isThis) {
+			this.builder.append("\tret i8* %this");
+			this.isThis = false;
 		} else {
 			this.builder.append("\tret " + retType + " %_" + this.registerCount);
 		}
