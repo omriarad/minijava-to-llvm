@@ -263,9 +263,7 @@
                     </vardecls>
                     <body>
                         <assign>
-                            <lv>
-                                otherRGB
-                            </lv>
+                            <lv>otherRGB</lv>
                             <rv>
                                 <call>
                                     <ownerExpr>
@@ -429,9 +427,7 @@
                     </vardecls>
                     <body>
                         <assign>
-                            <lv>
-                                result
-                            </lv>
+                            <lv>result</lv>
                             <rv>
                                 <call>
                                     <ownerExpr>
@@ -473,9 +469,7 @@
                     <vardecls></vardecls>
                     <body>
                         <assign>
-                            <lv>
-                                otherColor
-                            </lv>
+                            <lv>otherColor</lv>
                             <rv>
                                 <this/>
                             </rv>
@@ -512,17 +506,13 @@
                     </vardecls>
                     <body>
                         <assign>
-                            <lv>
-                                doubled
-                            </lv>
+                            <lv>doubled</lv>
                             <rv>
                                 <this/>
                             </rv>
                         </assign>
                         <assign>
-                            <lv>
-                                doubledRGB
-                            </lv>
+                            <lv>doubledRGB</lv>
                             <rv>
                                 <call>
                                     <ownerExpr>
@@ -644,9 +634,7 @@
                     <vardecls></vardecls>
                     <body>
                         <assign>
-                            <lv>
-                                colorField
-                            </lv>
+                            <lv>colorField</lv>
                             <rv>
                                 <this/>
                             </rv>
@@ -765,52 +753,40 @@
                             <type>
                                 <int-array/>
                             </type>
-                            <name>
-                                c1RGB
-                            </name>
+                            <name>c1RGB</name>
                         </vardecl>
                         <vardecl>
                             <lineNumber>83</lineNumber>
                             <type>
                                 <int/>
                             </type>
-                            <name>
-                                c2R
-                            </name>
+                            <name>c2R</name>
                         </vardecl>
                         <vardecl>
                             <lineNumber>84</lineNumber>
                             <type>
                                 <int/>
                             </type>
-                            <name>
-                                c2G
-                            </name>
+                            <name>c2G</name>
                         </vardecl>
                         <vardecl>
                             <lineNumber>85</lineNumber>
                             <type>
                                 <int/>
                             </type>
-                            <name>
-                                c2B
-                            </name>
+                            <name>c2B</name>
                         </vardecl>
                         <vardecl>
                             <lineNumber>86</lineNumber>
                             <type>
                                 <bool/>
                             </type>
-                            <name>
-                                placeholder
-                            </name>
+                            <name>placeholder</name>
                         </vardecl>
                     </vardecls>
                     <body>
                         <assign>
-                            <lv>
-                                c1
-                            </lv>
+                            <lv>c1</lv>
                             <rv>
                                 <new-object>
                                     <classId>Color</classId>
@@ -818,9 +794,7 @@
                             </rv>
                         </assign>
                         <assign>
-                            <lv>
-                                c2
-                            </lv>
+                            <lv>c2</lv>
                             <rv>
                                 <new-object>
                                     <classId>Color</classId>
@@ -828,9 +802,7 @@
                             </rv>
                         </assign>
                         <assign>
-                            <lv>
-                                c1RGB
-                            </lv>
+                            <lv>c1RGB</lv>
                             <rv>
                                 <new-int-array>
                                     <lengthExpr>
@@ -881,9 +853,7 @@
                             </rv>
                         </assign-array>
                         <assign>
-                            <lv>
-                                placeholder
-                            </lv>
+                            <lv>placeholder</lv>
                             <rv>
                                 <call>
                                     <ownerExpr>
@@ -901,9 +871,7 @@
                             </rv>
                         </assign>
                         <assign>
-                            <lv>
-                                c2R
-                            </lv>
+                            <lv>c2R</lv>
                             <rv>
                                 <int-literal>
                                     <num>20</num>
@@ -911,9 +879,7 @@
                             </rv>
                         </assign>
                         <assign>
-                            <lv>
-                                c2G
-                            </lv>
+                            <lv>c2G</lv>
                             <rv>
                                 <int-literal>
                                     <num>20</num>
@@ -921,9 +887,7 @@
                             </rv>
                         </assign>
                         <assign>
-                            <lv>
-                                c2B
-                            </lv>
+                            <lv>c2B</lv>
                             <rv>
                                 <int-literal>
                                     <num>20</num>
@@ -931,9 +895,7 @@
                             </rv>
                         </assign>
                         <assign>
-                            <lv>
-                                placeholder
-                            </lv>
+                            <lv>placeholder</lv>
                             <rv>
                                 <call>
                                     <ownerExpr>
@@ -974,25 +936,19 @@
                             <type>
                                 <bool/>
                             </type>
-                            <name>
-                                placeholder
-                            </name>
+                            <name>placeholder</name>
                         </vardecl>
                         <vardecl>
                             <lineNumber>105</lineNumber>
                             <type>
                                 <ref><id>Color</id></ref>
                             </type>
-                            <name>
-                                result
-                            </name>
+                            <name>result</name>
                         </vardecl>
                     </vardecls>
                     <body>
                         <assign>
-                            <lv>
-                                placeholder
-                            </lv>
+                            <lv>placeholder</lv>
                             <rv>
                                 <call>
                                     <ownerExpr>
@@ -1004,9 +960,7 @@
                             </rv>
                         </assign>
                         <assign>
-                            <lv>
-                                result
-                            </lv>
+                            <lv>result</lv>
                             <rv>
                                 <call>
                                     <ownerExpr>
@@ -1039,9 +993,7 @@
                             </arg>
                         </sysout>
                         <assign>
-                            <lv>
-                                result
-                            </lv>
+                            <lv>result</lv>
                             <rv>
                                 <call>
                                     <ownerExpr>
@@ -1074,9 +1026,7 @@
                             </arg>
                         </sysout>
                         <assign>
-                            <lv>
-                                result
-                            </lv>
+                            <lv>result</lv>
                             <rv>
                                 <call>
                                     <ownerExpr>
@@ -1109,9 +1059,7 @@
                             </arg>
                         </sysout>
                         <assign>
-                            <lv>
-                                c1
-                            </lv>
+                            <lv>c1</lv>
                             <rv>
                                 <call>
                                     <ownerExpr>
@@ -1138,9 +1086,7 @@
                             </arg>
                         </sysout>
                         <assign>
-                            <lv>
-                                result
-                            </lv>
+                            <lv>result</lv>
                             <rv>
                                 <call>
                                     <ownerExpr>
@@ -1167,9 +1113,7 @@
                             </arg>
                         </sysout>
                         <assign>
-                            <lv>
-                                result
-                            </lv>
+                            <lv>result</lv>
                             <rv>
                                 <call>
                                     <ownerExpr>
@@ -1183,9 +1127,7 @@
                             </rv>
                         </assign>
                         <assign>
-                            <lv>
-                                result
-                            </lv>
+                            <lv>result</lv>
                             <rv>
                                 <call>
                                     <ownerExpr>
