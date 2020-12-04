@@ -395,7 +395,8 @@ public class LLVMVisitor implements Visitor {
 		String src;
 
 		e.arrayExpr().accept(this);
-		if (e.arrayExpr() instanceof IdentifierExpr) {
+		if (e.arrayExpr() instanceof IdentifierExpr &&
+			!this.symbolTables.isField(this.currentClass, this.currentMethod, ((IdentifierExpr)e.arrayExpr()).id())) {
 			src = ((IdentifierExpr)e.arrayExpr()).id();
 		} else {
 			src = "_" + (this.registerCount - 1);
