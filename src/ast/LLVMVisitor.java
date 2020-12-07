@@ -58,8 +58,10 @@ public class LLVMVisitor implements Visitor {
 				builder.append("i8* bitcast ("+funcSig+" to i8*), ");
 			}
 		}
-		funcSig = vtable.getMethodFullSignature(entries.get(entries.size()-1).getMethodName());
-		builder.append("i8* bitcast ("+funcSig+" to i8*)");
+		if(entries.size() >= 1){
+			funcSig = vtable.getMethodFullSignature(entries.get(entries.size()-1).getMethodName());
+			builder.append("i8* bitcast ("+funcSig+" to i8*)");
+		}
 		// Footer
 		builder.append("]\n");
 	}
