@@ -465,7 +465,7 @@
                                 <mult>
                                     <e1>
                                         <ref-id>
-                                            <id>x</id>
+                                            <id>data</id>
                                         </ref-id>
                                     </e1>
                                     <e2>

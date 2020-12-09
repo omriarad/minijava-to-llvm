@@ -63,7 +63,7 @@ class DerivedFromDerived extends Derived {
 	int something;
 
 	int get() {
-		data = (x) * (4);
+		data = (data) * (4);
 		something = 1;
 		something = (something) + (data);
 		return something;

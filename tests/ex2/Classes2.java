@@ -10,7 +10,7 @@ class Classes {
 		Derived d;
 		DerivedFromDerived e; 
 		
-		e = new DerivedFromDerived; 
+		e = new DerivedFromDerived(); 
   		b = new Base();
  		d = new Derived();
 
@@ -76,7 +76,7 @@ class DerivedFromDerived extends Derived{
 	int something;
 
 	public int get() {
-		data = x * 4;
+		data = data * 4;
 		something = 1;
 		something = something + data;
 		return something;
