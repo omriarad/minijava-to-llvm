@@ -225,6 +225,7 @@ public class LLVMVisitor implements Visitor {
 			src = this.LLVMType;
 		} else if (this.newObjectOwner) {
 			src = "%_" + (this.registerCount - 2);
+			this.newObjectOwner = false;
 		} else if (this.isThis) {
 			src = "%this";
 		} else {
@@ -474,7 +475,14 @@ public class LLVMVisitor implements Visitor {
 					registers.add("%this");
 					this.isThis = false;
 				} else {
-					registers.add("%_" + String.valueOf(this.registerCount));
+					if(this.newObjectOwner)
+					{
+						registers.add("%_" + String.valueOf(this.registerCount - 2));
+					}
+					else{
+						registers.add("%_" + String.valueOf(this.registerCount));
+					}
+
 				}
 		}
 		this.registerCount++;
