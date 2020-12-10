@@ -427,6 +427,7 @@ public class LLVMVisitor implements Visitor {
 		e.arrayExpr().accept(this);
 		this.registerCount++;
 		this.builder.append("\t%_" + this.registerCount + " = load i32, i32* %_" + (this.registerCount - 1) + "\n");
+		this.LLVMType = "i32";
 	}
 
 	@Override
