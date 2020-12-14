@@ -60,6 +60,46 @@ public class SymbolTableLookup {
 		return lvSymbolTable.isClassScope();
 	}
 
+	MethodDecl getMethod(String curClass, String method) {
+		var targetClass = this.lookup(curClass, null, "method", method);
+
+		if (targetClass == null) {
+			return null;
+		}
+
+		return (MethodDecl)targetClass.getMethodEntries().get(method).getDeclRef();
+	}
+
+	MethodDecl getOverriddenMethod(String curClass, String method) {
+		SymbolTable overriddenClass;
+		SymbolTable classSymbolTable = this.classToScopes.get(curClass).get(curClass);
+
+		if (classSymbolTable.getParentSymbolTable() == null) {
+			return null;
+		}
+
+		return this.getMethod(classSymbolTable.getParentSymbolTable().getScopeName(), method);
+	}
+
+	boolean isSubclass(String subClass, String superClass) {
+		Map<String,SymbolTable> scopeToSymbolTable = this.classToScopes.get(subClass);
+		if (scopeToSymbolTable == null) {
+			return false;
+		}
+
+		SymbolTable classSymbolTable = scopeToSymbolTable.get(subClass);
+
+		while (classSymbolTable != null && classSymbolTable.getScopeName().compareTo(superClass) != 0) {
+			classSymbolTable = classSymbolTable.getParentSymbolTable();
+		}
+
+		return classSymbolTable != null;
+	}
+
+	boolean isDefined(String className) {
+		return this.classToScopes.get(className) != null;
+	}
+
 	boolean isAncestorSus(String curClass, String methodName, Set<String> susClasses, String susClass) {
 		Map<String,SymbolTable> scopeToSymbolTable = this.classToScopes.get(curClass);
 		if (scopeToSymbolTable == null) {
@@ -154,7 +194,7 @@ public class SymbolTableLookup {
 				SymbolTableEntry symbol = method.getValue();
 				table.addEntry(className,methodName,symbol);
 			}
-			
+
 			classToVTable.put(className,table);
 		}
 	}
