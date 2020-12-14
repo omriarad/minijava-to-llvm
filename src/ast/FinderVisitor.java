@@ -13,9 +13,11 @@ public class FinderVisitor implements Visitor {
 	private Program program;
 	private String searchTerm;
 	private Integer searchLineNumber;
+	private String mainClassName;
 
 	// Context fields
 	private String currentClass;
+	private String currentMethod;
 	private boolean found = false;
 	private SymbolTable currentSymbolTable;
 
@@ -38,6 +40,11 @@ public class FinderVisitor implements Visitor {
 		this.classToScopes = new LinkedHashMap<String,Map<String,SymbolTable>>();
 		// currentSymbolTable will be initialized when calling mainClass.accept()
 		this.currentSymbolTable = null;
+	}
+
+	private void throwCompilationError(String errorMessage) {
+		System.err.println("ERROR: "+ errorMessage);
+		System.exit(0);
 	}
 
 	private void generateSusSet() {
@@ -111,6 +118,10 @@ public class FinderVisitor implements Visitor {
 		return this.classToScopes;
 	}
 
+	public String getMainClassName(){
+		return this.mainClassName;
+	}
+
 	private void visitBinaryExpr(BinaryExpr e, String infixSymbol) {
 		e.e1().accept(this);
 		e.e2().accept(this);
@@ -149,6 +160,7 @@ public class FinderVisitor implements Visitor {
 	@Override
 	public void visit(Program program) {
 		this.currentClass = program.mainClass().name();
+		this.mainClassName = program.mainClass().name();
 		// add main Scope (little different than a regular class)
 		Map<String,SymbolTable> mainScopes =  new HashMap<String,SymbolTable>();
 		mainScopes.put(program.mainClass().name(),new SymbolTable(program.mainClass().name(),true));
@@ -158,10 +170,30 @@ public class FinderVisitor implements Visitor {
 
 		for (ClassDecl classdecl : program.classDecls()) {
 			this.currentClass = classdecl.name();
+			// checkDuplicateClass name has to be here -> before we create a scope
+			// checkSuperClassDefined may be moved to the ClassDecl visit if needed
+			if(!checkSuperClassDefined(classdecl) || checkDuplicateClassName(classdecl)){
+				throwCompilationError("Error on class definition of "+classdecl.name());
+			}
 			this.addClassScope(classdecl);
 			this.currentSymbolTable = this.classToScopes.get(this.currentClass).get(this.currentClass);
 			classdecl.accept(this);
 		}
+	}
+
+	
+
+	// Check 3
+	// Returns TRUE if class name is a duplicate
+	private boolean checkDuplicateClassName(ClassDecl classdecl) {
+		return this.classToScopes.get(classdecl.name()) != null;
+	}
+
+	// Checks 1 , 2
+	// Returns TRUE if a super class was defined properly, or it was not set
+	private boolean checkSuperClassDefined(ClassDecl classdecl) {
+		String superClass = classdecl.superName();
+		return superClass == null || (superClass != null && this.classToScopes.get(superClass) != null && superClass != this.mainClassName);
 	}
 
 	@Override
@@ -174,15 +206,43 @@ public class FinderVisitor implements Visitor {
 		SymbolTable currClassScope = classScopes.get(classDecl.name());
 
 		for (var fieldDecl : classDecl.fields()) {
+			if(checkDuplicateField(fieldDecl)){
+				throwCompilationError("Duplicate field name :"+fieldDecl.name());
+			}
 			fieldDecl.accept(this);
 		}
 
 		for (var methodDecl : classDecl.methoddecls()) {
+			this.currentMethod = methodDecl.name();
+			if(checkOverloadedMethod(methodDecl)){
+				throwCompilationError("Overloaded method "+methodDecl.name());
+			}
 			addMethodScope(classScopes, methodDecl, currClassScope);
 			this.currentSymbolTable = classScopes.get(methodDecl.name());
 			methodDecl.accept(this);
 		}
 	}
+
+	// Check 4
+	// Return TRUE if field is a duplicate
+	private boolean checkDuplicateField(VarDecl fieldDecl) {
+		SymbolTableLookup stl = new SymbolTableLookup(classToScopes);
+		SymbolTable st = stl.lookup(this.currentClass,null,"variable",fieldDecl.name());
+		return !(st == null);
+	}
+
+	// Check 5
+	// Returns TRUE if method is an overload
+	private boolean checkOverloadedMethod(MethodDecl methodDecl) {
+		SymbolTableLookup stl = new SymbolTableLookup(classToScopes);
+		SymbolTable st = stl.lookup(this.currentClass, null, "method", methodDecl.name());
+		// if we found the a method with the same name in this current class then it must be an overload.
+		// if we found it in any upper class - we check at InvalidMethodOverride
+		// if null (i.e. not in this class or any upper class) then we return true.
+		if (st == null) return false;
+		return (st.getScopeName().equals(this.currentClass));
+	}
+
 
 	@Override
 	public void visit(MainClass mainClass) {
@@ -211,10 +271,16 @@ public class FinderVisitor implements Visitor {
 		}
 
 		for (var formal : methodDecl.formals()) {
+			if(checkDuplicateFormalDeclaration(formal)){
+				throwCompilationError("Formal is of name already declared - "+formal.name());
+			}
 			formal.accept(this);
 		}
 
 		for (var varDecl : methodDecl.vardecls()) {
+			if(checkDuplicateLocalVariableDeclaration(varDecl)){
+				throwCompilationError("Local variable is of name already declared - "+varDecl.name());
+			}
 			varDecl.accept(this);
 		}
 
@@ -225,10 +291,21 @@ public class FinderVisitor implements Visitor {
 		methodDecl.ret().accept(this);
 	}
 
+	// Check 24a
+	// Return TRUE if local variable is a duplicate
+	private boolean checkDuplicateLocalVariableDeclaration(VarDecl varDecl) {
+		return this.currentSymbolTable.getVarEntries().get(varDecl.name()) != null;
+	}
+
+	// Check 24b
+	private boolean checkDuplicateFormalDeclaration(FormalArg formal) {
+		return this.currentSymbolTable.getVarEntries().get(formal.name()) != null;
+	}
+
 	private void checkSusVariable(VariableIntroduction variable) {
 		if(variable.name().compareTo(this.searchTerm) == 0
 				&& variable.lineNumber == this.searchLineNumber) {
-			this.foundSymbolTable = this.currentSymbolTable;
+			this.foundSymbolTable = this.currentSymbolTable;	
 		}
 	}
 
@@ -317,12 +394,43 @@ public class FinderVisitor implements Visitor {
 
 	@Override
 	public void visit(ArrayLengthExpr e) {
+		// Check 13
+		// arrayExpr must be newArray or identifer
+		if(!(e.arrayExpr() instanceof NewIntArrayExpr) && !(e.arrayExpr() instanceof IdentifierExpr)){
+			throwCompilationError(".length was used on a variable which is not new int[] or identifier - "+e.arrayExpr().toString());
+		}
 		e.arrayExpr().accept(this);
+		// if it's an identiferExpr we check if it's defined at Check 14 - which happens on visit
+		// if it's an identifer - make sure it's of type IntArray
+		if(e.arrayExpr() instanceof IdentifierExpr){
+			AstType type = new SymbolTableLookup(classToScopes).lookupVariableType(this.currentClass, this.currentMethod, ((IdentifierExpr)e.arrayExpr()).id());
+
+			// if this isn't a RefType we throw compilation error (it's a primitive type : int, bool, int[])
+			if (!(type instanceof IntArrayAstType)) {
+				throwCompilationError("Type of indentifer in array.length is not int[] - "+type.toString());
+			}
+		}
 	}
 
 	@Override
 	public void visit(MethodCallExpr e) {
+		// Check 12 - owner must be this/new ()/identifier
+		if(!(e.ownerExpr() instanceof ThisExpr) && !(e.ownerExpr() instanceof IdentifierExpr) && !(e.ownerExpr() instanceof NewObjectExpr)){
+			throwCompilationError("OwnerExpr is not this / new () / identifier - "+e.ownerExpr().toString());
+		}
+		
 		e.ownerExpr().accept(this);
+		// if it's an identiferExpr we check if it's defined at Check 14 - which happens on visit
+		// Check 10 - will only work if check 14 passed
+		if(e.ownerExpr() instanceof IdentifierExpr){
+			AstType type = new SymbolTableLookup(classToScopes).lookupVariableType(this.currentClass, this.currentMethod, ((IdentifierExpr)e.ownerExpr()).id());
+
+			// if this isn't a RefType we throw compilation error (it's a primitive type : int, bool, int[])
+			if (!RefType.class.isInstance(type)) {
+				throwCompilationError("OwnerExpr is and identifer which is not a RefType - "+type.toString());
+			}
+		}
+
 		for (Expr arg : e.actuals()) {
 			arg.accept(this);
 		}
@@ -338,7 +446,19 @@ public class FinderVisitor implements Visitor {
 	public void visit(FalseExpr e) {}
 
 	@Override
-	public void visit(IdentifierExpr e) {}
+	public void visit(IdentifierExpr e) {
+		if(!checkIdentifierDefined(e)){
+			throwCompilationError("Identifier "+e.id()+" was not previously defined");
+		}
+	}
+
+	// Check 14
+	// Returns TRUE if identifier was properly defined
+	private boolean checkIdentifierDefined(IdentifierExpr e) {
+		SymbolTableLookup stl = new SymbolTableLookup(classToScopes);
+		SymbolTable st = stl.lookup(this.currentClass, this.currentMethod, "variable", e.id());
+		return st != null;
+	}
 
 	@Override
 	public void visit(ThisExpr e) {}

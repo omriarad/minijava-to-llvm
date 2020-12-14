@@ -9,7 +9,6 @@ public class SymbolTable {
 	private Map<String,SymbolTableEntry> methodEntries;
 	private SymbolTable parentTable;
 	private boolean isClassScope;
-	// debugging variable
 	private String scopeName;
 
 	

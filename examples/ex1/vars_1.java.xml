@@ -246,7 +246,7 @@
                                 <call>
                                     <ownerExpr>
                                         <ref-id>
-                                            <id>a</id>
+                                            <id>b</id>
                                         </ref-id>
                                     </ownerExpr>
                                     <methodId>run</methodId>
