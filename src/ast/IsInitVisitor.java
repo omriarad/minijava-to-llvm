@@ -114,11 +114,16 @@ public class IsInitVisitor implements Visitor{
         ifStatement.cond().accept(this);
         HashMap<String, String> thenLaticeMap = this.duplicateLatticeMap(this.curLatticeMap);
         HashMap<String, String> elseLaticeMap = this.duplicateLatticeMap(this.curLatticeMap);
+
         this.curLatticeMap = thenLaticeMap;
         ifStatement.thencase().accept(this);
+        thenLaticeMap = this.curLatticeMap;
+
+
         this.curLatticeMap = elseLaticeMap;
         ifStatement.elsecase().accept(this);
-        this.curLatticeMap = this.laticeMapUnion(thenLaticeMap, elseLaticeMap);
+
+        this.curLatticeMap = this.laticeMapUnion(thenLaticeMap, this.curLatticeMap);
     }
 
     @Override
