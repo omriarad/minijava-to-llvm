@@ -128,7 +128,7 @@ public class IsInitVisitor implements Visitor{
         HashMap<String, String> whileLaticeMap = this.duplicateLatticeMap(this.curLatticeMap);
         this.curLatticeMap = whileLaticeMap;
         whileStatement.body().accept(this);
-        this.curLatticeMap = this.laticeMapUnion(prevLaticeMap, whileLaticeMap);
+        this.curLatticeMap = this.laticeMapUnion(prevLaticeMap, this.curLatticeMap);
     }
 
     @Override
@@ -219,7 +219,7 @@ public class IsInitVisitor implements Visitor{
     @Override
     public void visit(IdentifierExpr e) {
         if(!this.curLatticeMap.get(e.id()).equals("tt")){
-            throwCompilationError(e.id() + " is used before initialized (class: " + this.currentClass + " method: " + this.currentMethod);
+            throwCompilationError(e.id() + " is used before initialized (class: " + this.currentClass + " method: " + this.currentMethod + ")");
         }
     }
 
