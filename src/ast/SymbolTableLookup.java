@@ -165,6 +165,15 @@ public class SymbolTableLookup {
 		return list.getOffset(fieldName);
 	}
 
+	List<String> getFieldsNames(String className){
+		FieldOffsetsList list = this.classToFieldOffsets.get(className);
+		List<String> res = new ArrayList<>();
+		for(FieldOffsetsEntry e : list.getFieldOffsetsList()){
+			res.add(e.getName());
+		}
+		return res;
+	}
+
 	int getInstanceSize(String className){
 		FieldOffsetsList list = this.classToFieldOffsets.get(className);
 		return list.getListSize();
