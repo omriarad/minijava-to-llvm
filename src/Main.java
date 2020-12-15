@@ -35,7 +35,10 @@ public class Main {
                     outFile.write(astPrinter.getString());
 
                 } else if (action.equals("semantic")) {
-                    throw new UnsupportedOperationException("TODO - Ex. 3");
+                    var fv = new FinderVisitor(prog, "", 0);
+                    fv.visit(prog);
+                    var isInit = new IsInitVisitor(fv.getClassToScopes());
+                    isInit.visit(prog);
 
                 } else if (action.equals("compile")) {
                     var fv = new FinderVisitor(prog, "", 0);

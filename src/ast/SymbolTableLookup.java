@@ -19,6 +19,12 @@ public class SymbolTableLookup {
 		initVTable();
 	}
 
+	SymbolTable lookup(String curClass, String curMethod){
+		Map<String,SymbolTable> scopeToSymbolTable = this.classToScopes.get(curClass);
+		SymbolTable curSymbolTable = scopeToSymbolTable.get(curMethod);
+		return curSymbolTable;
+	}
+
 	SymbolTable lookup(String curClass, String curMethod, String type, String name) {
 		Map<String,SymbolTable> scopeToSymbolTable = this.classToScopes.get(curClass);
 		SymbolTable curSymbolTable;
