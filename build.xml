@@ -5,7 +5,6 @@
     <property name="jflex"    location="${src}/jflex"/>
     <property name="build"    location="${basedir}/build"/>
     <property name="tools"    location="${basedir}/tools"/>
-    <property name="lib"    location="${basedir}/lib"/>
 
     <taskdef  name="jflex" classname="jflex.anttask.JFlexTask"   classpath="${tools}/JFlex.jar"   />
     <taskdef  name="cup"   classname="java_cup.anttask.CUPTask"  classpath="${tools}/java-cup-11b.jar"  />
@@ -29,7 +28,6 @@
         <javac srcdir="${src}" destdir="${build}" debug="true">
             <classpath>
                 <fileset dir="${tools}" includes="*.jar"/>
-                <fileset dir="${lib}" includes="*.jar"/>
             </classpath>
         </javac>
     </target>
