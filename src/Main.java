@@ -35,12 +35,23 @@ public class Main {
                     outFile.write(astPrinter.getString());
 
                 } else if (action.equals("semantic")) {
-                    var fv = new FinderVisitor(prog, "", 0);
-                    fv.visit(prog);
-                    var vv = new VerifierVisitor(fv.getClassToScopes());
-                    vv.visit(prog);
-                    var isInit = new IsInitVisitor(fv.getClassToScopes());
-                    isInit.visit(prog);
+                    boolean erroneous = false;
+                    try {
+                        var fv = new FinderVisitor(prog, "", 0);
+                        fv.visit(prog);
+                        var vv = new VerifierVisitor(fv.getClassToScopes());
+                        vv.visit(prog);
+                        var isInit = new IsInitVisitor(fv.getClassToScopes());
+                        isInit.visit(prog);
+                    } catch(AssertionError e) {
+                        erroneous = true;
+                        System.out.println(e);
+                        outFile.write("ERROR\n");
+                    }
+
+                    if (!erroneous) {
+                        outFile.write("OK\n");
+                    }
 
                 } else if (action.equals("compile")) {
                     var fv = new FinderVisitor(prog, "", 0);

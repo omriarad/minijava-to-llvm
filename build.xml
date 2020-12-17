@@ -63,6 +63,13 @@
         </exec>
     </target>
 
-    <target name="test" depends="test1,test2">
+    <target name="test3" depends="dist">
+        <exec executable="/bin/sh">
+            <arg value="-c"/>
+            <arg value="make -C tests/ex3/"/>
+        </exec>
+    </target>
+
+    <target name="test" depends="test1,test2,test3">
     </target>
 </project>
