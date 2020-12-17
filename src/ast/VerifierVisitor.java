@@ -68,7 +68,7 @@ public class VerifierVisitor implements Visitor {
 				String.format(
 					"number of arguments mismatch found! original: %d, overriding: %d",
 					originalArgs,
-					originalMethod)
+					overridingArgs)
 				);
 		}
 
