@@ -43,8 +43,7 @@ public class FinderVisitor implements Visitor {
 	}
 
 	private void throwCompilationError(String errorMessage) {
-		System.err.println("ERROR: "+ errorMessage);
-		System.exit(0);
+        throw new AssertionError("ERROR: "+ errorMessage);
 	}
 
 	private void generateSusSet() {
@@ -181,7 +180,7 @@ public class FinderVisitor implements Visitor {
 		}
 	}
 
-	
+
 
 	// Check 3
 	// Returns TRUE if class name is a duplicate
@@ -305,7 +304,7 @@ public class FinderVisitor implements Visitor {
 	private void checkSusVariable(VariableIntroduction variable) {
 		if(variable.name().compareTo(this.searchTerm) == 0
 				&& variable.lineNumber == this.searchLineNumber) {
-			this.foundSymbolTable = this.currentSymbolTable;	
+			this.foundSymbolTable = this.currentSymbolTable;
 		}
 	}
 
@@ -418,7 +417,7 @@ public class FinderVisitor implements Visitor {
 		if(!(e.ownerExpr() instanceof ThisExpr) && !(e.ownerExpr() instanceof IdentifierExpr) && !(e.ownerExpr() instanceof NewObjectExpr)){
 			throwCompilationError("OwnerExpr is not this / new () / identifier - "+e.ownerExpr().toString());
 		}
-		
+
 		e.ownerExpr().accept(this);
 		// if it's an identiferExpr we check if it's defined at Check 14 - which happens on visit
 		// Check 10 - will only work if check 14 passed

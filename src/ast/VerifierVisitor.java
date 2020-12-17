@@ -252,6 +252,7 @@ public class VerifierVisitor implements Visitor {
 	@Override
 	public void visit(ArrayLengthExpr e) {
 		e.arrayExpr().accept(this);
+		this.type = "int";
 	}
 
 	@Override
@@ -293,6 +294,8 @@ public class VerifierVisitor implements Visitor {
 					);
 			}
 		}
+
+		this.type = this.getType(method.returnType());
 	}
 
 	@Override

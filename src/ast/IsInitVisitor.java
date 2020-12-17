@@ -20,8 +20,7 @@ public class IsInitVisitor implements Visitor{
     }
 
     private void throwCompilationError(String errorMessage) {
-        System.err.println("ERROR: "+ errorMessage);
-        System.exit(0);
+        throw new AssertionError("ERROR: "+ errorMessage);
     }
 
     private  HashMap<String, String> laticeMapUnion(HashMap<String, String> latticeMap1, HashMap<String, String> latticeMap2) {

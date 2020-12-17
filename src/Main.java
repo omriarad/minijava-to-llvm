@@ -37,6 +37,8 @@ public class Main {
                 } else if (action.equals("semantic")) {
                     var fv = new FinderVisitor(prog, "", 0);
                     fv.visit(prog);
+                    var vv = new VerifierVisitor(fv.getClassToScopes());
+                    vv.visit(prog);
                     var isInit = new IsInitVisitor(fv.getClassToScopes());
                     isInit.visit(prog);
 
