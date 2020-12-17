@@ -67,7 +67,7 @@ public class IsInitVisitor implements Visitor{
         methodDecl.returnType().accept(this);
         HashMap<String, String> latticeMap = new HashMap<>();
         for (FormalArg formal : methodDecl.formals()) {
-            latticeMap.put(formal.name(), "ff");
+            latticeMap.put(formal.name(), "tt");
             formal.type().accept(this);
         }
 
