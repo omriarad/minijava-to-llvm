@@ -281,11 +281,12 @@ public class VerifierVisitor implements Visitor {
 		}
 
 		for (int i = 0; i < methodArgCount; i++) {
-			var methodType = method.formals().get(i).type();
+			var methodType =this.getType(method.formals().get(i).type());
 			Expr arg = e.actuals().get(i);
 			arg.accept(this);
 
-			if (this.symbolTables.isSubclass(this.type, this.getType(methodType))) {
+			if (this.type.compareTo(methodType) != 0 &&
+				!this.symbolTables.isSubclass(this.type, methodType)) {
 				throw new VerificationError(
 					String.format(
 						"type of formal %d mismatch for method %s",
