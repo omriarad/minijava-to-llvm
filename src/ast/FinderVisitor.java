@@ -349,6 +349,9 @@ public class FinderVisitor implements Visitor {
 
 	@Override
 	public void visit(AssignStatement assignStatement) {
+		if(!checkIdentifierDefined(assignStatement.lv())){
+			throwCompilationError("Assign to undeclared variable "+assignStatement.lv());
+		}
 		assignStatement.rv().accept(this);
 	}
 
@@ -454,6 +457,12 @@ public class FinderVisitor implements Visitor {
 	private boolean checkIdentifierDefined(IdentifierExpr e) {
 		SymbolTableLookup stl = new SymbolTableLookup(classToScopes);
 		SymbolTable st = stl.lookup(this.currentClass, this.currentMethod, "variable", e.id());
+		return st != null;
+	}
+
+	private boolean checkIdentifierDefined(String lv){
+		SymbolTableLookup stl = new SymbolTableLookup(classToScopes);
+		SymbolTable st = stl.lookup(this.currentClass, this.currentMethod, "variable", lv);
 		return st != null;
 	}
 
