@@ -171,7 +171,7 @@ public class FinderVisitor implements Visitor {
 			this.currentClass = classdecl.name();
 			// checkDuplicateClass name has to be here -> before we create a scope
 			// checkSuperClassDefined may be moved to the ClassDecl visit if needed
-			if(!checkSuperClassDefined(classdecl) || checkDuplicateClassName(classdecl)){
+			if(checkDuplicateClassName(classdecl) || !checkSuperClassDefined(classdecl)){
 				throwCompilationError("Error on class definition of "+classdecl.name());
 			}
 			this.addClassScope(classdecl);
@@ -179,8 +179,6 @@ public class FinderVisitor implements Visitor {
 			classdecl.accept(this);
 		}
 	}
-
-
 
 	// Check 3
 	// Returns TRUE if class name is a duplicate
@@ -192,7 +190,7 @@ public class FinderVisitor implements Visitor {
 	// Returns TRUE if a super class was defined properly, or it was not set
 	private boolean checkSuperClassDefined(ClassDecl classdecl) {
 		String superClass = classdecl.superName();
-		return superClass == null || (superClass != null && this.classToScopes.get(superClass) != null && superClass != this.mainClassName);
+		return superClass == null || (superClass != null && this.classToScopes.get(superClass) != null && !superClass.equals(this.mainClassName));
 	}
 
 	@Override
