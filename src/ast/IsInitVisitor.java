@@ -142,16 +142,16 @@ public class IsInitVisitor implements Visitor{
 
     @Override
     public void visit(AssignStatement assignStatement) {
-        this.curLatticeMap.put(assignStatement.lv(), "tt");
         assignStatement.rv().accept(this);
+        this.curLatticeMap.put(assignStatement.lv(), "tt");
     }
 
 
     @Override
     public void visit(AssignArrayStatement assignArrayStatement) {
-       assignArrayStatement.lv();
         assignArrayStatement.index().accept(this);
         assignArrayStatement.rv().accept(this);
+        this.curLatticeMap.put(assignArrayStatement.lv(), "tt");
     }
 
     @Override
@@ -222,6 +222,8 @@ public class IsInitVisitor implements Visitor{
 
     @Override
     public void visit(IdentifierExpr e) {
+        System.out.println("id: " + e.id());
+        System.out.println(this.curLatticeMap);
         if(!this.curLatticeMap.get(e.id()).equals("tt")){
             throwCompilationError(e.id() + " is used before initialized (class: " + this.currentClass + " method: " + this.currentMethod + ")");
         }
