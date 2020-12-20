@@ -81,6 +81,7 @@ public class VerifierVisitor implements Visitor {
 
 		var originalReturnType = this.getType(originalMethod.returnType());
 		var overridingReturnType = this.getType(overridingMethod.returnType());
+		System.out.println(overridingReturnType + " " + originalReturnType);
 		if (originalReturnType.compareTo(overridingReturnType) != 0 &&
 			!this.symbolTables.isSubclass(overridingReturnType, originalReturnType)) {
 			throw new VerificationError(
@@ -110,13 +111,14 @@ public class VerifierVisitor implements Visitor {
 			stmt.accept(this);
 		}
 
+		var returnType = this.getType(methodDecl.returnType());
 		methodDecl.ret().accept(this);
-		if (this.type.compareTo(this.getType(methodDecl.returnType())) != 0 &&
-			!this.symbolTables.isSubclass(this.type, this.getType(methodDecl.returnType()))) {
+		if (this.type.compareTo(returnType) != 0 &&
+			!this.symbolTables.isSubclass(this.type, returnType)) {
 			throw new VerificationError(
 				String.format(
-					"invalid return type, static=%s got=%",
-					methodDecl.returnType(),
+					"invalid return type, static=%s got=%s",
+					returnType,
 					this.type)
 				);
 		}
