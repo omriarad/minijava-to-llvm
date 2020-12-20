@@ -455,9 +455,10 @@ public class FinderVisitor implements Visitor {
 	// Check 14
 	// Returns TRUE if identifier was properly defined
 	private boolean checkIdentifierDefined(IdentifierExpr e) {
-		SymbolTableLookup stl = new SymbolTableLookup(classToScopes);
-		SymbolTable st = stl.lookup(this.currentClass, this.currentMethod, "variable", e.id());
-		return st != null;
+		// SymbolTableLookup stl = new SymbolTableLookup(classToScopes);
+		// SymbolTable st = stl.lookup(this.currentClass, this.currentMethod, "variable", e.id());
+		// return st != null;
+		return checkIdentifierDefined(e.id());
 	}
 
 	private boolean checkIdentifierDefined(String lv){
