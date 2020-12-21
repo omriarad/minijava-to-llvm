@@ -331,6 +331,7 @@ public class VerifierVisitor implements Visitor {
 	@Override
 	public void visit(NewIntArrayExpr e) {
 		e.lengthExpr().accept(this);
+		this.compareType("int", this.type);
 		this.type = "int[]";
 	}
 
