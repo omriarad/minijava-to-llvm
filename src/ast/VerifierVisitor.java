@@ -81,7 +81,6 @@ public class VerifierVisitor implements Visitor {
 
 		var originalReturnType = this.getType(originalMethod.returnType());
 		var overridingReturnType = this.getType(overridingMethod.returnType());
-		System.out.println(overridingReturnType + " " + originalReturnType);
 		if (originalReturnType.compareTo(overridingReturnType) != 0 &&
 			!this.symbolTables.isSubclass(overridingReturnType, originalReturnType)) {
 			throw new VerificationError(

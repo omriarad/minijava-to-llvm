@@ -222,8 +222,6 @@ public class IsInitVisitor implements Visitor{
 
     @Override
     public void visit(IdentifierExpr e) {
-        System.out.println("id: " + e.id());
-        System.out.println(this.curLatticeMap);
         if(!this.curLatticeMap.get(e.id()).equals("tt")){
             throwCompilationError(e.id() + " is used before initialized (class: " + this.currentClass + " method: " + this.currentMethod + ")");
         }
