@@ -57,6 +57,8 @@ public class IsInitVisitor implements Visitor{
 
     @Override
     public void visit(MainClass mainClass) {
+        HashMap<String, String> latticeMap = new HashMap<>();
+        this.curLatticeMap = latticeMap;
         mainClass.mainStatement().accept(this);
     }
 
