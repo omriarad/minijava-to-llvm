@@ -89,7 +89,14 @@
                                     </rv>
                                 </assign>
                             </thencase>
-                            <elsecase/>
+                            <elsecase>
+                                <assign>
+                                    <lv>x</lv>
+                                    <rv>
+                                        <ref-id><id>x</id></ref-id>
+                                    </rv>
+                                </assign>
+                            </elsecase>
                         </if>
                     </body>
                     <ret>
