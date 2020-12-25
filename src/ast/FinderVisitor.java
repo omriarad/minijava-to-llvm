@@ -394,22 +394,7 @@ public class FinderVisitor implements Visitor {
 
 	@Override
 	public void visit(ArrayLengthExpr e) {
-		// Check 13
-		// arrayExpr must be newArray or identifer
-		if(!(e.arrayExpr() instanceof NewIntArrayExpr) && !(e.arrayExpr() instanceof IdentifierExpr)){
-			throwCompilationError(".length was used on a variable which is not new int[] or identifier - "+e.arrayExpr().toString());
-		}
 		e.arrayExpr().accept(this);
-		// if it's an identiferExpr we check if it's defined at Check 14 - which happens on visit
-		// if it's an identifer - make sure it's of type IntArray
-		if(e.arrayExpr() instanceof IdentifierExpr){
-			AstType type = new SymbolTableLookup(classToScopes).lookupVariableType(this.currentClass, this.currentMethod, ((IdentifierExpr)e.arrayExpr()).id());
-
-			// if this isn't a RefType we throw compilation error (it's a primitive type : int, bool, int[])
-			if (!(type instanceof IntArrayAstType)) {
-				throwCompilationError("Type of indentifer in array.length is not int[] - "+type.toString());
-			}
-		}
 	}
 
 	@Override
