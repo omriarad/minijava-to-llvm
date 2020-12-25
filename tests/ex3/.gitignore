@@ -1,2 +1,5 @@
 result
 out
+*.log
+*.our-result
+*.txt

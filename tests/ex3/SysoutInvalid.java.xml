@@ -6,15 +6,9 @@
         <mainStatement>
             <sysout>
                 <arg>
-                    <call>
-                        <ownerExpr>
-                            <new-object>
-<classId>Simple</classId>
-                            </new-object>
-                        </ownerExpr>
-                        <methodId>bar</methodId>
-                        <actuals/>
-                    </call>
+                    <int-literal>
+                        <num>3</num>
+                    </int-literal>
                 </arg>
             </sysout>
         </mainStatement>
@@ -25,56 +19,32 @@
             <fields/>
             <methoddecls>
                 <methoddecl>
-                    <lineNumber>19</lineNumber>
+                    <lineNumber>17</lineNumber>
                     <returnType>
-                        <bool/>
+                        <int/>
                     </returnType>
-                    <name>bar</name>
+                    <name>fun</name>
                     <formals/>
-                    <vardecls>
-                        <vardecl>
-                            <lineNumber>10</lineNumber>
-                            <type>
-<int/>
-                            </type>
-                            <name>x</name>
-                        </vardecl>
-                        <vardecl>
-                            <lineNumber>12</lineNumber>
-                            <type>
-<bool/>
-                            </type>
-                            <name>b</name>
-                        </vardecl>
-                    </vardecls>
+                    <vardecls/>
+
                     <body>
-                        <assign>
-                            <lv>x</lv>
-                            <rv>
-<int-literal>
-    <num>10</num>
-</int-literal>
-                            </rv>
-                        </assign>
-                        <assign>
-                            <lv>b</lv>
-                            <rv>
-<true/>
-                            </rv>
-                        </assign>
                         <sysout>
                             <arg>
-<ref-id>
-    <id>x</id>
-</ref-id>
+                                <ref-id>
+                                    <id>b</id>
+                                </ref-id>
                             </arg>
                         </sysout>
                     </body>
                     <ret>
-                        <false/>
+                        <int-literal>
+                            <num>0</num>
+                        </int-literal>
                     </ret>
                 </methoddecl>
             </methoddecls>
         </classdecl>
+
     </classdecls>
+
 </program>
