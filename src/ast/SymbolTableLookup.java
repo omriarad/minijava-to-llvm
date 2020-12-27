@@ -30,9 +30,10 @@ public class SymbolTableLookup {
 		SymbolTable curSymbolTable;
 		if(curMethod != null){
 			curSymbolTable = scopeToSymbolTable.get(curMethod);
-		}
-		else{
+		} else if (curClass != null ) {
 			curSymbolTable = scopeToSymbolTable.get(curClass);
+		} else {
+			return null;
 		}
 		Map<String,SymbolTableEntry> curSymbolTableEntries;
 		if(type.equals("variable")){
