@@ -357,6 +357,9 @@ public class FinderVisitor implements Visitor {
 
 	@Override
 	public void visit(AssignArrayStatement assignArrayStatement) {
+		if(!checkIdentifierDefined(assignArrayStatement.lv())){
+			throwCompilationError("Assign to undeclared variable "+assignArrayStatement.lv());
+		}
 		assignArrayStatement.index().accept(this);
 		assignArrayStatement.rv().accept(this);
 	}
