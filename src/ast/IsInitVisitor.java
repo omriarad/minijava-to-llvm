@@ -151,9 +151,11 @@ public class IsInitVisitor implements Visitor{
 
     @Override
     public void visit(AssignArrayStatement assignArrayStatement) {
+        if(!this.curLatticeMap.get(assignArrayStatement.lv()).equals("tt")){
+            throwCompilationError(assignArrayStatement.lv() + " is used before initialized (class: " + this.currentClass + " method: " + this.currentMethod + ")");
+        }
         assignArrayStatement.index().accept(this);
         assignArrayStatement.rv().accept(this);
-        this.curLatticeMap.put(assignArrayStatement.lv(), "tt");
     }
 
     @Override
