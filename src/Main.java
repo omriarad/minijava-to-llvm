@@ -45,7 +45,7 @@ public class Main {
                         isInit.visit(prog);
                     } catch(AssertionError e) {
                         erroneous = true;
-                        System.out.println(e);
+                        //System.out.println(e);
                         outFile.write("ERROR\n");
                     }
 
