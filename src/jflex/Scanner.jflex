@@ -1,51 +1,16 @@
-/***************************/
-/* Based on a template by Oren Ish-Shalom */
-/***************************/
 
-/*************/
-/* USER CODE */
-/*************/
-import java_cup.runtime.*;
-
-
-
-/******************************/
-/* DOLAR DOLAR - DON'T TOUCH! */
-/******************************/
+import java_cup.runtime.Symbol;
 
 %%
 
-/************************************/
-/* OPTIONS AND DECLARATIONS SECTION */
-/************************************/
-
-/*****************************************************/
-/* Lexer is the name of the class JFlex will create. */
-/* The code will be written to the file Lexer.java.  */
-/*****************************************************/
 %class Lexer
 
-/********************************************************************/
-/* The current line number can be accessed with the variable yyline */
-/* and the current column number with the variable yycolumn.        */
-/********************************************************************/
+%implements sym
+%cup
 %line
 %column
+%eofclose
 
-/******************************************************************/
-/* CUP compatibility mode interfaces with a CUP generated parser. */
-/******************************************************************/
-%cup
-
-/****************/
-/* DECLARATIONS */
-/****************/
-/*****************************************************************************/
-/* Code between %{ and %}, both of which must be at the beginning of a line, */
-/* will be copied verbatim (letter to letter) into the Lexer class code.     */
-/* Here you declare member variables and functions that are used inside the  */
-/* scanner actions.                                                          */
-/*****************************************************************************/
 %{
 	/*********************************************************************************/
 	/* Create a new java_cup.runtime.Symbol with information about the current token */
@@ -60,27 +25,68 @@ import java_cup.runtime.*;
 	public int getCharPos() { return yycolumn;   }
 %}
 
-/***********************/
-/* MACRO DECALARATIONS */
-/***********************/
+ID = [a-zA-Z][a-zA-Z0-9_]*
+Integer = 0 | [1-9][0-9]*
 
-/******************************/
-/* DOLAR DOLAR - DON'T TOUCH! */
-/******************************/
+new_line = \r|\n|\r\n|\z
+tab = \t
+white_space = {new_line} | {tab} | [ \f]
+
+
+InputCharacter = [^\r\n]
+EndOfLineComment = "//" {InputCharacter}*
 
 %%
 
-/************************************************************/
-/* LEXER matches regular expressions to actions (Java code) */
-/************************************************************/
+/* keywords */
+"public"	{ return symbol(PUBLIC); }
+"static"	{ return symbol(STATIC); }
+"void"		{ return symbol(VOID); }
+"main"		{ return symbol(MAIN); }
+"String"	{ return symbol(STRING); }
+"class"		{ return symbol(CLASS); }
+"extends"	{ return symbol(EXTENDS); }
+"return"	{ return symbol(RETURN); }
+"int"		{ return symbol(INT); }
+"boolean"	{ return symbol(BOOLEAN); }
+"if"		{ return symbol(IF); }
+"else"		{ return symbol(ELSE); }
+"while"		{ return symbol(WHILE); }
+"System.out.println"	{ return symbol(PRINTLN); }
+"length"	{ return symbol(LENGTH); }
+"true"		{ return symbol(TRUE); }
+"false"		{ return symbol(FALSE); }
+"this"		{ return symbol(THIS); }
+"new"		{ return symbol(NEW); }
 
-/**************************************************************/
-/* YYINITIAL is the state at which the lexer begins scanning. */
-/* So these regular expressions will only be matched if the   */
-/* scanner is in the start state YYINITIAL.                   */
-/**************************************************************/
+/* literals */
+{Integer}	{ return symbol(INTEGER, new Integer(Integer.parseInt(yytext()))); }
 
-<YYINITIAL> {
-"public"            { return symbol(sym.PUBLIC); }
-<<EOF>>				{ return symbol(sym.EOF); }
-}
+";"		{ return symbol(SEMICOLON); }
+"("		{ return symbol(LPAREN); }
+")"		{ return symbol(RPAREN); }
+"["		{ return symbol(LBRACKET); }
+"]"		{ return symbol(RBRACKET); }
+"&&"		{ return symbol(AND); }
+"<"		{ return symbol(LESSTHAN); }
+"+"		{ return symbol(PLUS); }
+"-"		{ return symbol(MINUS); }
+"*"		{ return symbol(MULT); }
+"{"		{ return symbol(LBRACE); }
+"}"		{ return symbol(RBRACE);  }
+"!"		{ return symbol(NOT); }
+","		{ return symbol(COMMA); }
+"."		{ return symbol(DOT); }
+"="		{ return symbol(EQUAL); }
+
+{ID}		{ return symbol(ID, yytext());  }
+
+{white_space}		{ /* ignore */ }
+{EndOfLineComment}	{ /* ignore */ }
+"/*" ~ "*/"		{ /* ignore */ }
+
+/* error fallback */
+[^]|\n	{  /* throw new Error("Illegal character <"+ yytext()+">");*/
+		System.err.println("Illegal character <"+ yytext()+">");
+		System.exit(1);
+	}

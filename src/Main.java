@@ -15,7 +15,9 @@ public class Main {
             Program prog;
 
             if (inputMethod.equals("parse")) {
-                throw new UnsupportedOperationException("TODO - Ex. 4");
+                Parser parser_obj = new Parser(new Lexer(new FileReader(filename)));
+                var parse_tree = parser_obj.parse();
+                prog = (Program)parse_tree.value;
             } else if (inputMethod.equals("unmarshal")) {
                 AstXMLSerializer xmlSerializer = new AstXMLSerializer();
                 prog = xmlSerializer.deserialize(new File(filename));
