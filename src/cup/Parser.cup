@@ -53,7 +53,7 @@ scan with
 terminal PUBLIC, CLASS, EXTENDS, RETURN;
 terminal STATIC, VOID, MAIN, STRING; // Main terminals
 /* Statements */
-terminal IF, ELSE, WHILE, PRINTLN;
+terminal IF, ELSE, WHILE, PRINT;
 /* Primitives */
 terminal INT, BOOLEAN;
 /* Objects */
@@ -69,8 +69,8 @@ terminal COMMA, DOT, SEMICOLON;
 terminal LENGTH;
 /* Literals */
 terminal TRUE, FALSE;
-terminal Integer INTLITERAL;
-terminal String ID;
+terminal Integer INTEGER_LITERAL;
+terminal String IDENTIFIER;
 
 /*****************/
 /* NON TERMINALS */
@@ -120,45 +120,45 @@ prog ::= mainClass:main classDecls:cs
 			{: RESULT = new Program(main, cs); :}
 ;
 
-mainClass ::= CLASS ID:id LBRACE PUBLIC STATIC VOID MAIN LPAREN STRING LBRACKET RBRACKET ID:arg RPAREN LBRACE statement:s RBRACE RBRACE
+mainClass ::= CLASS IDENTIFIER:id LBRACE PUBLIC STATIC VOID MAIN LPAREN STRING LBRACKET RBRACKET IDENTIFIER:arg RPAREN LBRACE statement:s RBRACE RBRACE
 			{: RESULT = new MainClass(id, arg, s); :}
 ;
 
-classDecl ::= CLASS ID:name LBRACE varDecls:vars methodDecls:methods RBRACE
+classDecl ::= CLASS IDENTIFIER:name LBRACE varDecls:vars methodDecls:methods RBRACE
 			{: RESULT = new ClassDecl(name, null, vars, methods); :}
-		| CLASS ID:name EXTENDS ID:sup LBRACE varDecls:vars methodDecls:methods RBRACE
+		| CLASS IDENTIFIER:name EXTENDS IDENTIFIER:sup LBRACE varDecls:vars methodDecls:methods RBRACE
 			{: RESULT = new ClassDecl(name, sup, vars, methods); :}
 ;
 
-methodDecl ::= PUBLIC INT LBRACKET RBRACKET ID:name LPAREN formalArgs:f RPAREN LBRACE varDecls:v statements:s RETURN expr:e SEMICOLON RBRACE
+methodDecl ::= PUBLIC INT LBRACKET RBRACKET IDENTIFIER:name LPAREN formalArgs:f RPAREN LBRACE varDecls:v statements:s RETURN expr:e SEMICOLON RBRACE
 			{: RESULT = new MethodDecl(new IntArrayAstType(), name, f, v, s, e, nameleft); :}
-		| PUBLIC BOOLEAN ID:name LPAREN formalArgs:f RPAREN LBRACE varDecls:v statements:s RETURN expr:e SEMICOLON RBRACE
+		| PUBLIC BOOLEAN IDENTIFIER:name LPAREN formalArgs:f RPAREN LBRACE varDecls:v statements:s RETURN expr:e SEMICOLON RBRACE
 			{: RESULT = new MethodDecl(new BoolAstType(), name, f, v, s, e, nameleft); :}
-		| PUBLIC INT ID:name LPAREN formalArgs:f RPAREN LBRACE varDecls:v statements:s RETURN expr:e SEMICOLON RBRACE
+		| PUBLIC INT IDENTIFIER:name LPAREN formalArgs:f RPAREN LBRACE varDecls:v statements:s RETURN expr:e SEMICOLON RBRACE
 			{: RESULT = new MethodDecl(new IntAstType(), name, f, v, s, e, nameleft); :}
-		| PUBLIC ID:type ID:name LPAREN formalArgs:f RPAREN LBRACE varDecls:v statements:s RETURN expr:e SEMICOLON RBRACE
+		| PUBLIC IDENTIFIER:type IDENTIFIER:name LPAREN formalArgs:f RPAREN LBRACE varDecls:v statements:s RETURN expr:e SEMICOLON RBRACE
 			{: RESULT = new MethodDecl(new RefType(type), name, f, v, s, e, nameleft); :}
 ;
 
-commaFormalArg ::= COMMA INT LBRACKET RBRACKET ID:name	{: RESULT = new FormalArg(new IntArrayAstType(), name, nameleft);:}
-		| COMMA BOOLEAN ID:name							{: RESULT = new FormalArg(new BoolAstType(), name, nameleft); :}
-		| COMMA INT ID:name								{: RESULT = new FormalArg(new IntAstType(), name, nameleft); :}
-		| COMMA ID:type ID:name							{: RESULT = new FormalArg(new RefType(type), name, nameleft); :}
+commaFormalArg ::= COMMA INT LBRACKET RBRACKET IDENTIFIER:name	{: RESULT = new FormalArg(new IntArrayAstType(), name, nameleft);:}
+		| COMMA BOOLEAN IDENTIFIER:name							{: RESULT = new FormalArg(new BoolAstType(), name, nameleft); :}
+		| COMMA INT IDENTIFIER:name								{: RESULT = new FormalArg(new IntAstType(), name, nameleft); :}
+		| COMMA IDENTIFIER:type IDENTIFIER:name							{: RESULT = new FormalArg(new RefType(type), name, nameleft); :}
 ;
 
-varDecl ::= INT LBRACKET RBRACKET ID:name SEMICOLON {: RESULT = new VarDecl(new IntArrayAstType(), name, nameleft);	:}
-		| BOOLEAN ID:name SEMICOLON					{: RESULT = new VarDecl(new BoolAstType(), name, nameleft);	:}
-		| INT ID:name SEMICOLON						{: RESULT = new VarDecl(new IntAstType(), name, nameleft); :}
-		| ID:type ID:name SEMICOLON					{: RESULT = new VarDecl(new RefType(type), name, nameleft); :}
+varDecl ::= INT LBRACKET RBRACKET IDENTIFIER:name SEMICOLON {: RESULT = new VarDecl(new IntArrayAstType(), name, nameleft);	:}
+		| BOOLEAN IDENTIFIER:name SEMICOLON					{: RESULT = new VarDecl(new BoolAstType(), name, nameleft);	:}
+		| INT IDENTIFIER:name SEMICOLON						{: RESULT = new VarDecl(new IntAstType(), name, nameleft); :}
+		| IDENTIFIER:type IDENTIFIER:name SEMICOLON					{: RESULT = new VarDecl(new RefType(type), name, nameleft); :}
 ;
 
 statement ::= LBRACE statements:sl RBRACE			{: RESULT = new BlockStatement(sl); :}
-		| PRINTLN:p LPAREN expr:e RPAREN SEMICOLON	{: RESULT = new SysoutStatement(e); :}
-		| ID:rv EQUAL:eq expr:lv SEMICOLON 			{: RESULT = new AssignStatement(rv, lv); :}
+		| PRINT:p LPAREN expr:e RPAREN SEMICOLON	{: RESULT = new SysoutStatement(e); :}
+		| IDENTIFIER:rv EQUAL:eq expr:lv SEMICOLON 			{: RESULT = new AssignStatement(rv, lv); :}
 		| WHILE LPAREN expr:e RPAREN statement:body {: RESULT = new WhileStatement(e, body); :}
 		| IF LPAREN expr:e RPAREN statement:true_statement ELSE statement:false_statement
 				{: RESULT = new IfStatement(e, true_statement, false_statement); :}
-		| ID:array LBRACKET expr:index RBRACKET EQUAL:eq expr:lv SEMICOLON
+		| IDENTIFIER:array LBRACKET expr:index RBRACKET EQUAL:eq expr:lv SEMICOLON
 				{: RESULT = new AssignArrayStatement(array, index, lv); :}
 ;
 
@@ -169,14 +169,14 @@ expr ::= expr:lv PLUS:op expr:rv						{: RESULT = new AddExpr(lv, rv); :}
 		| expr:lv LESSTHAN:op expr:rv					{: RESULT = new LtExpr(lv, rv); :}
 		| expr:lv LBRACKET:op expr:index RBRACKET		{: RESULT = new ArrayAccessExpr(lv, index); :}
 		| expr:lv DOT LENGTH							{: RESULT = new ArrayLengthExpr(lv); :}
-		| expr:lv DOT ID:func LPAREN actuals:es RPAREN	{: RESULT = new MethodCallExpr(lv, func, es); :}
-		| INTLITERAL:i									{: RESULT = new IntegerLiteralExpr(i.intValue()); :}
+		| expr:lv DOT IDENTIFIER:func LPAREN actuals:es RPAREN	{: RESULT = new MethodCallExpr(lv, func, es); :}
+		| INTEGER_LITERAL:i									{: RESULT = new IntegerLiteralExpr(i.intValue()); :}
 		| TRUE											{: RESULT = new TrueExpr(); :}
 		| FALSE											{: RESULT = new FalseExpr(); :}
-		| ID:name										{: RESULT = new IdentifierExpr(name); :}
+		| IDENTIFIER:name										{: RESULT = new IdentifierExpr(name); :}
 		| THIS											{: RESULT = new ThisExpr(); :}
 		| NEW INT LBRACKET expr:size RBRACKET			{: RESULT = new NewIntArrayExpr(size); :}
-		| NEW ID:type LPAREN RPAREN						{: RESULT = new NewObjectExpr(type); :}
+		| NEW IDENTIFIER:type LPAREN RPAREN						{: RESULT = new NewObjectExpr(type); :}
 		| NOT expr:e									{: RESULT = new NotExpr(e); :}
 		| LPAREN expr:e RPAREN							{: RESULT = e; :}
 ;
@@ -192,13 +192,13 @@ methodDecls ::= methodDecls:ms methodDecl:m
 		| /* empty */	{: RESULT = new LinkedList<MethodDecl>(); :}
 ;
 
-formalArgs ::= INT LBRACKET RBRACKET ID:name commaFormalArgs:fs
+formalArgs ::= INT LBRACKET RBRACKET IDENTIFIER:name commaFormalArgs:fs
 			{: if(fs == null) fs = new LinkedList<FormalArg>(); fs.addFirst(new FormalArg(new IntArrayAstType(), name, nameleft)); RESULT = fs; :}
-		| BOOLEAN ID:name commaFormalArgs:fs
+		| BOOLEAN IDENTIFIER:name commaFormalArgs:fs
 			{: if(fs == null) fs = new LinkedList<FormalArg>(); fs.addFirst(new FormalArg(new BoolAstType(), name, nameleft)); RESULT = fs; :}
-		| INT ID:name commaFormalArgs:fs
+		| INT IDENTIFIER:name commaFormalArgs:fs
 			{: if(fs == null) fs = new LinkedList<FormalArg>(); fs.addFirst(new FormalArg(new IntAstType(), name, nameleft)); RESULT = fs; :}
-		| ID:type ID:name commaFormalArgs:fs
+		| IDENTIFIER:type IDENTIFIER:name commaFormalArgs:fs
 			{: if(fs == null) fs = new LinkedList<FormalArg>(); fs.addFirst(new FormalArg(new RefType(type), name, nameleft)); RESULT = fs; :}
 		| /* empty */
 			{: RESULT = new LinkedList<FormalArg>(); :}
