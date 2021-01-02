@@ -84,7 +84,6 @@ non terminal MethodDecl methodDecl;
 non terminal FormalArg commaFormalArg;
 non terminal Statement statement;
 non terminal Expr expr;
-non terminal Expr actual;
 
 /* Ast class lists definitions */
 non terminal LinkedList<ClassDecl> classDecls;
@@ -153,8 +152,6 @@ varDecl ::= INT LBRACKET RBRACKET ID:name SEMICOLON {: RESULT = new VarDecl(new 
 		| ID:type ID:name SEMICOLON					{: RESULT = new VarDecl(new RefType(type), name, nameleft); :}
 ;
 
-actual ::= COMMA expr:e {: RESULT = e; :};
-
 statement ::= LBRACE statements:sl RBRACE			{: RESULT = new BlockStatement(sl); :}
 		| PRINTLN:p LPAREN expr:e RPAREN SEMICOLON	{: RESULT = new SysoutStatement(e); :}
 		| ID:rv EQUAL:eq expr:lv SEMICOLON 			{: RESULT = new AssignStatement(rv, lv); :}
@@ -216,11 +213,11 @@ varDecls ::= varDecls:vs varDecl:v	{: if(vs == null) vs = new LinkedList<VarDecl
 		| /* empty */				{: RESULT = new LinkedList<VarDecl>(); :}
 ;
 
-actuals ::= actual:a commaActuals:as {: if(as == null) as = new LinkedList<Expr>(); as.addFirst(a); RESULT = as; :}
+actuals ::= expr:a commaActuals:as {: if(as == null) as = new LinkedList<Expr>(); as.addFirst(a); RESULT = as; :}
 		| /* empty */				 {: RESULT = new LinkedList<Expr>(); :}
 ;
 
-commaActuals ::= commaActuals:as actual:a {: if(as == null) as = new LinkedList<Expr>(); as.add(a);	RESULT = as; :}
+commaActuals ::= commaActuals:as COMMA expr:a {: if(as == null) as = new LinkedList<Expr>(); as.add(a); RESULT = as; :}
 		| /* empty */
 ;
 
