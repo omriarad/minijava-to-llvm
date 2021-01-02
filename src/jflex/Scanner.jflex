@@ -88,11 +88,10 @@ LineTerminator = \r|\n|\r\n
 
 "public" { return symbol(sym.PUBLIC); }
 "class" { return symbol(sym.CLASS); }
-{Identifier} { return symbol(sym.IDENTIFIER, new String(yytext())); }
 "static" { return symbol(sym.STATIC); }
 "void" { return symbol(sym.VOID); }
 "main" { return symbol(sym.MAIN); }
-"String" { return symbol(sym.String); }
+"String" { return symbol(sym.STRING); }
 "extends" { return symbol(sym.EXTENDS); }
 "return" { return symbol(sym.RETURN); }
 "int" { return symbol(sym.INT); }
@@ -110,6 +109,7 @@ LineTerminator = \r|\n|\r\n
 
 {WhiteSpace}   { /* do nothing */ }
 <<EOF>> { return symbol(sym.EOF); }
+{Identifier} { return symbol(sym.IDENTIFIER, new String(yytext())); }
 "/*" ~ "*/" { /* do nothing */ }
 "//".* { /* do nothing */ }
 
