@@ -67,23 +67,26 @@ terminal String ID;
 /*****************/
 /* NON TERMINALS */
 /*****************/
+/* Ast class definitions */
 non terminal Program prog;
-non terminal MainClass main_class;
-non terminal LinkedList<ClassDecl> class_list;
-non terminal ClassDecl class_decl;
-non terminal LinkedList<VarDecl> var_decl_list;
+non terminal MainClass mainClass;
+non terminal ClassDecl classDecl;
 non terminal VarDecl var_decl;
-non terminal LinkedList<MethodDecl> method_decl_list;
 non terminal MethodDecl method_decl;
-non terminal LinkedList<FormalArg> formal_list;
-non terminal LinkedList<FormalArg> formal_rest_list;
-non terminal FormalArg formal_rest;
-non terminal LinkedList<Statement> statement_list;
+non terminal FormalArg commaPrefixedFormalArg;
 non terminal Statement statement;
-non terminal LinkedList<Expr> expr_list;
-non terminal Expr expr_rest;
-non terminal LinkedList<Expr> expr_rest_list;
 non terminal Expr expr;
+non terminal Expr actual;
+
+/* Ast class lists definitions */
+non terminal LinkedList<ClassDecl> classDecls;
+non terminal LinkedList<VarDecl> varDecls;
+non terminal LinkedList<MethodDecl> methodDecls;
+non terminal LinkedList<Statement> statements;
+non terminal LinkedList<Expr> exprs;
+non terminal LinkedList<FormalArg> formalArgs;
+non terminal LinkedList<FormalArg> commaPrefixedFormalArgs;
+non terminal LinkedList<Expr> actuals;
 
 /***********************/
 /* OPERATOR PRECEDENCE */
@@ -107,21 +110,21 @@ start with prog;
 /********************/
 
 
-prog ::= main_class:main class_list:l
+prog ::= mainClass:main classDecls:l
 	{:
 		Program result  = new Program(main, l);
 		RESULT = result;
 	:}
 	;
 
-main_class ::= CLASS ID:id LBRACE PUBLIC STATIC VOID MAIN LPAREN STRING LBRACKET RBRACKET ID:arg RPAREN LBRACE statement:s RBRACE RBRACE
+mainClass ::= CLASS ID:id LBRACE PUBLIC STATIC VOID MAIN LPAREN STRING LBRACKET RBRACKET ID:arg RPAREN LBRACE statement:s RBRACE RBRACE
 	{:
 		MainClass result  = new MainClass(id, arg, s);
 		RESULT = result;
 	:}
 	;
 
-class_list ::= class_list:l class_decl:c
+classDecls ::= classDecls:l classDecl:c
 	{:
 		LinkedList<ClassDecl> temp;
 		if(l == null) {
@@ -140,20 +143,20 @@ class_list ::= class_list:l class_decl:c
 	:}
 	;
 
-class_decl ::= CLASS ID:name LBRACE var_decl_list:vars method_decl_list:methods RBRACE
+classDecl ::= CLASS ID:name LBRACE varDecls:vars methodDecls:methods RBRACE
 	{:
 		ClassDecl result  = new ClassDecl(name, null, vars, methods);
 		RESULT = result;
 	:}
 	|
-	CLASS ID:name EXTENDS ID:sup LBRACE var_decl_list:vars method_decl_list:methods RBRACE
+	CLASS ID:name EXTENDS ID:sup LBRACE varDecls:vars methodDecls:methods RBRACE
 	{:
 		ClassDecl result  = new ClassDecl(name, sup, vars, methods);
 		RESULT = result;
 	:}
 	;
 
-var_decl_list ::= var_decl_list:l var_decl:v
+varDecls ::= varDecls:l var_decl:v
 	{:
 		LinkedList<VarDecl> temp;
 		if(l == null) {
@@ -197,7 +200,7 @@ var_decl ::= INT LBRACKET RBRACKET ID:name SEMICOLON
 	:}
 	;
 
-method_decl_list ::= method_decl_list:l method_decl:m
+methodDecls ::= methodDecls:l method_decl:m
 	{:
 		LinkedList<MethodDecl> temp;
 		if(l == null) {
@@ -216,32 +219,32 @@ method_decl_list ::= method_decl_list:l method_decl:m
 	:}
 	;
 
-method_decl ::= PUBLIC INT LBRACKET RBRACKET ID:name LPAREN formal_list:f RPAREN LBRACE var_decl_list:v statement_list:s RETURN expr:e SEMICOLON RBRACE
+method_decl ::= PUBLIC INT LBRACKET RBRACKET ID:name LPAREN formalArgs:f RPAREN LBRACE varDecls:v statements:s RETURN expr:e SEMICOLON RBRACE
 	{:
 		MethodDecl result  = new MethodDecl(new IntArrayAstType(), name, f, v, s, e, nameleft);
 		RESULT = result;
 	:}
 	|
-	PUBLIC BOOLEAN ID:name LPAREN formal_list:f RPAREN LBRACE var_decl_list:v statement_list:s RETURN expr:e SEMICOLON RBRACE
+	PUBLIC BOOLEAN ID:name LPAREN formalArgs:f RPAREN LBRACE varDecls:v statements:s RETURN expr:e SEMICOLON RBRACE
 	{:
 		MethodDecl result  = new MethodDecl(new BoolAstType(), name, f, v, s, e, nameleft);
 		RESULT = result;
 	:}
 	|
-	PUBLIC INT ID:name LPAREN formal_list:f RPAREN LBRACE var_decl_list:v statement_list:s RETURN expr:e SEMICOLON RBRACE
+	PUBLIC INT ID:name LPAREN formalArgs:f RPAREN LBRACE varDecls:v statements:s RETURN expr:e SEMICOLON RBRACE
 	{:
 		MethodDecl result  = new MethodDecl(new IntAstType(), name, f, v, s, e, nameleft);
 		RESULT = result;
 	:}
 	|
-	PUBLIC ID:type ID:name LPAREN formal_list:f RPAREN LBRACE var_decl_list:v statement_list:s RETURN expr:e SEMICOLON RBRACE
+	PUBLIC ID:type ID:name LPAREN formalArgs:f RPAREN LBRACE varDecls:v statements:s RETURN expr:e SEMICOLON RBRACE
 	{:
 		MethodDecl result  = new MethodDecl(new RefType(type), name, f, v, s, e, nameleft);
 		RESULT = result;
 	:}
 	;
 
-formal_list ::= INT LBRACKET RBRACKET ID:name formal_rest_list:l
+formalArgs ::= INT LBRACKET RBRACKET ID:name commaPrefixedFormalArgs:l
 	{:
 		FormalArg f = new FormalArg(new IntArrayAstType(), name, nameleft);
 		LinkedList<FormalArg> temp = new LinkedList<FormalArg>();
@@ -254,7 +257,7 @@ formal_list ::= INT LBRACKET RBRACKET ID:name formal_rest_list:l
 		RESULT = temp;
 	:}
 	|
-	BOOLEAN ID:name formal_rest_list:l
+	BOOLEAN ID:name commaPrefixedFormalArgs:l
 	{:
 		FormalArg f = new FormalArg(new BoolAstType(), name, nameleft);
 		LinkedList<FormalArg> temp = new LinkedList<FormalArg>();
@@ -267,7 +270,7 @@ formal_list ::= INT LBRACKET RBRACKET ID:name formal_rest_list:l
 		RESULT = temp;
 	:}
 	|
-	INT ID:name formal_rest_list:l
+	INT ID:name commaPrefixedFormalArgs:l
 	{:
 		FormalArg f = new FormalArg(new IntAstType(), name, nameleft);
 		LinkedList<FormalArg> temp = new LinkedList<FormalArg>();
@@ -280,7 +283,7 @@ formal_list ::= INT LBRACKET RBRACKET ID:name formal_rest_list:l
 		RESULT = temp;
 	:}
 	|
-	ID:type ID:name formal_rest_list:l
+	ID:type ID:name commaPrefixedFormalArgs:l
 	{:
 		FormalArg f = new FormalArg(new RefType(type), name, nameleft);
 		LinkedList<FormalArg> temp = new LinkedList<FormalArg>();
@@ -299,7 +302,7 @@ formal_list ::= INT LBRACKET RBRACKET ID:name formal_rest_list:l
 	:}
 	;
 
-formal_rest_list ::= formal_rest_list:l formal_rest:f
+commaPrefixedFormalArgs ::= commaPrefixedFormalArgs:l commaPrefixedFormalArg:f
 	{:
 		LinkedList<FormalArg> temp;
 		if(l == null) {
@@ -319,7 +322,7 @@ formal_rest_list ::= formal_rest_list:l formal_rest:f
 	:}
 	;
 
-formal_rest ::= COMMA INT LBRACKET RBRACKET ID:name
+commaPrefixedFormalArg ::= COMMA INT LBRACKET RBRACKET ID:name
 	{:
 		FormalArg result  = new FormalArg(new IntArrayAstType(), name, nameleft);
 		RESULT = result;
@@ -344,7 +347,7 @@ formal_rest ::= COMMA INT LBRACKET RBRACKET ID:name
 	:}
 	;
 
-statement_list ::= statement:s statement_list:l
+statements ::= statement:s statements:l
 	{:
 		LinkedList<Statement> temp = new LinkedList<Statement>();
 		temp.add(s);
@@ -362,7 +365,7 @@ statement_list ::= statement:s statement_list:l
 	:}
 	;
 
-statement ::= LBRACE statement_list:l RBRACE
+statement ::= LBRACE statements:l RBRACE
 	{:
 		BlockStatement result  = new BlockStatement(l);
 		RESULT = result;
@@ -441,7 +444,7 @@ expr ::=expr:l PLUS:op expr:r
 		RESULT = result;
 	:}
 	|
-	expr:l DOT ID:func LPAREN expr_list:list RPAREN
+	expr:l DOT ID:func LPAREN exprs:list RPAREN
 	{:
 		MethodCallExpr result  = new MethodCallExpr(l, func, list);
 		RESULT = result;
@@ -501,7 +504,7 @@ expr ::=expr:l PLUS:op expr:r
 	:}
 	;
 
-expr_list ::= expr:e expr_rest_list:l
+exprs ::= expr:e actuals:l
 	{:
 		LinkedList<Expr> temp = new LinkedList<Expr>();
 		temp.add(e);
@@ -520,7 +523,7 @@ expr_list ::= expr:e expr_rest_list:l
 	:}
 	;
 
-expr_rest_list ::= expr_rest_list:l expr_rest:e
+actuals ::= actuals:l actual:e
 	{:
 		LinkedList<Expr> temp;
 		if(l == null) {
@@ -536,7 +539,7 @@ expr_rest_list ::= expr_rest_list:l expr_rest:e
 	|
 	;
 
-expr_rest ::= COMMA expr:e
+actual ::= COMMA expr:e
 	{:
 		RESULT = e;
 	:}
