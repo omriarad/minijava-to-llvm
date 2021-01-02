@@ -196,13 +196,13 @@ methodDecls ::= methodDecls:ms methodDecl:m
 ;
 
 formalArgs ::= INT LBRACKET RBRACKET ID:name commaFormalArgs:fs
-			{: if(fs == null) fs = new LinkedList<FormalArg>(); fs.add(0, new FormalArg(new IntArrayAstType(), name, nameleft)); RESULT = fs; :}
+			{: if(fs == null) fs = new LinkedList<FormalArg>(); fs.addFirst(new FormalArg(new IntArrayAstType(), name, nameleft)); RESULT = fs; :}
 		| BOOLEAN ID:name commaFormalArgs:fs
-			{: if(fs == null) fs = new LinkedList<FormalArg>(); fs.add(0, new FormalArg(new BoolAstType(), name, nameleft)); RESULT = fs; :}
+			{: if(fs == null) fs = new LinkedList<FormalArg>(); fs.addFirst(new FormalArg(new BoolAstType(), name, nameleft)); RESULT = fs; :}
 		| INT ID:name commaFormalArgs:fs
-			{: if(fs == null) fs = new LinkedList<FormalArg>(); fs.add(0, new FormalArg(new IntAstType(), name, nameleft)); RESULT = fs; :}
+			{: if(fs == null) fs = new LinkedList<FormalArg>(); fs.addFirst(new FormalArg(new IntAstType(), name, nameleft)); RESULT = fs; :}
 		| ID:type ID:name commaFormalArgs:fs
-						{: if(fs == null) fs = new LinkedList<FormalArg>(); fs.add(0, new FormalArg(new RefType(type), name, nameleft)); RESULT = fs; :}
+			{: if(fs == null) fs = new LinkedList<FormalArg>(); fs.addFirst(new FormalArg(new RefType(type), name, nameleft)); RESULT = fs; :}
 		| /* empty */
 			{: RESULT = new LinkedList<FormalArg>(); :}
 ;
@@ -216,7 +216,7 @@ varDecls ::= varDecls:vs varDecl:v	{: if(vs == null) vs = new LinkedList<VarDecl
 		| /* empty */				{: RESULT = new LinkedList<VarDecl>(); :}
 ;
 
-actuals ::= actual:a commaActuals:as {: if(as == null) as = new LinkedList<Expr>(); as.add(0, a); RESULT = as; :}
+actuals ::= actual:a commaActuals:as {: if(as == null) as = new LinkedList<Expr>(); as.addFirst(a); RESULT = as; :}
 		| /* empty */				 {: RESULT = new LinkedList<Expr>(); :}
 ;
 
@@ -225,6 +225,6 @@ commaActuals ::= commaActuals:as actual:a {: if(as == null) as = new LinkedList<
 ;
 
 statements ::= statement:s statements:sl
-						{: if(sl == null) sl = new LinkedList<Statement>(); sl.add(0, s); RESULT = sl;	:}
+						{: if(sl == null) sl = new LinkedList<Statement>(); sl.addFirst(s); RESULT = sl; :}
 		| /* empty */	{: RESULT = new LinkedList<Statement>(); :}
 ;
