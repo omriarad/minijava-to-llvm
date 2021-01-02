@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<program>
+    <mainclass>
+        <name>Main</name>
+        <argsName>a_43p93s</argsName>
+        <mainStatement>
+            <sysout>
+                <arg>
+                    <subtract>
+                        <e1>
+                            <int-literal>
+<num>0</num>
+                            </int-literal>
+                        </e1>
+                        <e2>
+                            <int-literal>
+<num>2</num>
+                            </int-literal>
+                        </e2>
+                    </subtract>
+                </arg>
+            </sysout>
+        </mainStatement>
+    </mainclass>
+    <classdecls>
+        <classdecl>
+            <name>A</name>
+            <fields>
+                <field>
+                    <lineNumber>7</lineNumber>
+                    <type>
+                        <int/>
+                    </type>
+                    <name>x</name>
+                </field>
+            </fields>
+            <methoddecls>
+                <methoddecl>
+                    <lineNumber>8</lineNumber>
+                    <returnType>
+                        <int/>
+                    </returnType>
+                    <name>test</name>
+                    <formals/>
+                    <vardecls/>
+                    <body>
+                        <assign>
+                            <lv>x</lv>
+                            <rv>
+<subtract>
+    <e1>
+        <int-literal>
+            <num>0</num>
+        </int-literal>
+    </e1>
+    <e2>
+        <int-literal>
+            <num>5</num>
+        </int-literal>
+    </e2>
+</subtract>
+                            </rv>
+                        </assign>
+                    </body>
+                    <ret>
+                        <ref-id>
+                            <id>x</id>
+                        </ref-id>
+                    </ret>
+                </methoddecl>
+            </methoddecls>
+        </classdecl>
+    </classdecls>
+</program>
