@@ -81,7 +81,7 @@ non terminal MainClass mainClass;
 non terminal ClassDecl classDecl;
 non terminal VarDecl varDecl;
 non terminal MethodDecl methodDecl;
-non terminal FormalArg commaPrefixedFormalArg;
+non terminal FormalArg commaFormalArg;
 non terminal Statement statement;
 non terminal Expr expr;
 non terminal Expr actual;
@@ -92,9 +92,9 @@ non terminal LinkedList<VarDecl> varDecls;
 non terminal LinkedList<MethodDecl> methodDecls;
 non terminal LinkedList<Statement> statements;
 non terminal LinkedList<FormalArg> formalArgs;
-non terminal LinkedList<FormalArg> commaPrefixedFormalArgs;
+non terminal LinkedList<FormalArg> commaFormalArgs;
 non terminal LinkedList<Expr> actuals;
-non terminal LinkedList<Expr> commaPrefixedActuals;
+non terminal LinkedList<Expr> commaActuals;
 
 /***********************/
 /* OPERATOR PRECEDENCE */
@@ -117,173 +117,121 @@ start with prog;
 /* PRODUCTION RULES */
 /********************/
 
-
 prog ::= mainClass:main classDecls:cs
-		{: RESULT = new Program(main, cs); :};
+			{: RESULT = new Program(main, cs); :}
+;
 
 mainClass ::= CLASS ID:id LBRACE PUBLIC STATIC VOID MAIN LPAREN STRING LBRACKET RBRACKET ID:arg RPAREN LBRACE statement:s RBRACE RBRACE
-	{: RESULT = new MainClass(id, arg, s); :};
+			{: RESULT = new MainClass(id, arg, s); :}
+;
 
 classDecls ::= classDecls:cs classDecl:c
-		{:
-			if(cs == null) { cs = new LinkedList<ClassDecl>();}
-			cs.add(c);
-			RESULT = cs;
-		:}
-	| {: RESULT = new LinkedList<ClassDecl>(); :};
+						{: if(cs == null) cs = new LinkedList<ClassDecl>(); cs.add(c); RESULT = cs; :}
+		| /* empty */	{: RESULT = new LinkedList<ClassDecl>(); :}
+;
 
 classDecl ::= CLASS ID:name LBRACE varDecls:vars methodDecls:methods RBRACE
 			{: RESULT = new ClassDecl(name, null, vars, methods); :}
 		| CLASS ID:name EXTENDS ID:sup LBRACE varDecls:vars methodDecls:methods RBRACE
-			{: RESULT = new ClassDecl(name, sup, vars, methods); :};
+			{: RESULT = new ClassDecl(name, sup, vars, methods); :}
+;
 
-varDecls ::= varDecls:vs varDecl:v
-		{:
-			if(vs == null) { vs = new LinkedList<VarDecl>();}
-			vs.add(v);
-			RESULT = vs;
-		:}
-	| {: RESULT = new LinkedList<VarDecl>(); :};
+varDecls ::= varDecls:vs varDecl:v	{: if(vs == null) vs = new LinkedList<VarDecl>(); vs.add(v); RESULT = vs; :}
+		| /* empty */				{: RESULT = new LinkedList<VarDecl>(); :}
+;
 
 varDecl ::= INT LBRACKET RBRACKET ID:name SEMICOLON
-		{: RESULT = new VarDecl(new IntArrayAstType(), name, nameleft);	:}
-	| BOOLEAN ID:name SEMICOLON
-		{: RESULT = new VarDecl(new BoolAstType(), name, nameleft);	:}
-	| INT ID:name SEMICOLON
-		{: RESULT = new VarDecl(new IntAstType(), name, nameleft); :}
-	| ID:type ID:name SEMICOLON
-		{: RESULT = new VarDecl(new RefType(type), name, nameleft); :};
+			{: RESULT = new VarDecl(new IntArrayAstType(), name, nameleft);	:}
+		| BOOLEAN ID:name SEMICOLON
+			{: RESULT = new VarDecl(new BoolAstType(), name, nameleft);	:}
+		| INT ID:name SEMICOLON
+			{: RESULT = new VarDecl(new IntAstType(), name, nameleft); :}
+		| ID:type ID:name SEMICOLON
+			{: RESULT = new VarDecl(new RefType(type), name, nameleft); :}
+;
 
 methodDecls ::= methodDecls:ms methodDecl:m
-		{:
-			if(ms == null) { ms = new LinkedList<MethodDecl>();}
-			ms.add(m);
-			RESULT = ms;
-		:}
-	| {: RESULT = new LinkedList<MethodDecl>(); :};
+						{: if(ms == null) ms = new LinkedList<MethodDecl>(); ms.add(m); RESULT = ms; :}
+		| /* empty */	{: RESULT = new LinkedList<MethodDecl>(); :}
+;
 
 methodDecl ::= PUBLIC INT LBRACKET RBRACKET ID:name LPAREN formalArgs:f RPAREN LBRACE varDecls:v statements:s RETURN expr:e SEMICOLON RBRACE
-		{: RESULT = new MethodDecl(new IntArrayAstType(), name, f, v, s, e, nameleft); :}
-	| PUBLIC BOOLEAN ID:name LPAREN formalArgs:f RPAREN LBRACE varDecls:v statements:s RETURN expr:e SEMICOLON RBRACE
-		{: RESULT = new MethodDecl(new BoolAstType(), name, f, v, s, e, nameleft); :}
-	| PUBLIC INT ID:name LPAREN formalArgs:f RPAREN LBRACE varDecls:v statements:s RETURN expr:e SEMICOLON RBRACE
-		{: RESULT = new MethodDecl(new IntAstType(), name, f, v, s, e, nameleft); :}
-	| PUBLIC ID:type ID:name LPAREN formalArgs:f RPAREN LBRACE varDecls:v statements:s RETURN expr:e SEMICOLON RBRACE
-		{: RESULT = new MethodDecl(new RefType(type), name, f, v, s, e, nameleft); :};
+			{: RESULT = new MethodDecl(new IntArrayAstType(), name, f, v, s, e, nameleft); :}
+		| PUBLIC BOOLEAN ID:name LPAREN formalArgs:f RPAREN LBRACE varDecls:v statements:s RETURN expr:e SEMICOLON RBRACE
+			{: RESULT = new MethodDecl(new BoolAstType(), name, f, v, s, e, nameleft); :}
+		| PUBLIC INT ID:name LPAREN formalArgs:f RPAREN LBRACE varDecls:v statements:s RETURN expr:e SEMICOLON RBRACE
+			{: RESULT = new MethodDecl(new IntAstType(), name, f, v, s, e, nameleft); :}
+		| PUBLIC ID:type ID:name LPAREN formalArgs:f RPAREN LBRACE varDecls:v statements:s RETURN expr:e SEMICOLON RBRACE
+			{: RESULT = new MethodDecl(new RefType(type), name, f, v, s, e, nameleft); :}
+;
 
-formalArgs ::= INT LBRACKET RBRACKET ID:name commaPrefixedFormalArgs:fs
-		{:
-			if(fs == null) { fs = new LinkedList<FormalArg>();}
-			fs.add(0, new FormalArg(new IntArrayAstType(), name, nameleft));
-			RESULT = fs;
-		:}
-	| BOOLEAN ID:name commaPrefixedFormalArgs:fs
-		{:
-			if(fs == null) { fs = new LinkedList<FormalArg>();}
-			fs.add(0, new FormalArg(new BoolAstType(), name, nameleft));
-			RESULT = fs;
-		:}
-	| INT ID:name commaPrefixedFormalArgs:fs
-		{:
-			if(fs == null) { fs = new LinkedList<FormalArg>();}
-			fs.add(0, new FormalArg(new IntAstType(), name, nameleft));
-			RESULT = fs;
-		:}
-	| ID:type ID:name commaPrefixedFormalArgs:fs
-		{:
-			if(fs == null) { fs = new LinkedList<FormalArg>();}
-			fs.add(0, new FormalArg(new RefType(type), name, nameleft));
-			RESULT = fs;
-		:}
-	| {: RESULT = new LinkedList<FormalArg>(); :};
+formalArgs ::= INT LBRACKET RBRACKET ID:name commaFormalArgs:fs
+			{: if(fs == null) fs = new LinkedList<FormalArg>(); fs.add(0, new FormalArg(new IntArrayAstType(), name, nameleft)); RESULT = fs; :}
+		| BOOLEAN ID:name commaFormalArgs:fs
+			{: if(fs == null) fs = new LinkedList<FormalArg>(); fs.add(0, new FormalArg(new BoolAstType(), name, nameleft)); RESULT = fs; :}
+		| INT ID:name commaFormalArgs:fs
+			{: if(fs == null) fs = new LinkedList<FormalArg>(); fs.add(0, new FormalArg(new IntAstType(), name, nameleft)); RESULT = fs; :}
+		| ID:type ID:name commaFormalArgs:fs
+						{: if(fs == null) fs = new LinkedList<FormalArg>(); fs.add(0, new FormalArg(new RefType(type), name, nameleft)); RESULT = fs; :}
+		| /* empty */
+			{: RESULT = new LinkedList<FormalArg>(); :}
+;
 
-commaPrefixedFormalArgs ::= commaPrefixedFormalArgs:fs commaPrefixedFormalArg:f
-		{:
-			if(fs == null) { fs = new LinkedList<FormalArg>();}
-			fs.add(f);
-			RESULT = fs;
-		:}
-	| {: RESULT = new LinkedList<FormalArg>(); :};
+commaFormalArgs ::= commaFormalArgs:fs commaFormalArg:f
+						{: if(fs == null) fs = new LinkedList<FormalArg>(); fs.add(f); RESULT = fs; :}
+		| /* empty */	{: RESULT = new LinkedList<FormalArg>(); :}
+;
 
-commaPrefixedFormalArg ::= COMMA INT LBRACKET RBRACKET ID:name
-		{: RESULT = new FormalArg(new IntArrayAstType(), name, nameleft);:}
-	| COMMA BOOLEAN ID:name
-		{: RESULT = new FormalArg(new BoolAstType(), name, nameleft); :}
-	| COMMA INT ID:name
-		{: RESULT = new FormalArg(new IntAstType(), name, nameleft); :}
-	| COMMA ID:type ID:name
-		{: RESULT = new FormalArg(new RefType(type), name, nameleft); :};
+commaFormalArg ::= COMMA INT LBRACKET RBRACKET ID:name
+			{: RESULT = new FormalArg(new IntArrayAstType(), name, nameleft);:}
+		| COMMA BOOLEAN ID:name
+			{: RESULT = new FormalArg(new BoolAstType(), name, nameleft); :}
+		| COMMA INT ID:name
+			{: RESULT = new FormalArg(new IntAstType(), name, nameleft); :}
+		| COMMA ID:type ID:name
+			{: RESULT = new FormalArg(new RefType(type), name, nameleft); :}
+;
 
 statements ::= statement:s statements:sl
-		{:
-			if(sl == null) { sl = new LinkedList<Statement>(); }
-			sl.add(0, s);
-			RESULT = sl;
-		:}
-	| {: RESULT = new LinkedList<Statement>(); :};
+						{: if(sl == null) sl = new LinkedList<Statement>(); sl.add(0, s); RESULT = sl;	:}
+		| /* empty */	{: RESULT = new LinkedList<Statement>(); :}
+;
 
-statement ::= LBRACE statements:sl RBRACE
-		{: RESULT = new BlockStatement(sl); :}
-	| PRINTLN:p LPAREN expr:e RPAREN SEMICOLON
-		{: RESULT = new SysoutStatement(e); :}
-	| ID:rv EQUAL:eq expr:lv SEMICOLON
-		{: RESULT = new AssignStatement(rv, lv); :}
-	| IF LPAREN expr:e RPAREN statement:true_statement ELSE statement:false_statement
-		{: RESULT = new IfStatement(e, true_statement, false_statement); :}
-	| WHILE LPAREN expr:e RPAREN statement:body
-		{: RESULT = new WhileStatement(e, body); :}
-	| ID:array LBRACKET expr:index RBRACKET EQUAL:eq expr:lv SEMICOLON
-		{: RESULT = new AssignArrayStatement(array, index, lv); :};
+statement ::= LBRACE statements:sl RBRACE			{: RESULT = new BlockStatement(sl); :}
+		| PRINTLN:p LPAREN expr:e RPAREN SEMICOLON	{: RESULT = new SysoutStatement(e); :}
+		| ID:rv EQUAL:eq expr:lv SEMICOLON 			{: RESULT = new AssignStatement(rv, lv); :}
+		| WHILE LPAREN expr:e RPAREN statement:body {: RESULT = new WhileStatement(e, body); :}
+		| IF LPAREN expr:e RPAREN statement:true_statement ELSE statement:false_statement
+				{: RESULT = new IfStatement(e, true_statement, false_statement); :}
+		| ID:array LBRACKET expr:index RBRACKET EQUAL:eq expr:lv SEMICOLON
+				{: RESULT = new AssignArrayStatement(array, index, lv); :}
+;
 
-expr ::= expr:lv PLUS:op expr:rv
-		{: RESULT = new AddExpr(lv, rv); :}
-	| expr:lv MINUS:op expr:rv
-		{: RESULT = new SubtractExpr(lv, rv); :}
-	| expr:lv MULT:op expr:rv
-		{: RESULT = new MultExpr(lv, rv); :}
-	| expr:lv AND:op expr:rv
-		{: RESULT = new AndExpr(lv, rv); :}
-	| expr:lv LESSTHAN:op expr:rv
-		{: RESULT = new LtExpr(lv, rv); :}
-	| expr:lv LBRACKET:op expr:index RBRACKET
-		{: RESULT = new ArrayAccessExpr(lv, index); :}
-	| expr:lv DOT LENGTH
-		{: RESULT = new ArrayLengthExpr(lv); :}
-	| expr:lv DOT ID:func LPAREN actuals:es RPAREN
-		{: RESULT = new MethodCallExpr(lv, func, es); :}
-	| INTLITERAL:i
-		{: RESULT = new IntegerLiteralExpr(i.intValue()); :}
-	| TRUE
-		{: RESULT = new TrueExpr(); :}
-	| FALSE
-		{: RESULT = new FalseExpr(); :}
-	| ID:name
-		{: RESULT = new IdentifierExpr(name); :}
-	| THIS
-		{: RESULT = new ThisExpr(); :}
-	| NEW INT LBRACKET expr:size RBRACKET
-		{: RESULT = new NewIntArrayExpr(size); :}
-	| NEW ID:type LPAREN RPAREN
-		{: RESULT =  new NewObjectExpr(type); :}
-	| NOT expr:e
-		{: RESULT = new NotExpr(e); :}
-	| LPAREN expr:e RPAREN
-		{: RESULT = e; :};
+expr ::= expr:lv PLUS:op expr:rv						{: RESULT = new AddExpr(lv, rv); :}
+		| expr:lv MINUS:op expr:rv						{: RESULT = new SubtractExpr(lv, rv); :}
+		| expr:lv MULT:op expr:rv						{: RESULT = new MultExpr(lv, rv); :}
+		| expr:lv AND:op expr:rv						{: RESULT = new AndExpr(lv, rv); :}
+		| expr:lv LESSTHAN:op expr:rv					{: RESULT = new LtExpr(lv, rv); :}
+		| expr:lv LBRACKET:op expr:index RBRACKET		{: RESULT = new ArrayAccessExpr(lv, index); :}
+		| expr:lv DOT LENGTH							{: RESULT = new ArrayLengthExpr(lv); :}
+		| expr:lv DOT ID:func LPAREN actuals:es RPAREN	{: RESULT = new MethodCallExpr(lv, func, es); :}
+		| INTLITERAL:i									{: RESULT = new IntegerLiteralExpr(i.intValue()); :}
+		| TRUE											{: RESULT = new TrueExpr(); :}
+		| FALSE											{: RESULT = new FalseExpr(); :}
+		| ID:name										{: RESULT = new IdentifierExpr(name); :}
+		| THIS											{: RESULT = new ThisExpr(); :}
+		| NEW INT LBRACKET expr:size RBRACKET			{: RESULT = new NewIntArrayExpr(size); :}
+		| NEW ID:type LPAREN RPAREN						{: RESULT =  new NewObjectExpr(type); :}
+		| NOT expr:e									{: RESULT = new NotExpr(e); :}
+		| LPAREN expr:e RPAREN							{: RESULT = e; :}
+;
 
-actuals ::= actual:a commaPrefixedActuals:as
-		{:
-			if(as == null) { as = new LinkedList<Expr>(); }
-			as.add(0, a);
-			RESULT = as;
-		:}
-	| {: RESULT = new LinkedList<Expr>(); :};
+actuals ::= actual:a commaActuals:as {: if(as == null) as = new LinkedList<Expr>(); as.add(0, a); RESULT = as; :}
+		| /* empty */				 {: RESULT = new LinkedList<Expr>(); :}
+;
 
-commaPrefixedActuals ::= commaPrefixedActuals:as actual:a
-		{:
-			if(as == null) { as = new LinkedList<Expr>(); }
-			as.add(a);
-			RESULT = as;
-		:}
-	|;
+commaActuals ::= commaActuals:as actual:a {: if(as == null) as = new LinkedList<Expr>(); as.add(a);	RESULT = as; :}
+		| /* empty */
+;
 
 actual ::= COMMA expr:e {: RESULT = e; :};
