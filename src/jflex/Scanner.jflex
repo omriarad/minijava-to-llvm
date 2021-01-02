@@ -60,7 +60,7 @@ EndOfLineComment = "//" {InputCharacter}*
 "new"		{ return symbol(NEW); }
 
 /* literals */
-{Integer}	{ return symbol(INTEGER, new Integer(Integer.parseInt(yytext()))); }
+{Integer}	{ return symbol(INTLITERAL, new Integer(Integer.parseInt(yytext()))); }
 
 ";"		{ return symbol(SEMICOLON); }
 "("		{ return symbol(LPAREN); }

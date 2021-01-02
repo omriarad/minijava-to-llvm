@@ -49,19 +49,27 @@ scan with
 /*************/
 /* TERMINALS */
 /*************/
-terminal PUBLIC, STATIC, VOID, MAIN, STRING;
-terminal CLASS, EXTENDS;
-terminal RETURN, IF, ELSE, WHILE;
+/* Classes */
+terminal PUBLIC, CLASS, EXTENDS, RETURN;
+terminal STATIC, VOID, MAIN, STRING; // Main terminals
+/* Statements */
+terminal IF, ELSE, WHILE, PRINTLN;
+/* Primitives */
 terminal INT, BOOLEAN;
-terminal PRINTLN, LENGTH, TRUE, FALSE, NEW, THIS;
+/* Objects */
+terminal NEW, THIS;
+/* Unary expressions */
+terminal NOT;
+/* Binary expressions */
+terminal PLUS, MINUS, MULT, AND, LESSTHAN, EQUAL;
+/* Parentheses & delimiters */
 terminal LPAREN, RPAREN, LBRACKET, RBRACKET, LBRACE, RBRACE;
 terminal COMMA, DOT, SEMICOLON;
-terminal MULT;
-terminal PLUS, MINUS;
-terminal AND, LESSTHAN;
-terminal EQUAL;
-terminal NOT;
-terminal Integer INTEGER;
+/* Arrays */
+terminal LENGTH;
+/* Literals */
+terminal TRUE, FALSE;
+terminal Integer INTLITERAL;
 terminal String ID;
 
 /*****************/
@@ -450,7 +458,7 @@ expr ::=expr:l PLUS:op expr:r
 		RESULT = result;
 	:}
 	|
-	INTEGER:i
+	INTLITERAL:i
 	{:
 		IntegerLiteralExpr result  = new IntegerLiteralExpr(i.intValue());
 		RESULT = result;
