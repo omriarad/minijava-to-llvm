@@ -1,0 +1,13 @@
+class Main {
+	public static void main(String[] args) {
+		System.out.println(1);
+	}
+}
+
+class A {
+	public int run() {
+		return (1).run();
+	}
+
+}
+

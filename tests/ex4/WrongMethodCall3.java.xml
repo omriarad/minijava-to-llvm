@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<program>
+    <mainclass>
+        <name>Main</name>
+        <argsName>a</argsName>
+        <mainStatement>
+            <sysout>
+                <arg>
+                    <call>
+                        <ownerExpr>
+                            <new-object>
+<classId>A</classId>
+                            </new-object>
+                        </ownerExpr>
+                        <methodId>test</methodId>
+                        <actuals>
+                            <actual>
+<new-object>
+    <classId>A</classId>
+</new-object>
+                            </actual>
+                            <actual>
+<new-object>
+    <classId>A</classId>
+</new-object>
+                            </actual>
+                        </actuals>
+                    </call>
+                </arg>
+            </sysout>
+        </mainStatement>
+    </mainclass>
+    <classdecls>
+        <classdecl>
+            <name>A</name>
+            <fields/>
+            <methoddecls>
+                <methoddecl>
+                    <lineNumber>8</lineNumber>
+                    <returnType>
+                        <int/>
+                    </returnType>
+                    <name>test</name>
+                    <formals>
+                        <formal>
+                            <lineNumber>8</lineNumber>
+                            <type>
+<ref>
+    <id>A</id>
+</ref>
+                            </type>
+                            <name>formal1</name>
+                        </formal>
+                        <formal>
+                            <lineNumber>8</lineNumber>
+                            <type>
+<ref>
+    <id>A</id>
+</ref>
+                            </type>
+                            <name>formal2</name>
+                        </formal>
+                    </formals>
+                    <vardecls/>
+                    <body/>
+                    <ret>
+                        <int-literal>
+                            <num>5</num>
+                        </int-literal>
+                    </ret>
+                </methoddecl>
+            </methoddecls>
+        </classdecl>
+        <classdecl>
+            <name>B</name>
+            <superName>A</superName>
+            <fields/>
+            <methoddecls>
+                <methoddecl>
+                    <lineNumber>14</lineNumber>
+                    <returnType>
+                        <int/>
+                    </returnType>
+                    <name>test</name>
+                    <formals>
+                        <formal>
+                            <lineNumber>14</lineNumber>
+                            <type>
+<ref>
+    <id>B</id>
+</ref>
+                            </type>
+                            <name>formal1</name>
+                        </formal>
+                        <formal>
+                            <lineNumber>14</lineNumber>
+                            <type>
+<ref>
+    <id>B</id>
+</ref>
+                            </type>
+                            <name>formal2</name>
+                        </formal>
+                    </formals>
+                    <vardecls>
+                        <vardecl>
+                            <lineNumber>15</lineNumber>
+                            <type>
+<ref>
+    <id>A</id>
+</ref>
+                            </type>
+                            <name>a</name>
+                        </vardecl>
+                        <vardecl>
+                            <lineNumber>16</lineNumber>
+                            <type>
+<int/>
+                            </type>
+                            <name>res</name>
+                        </vardecl>
+                    </vardecls>
+                    <body>
+                        <assign>
+                            <lv>res</lv>
+                            <rv>
+<call>
+    <ownerExpr>
+        <ref-id>
+            <id>a</id>
+        </ref-id>
+    </ownerExpr>
+    <methodId>test</methodId>
+    <actuals>
+        <actual>
+            <new-object>
+                <classId>B</classId>
+            </new-object>
+        </actual>
+        <actual>
+            <new-object>
+                <classId>C</classId>
+            </new-object>
+        </actual>
+    </actuals>
+</call>
+                            </rv>
+                        </assign>
+                    </body>
+                    <ret>
+                        <int-literal>
+                            <num>3</num>
+                        </int-literal>
+                    </ret>
+                </methoddecl>
+            </methoddecls>
+        </classdecl>
+        <classdecl>
+            <name>C</name>
+            <fields/>
+            <methoddecls/>
+        </classdecl>
+    </classdecls>
+</program>

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<program>
+    <mainclass>
+        <name>Main</name>
+        <argsName>a</argsName>
+        <mainStatement>
+            <sysout>
+                <arg>
+                    <call>
+                        <ownerExpr>
+                            <new-object>
+<classId>A</classId>
+                            </new-object>
+                        </ownerExpr>
+                        <methodId>test</methodId>
+                        <actuals>
+                            <actual>
+<new-object>
+    <classId>A</classId>
+</new-object>
+                            </actual>
+                        </actuals>
+                    </call>
+                </arg>
+            </sysout>
+        </mainStatement>
+    </mainclass>
+    <classdecls>
+        <classdecl>
+            <name>A</name>
+            <fields>
+                <field>
+                    <lineNumber>8</lineNumber>
+                    <type>
+                        <ref>
+                            <id>B</id>
+                        </ref>
+                    </type>
+                    <name>b</name>
+                </field>
+            </fields>
+            <methoddecls>
+                <methoddecl>
+                    <lineNumber>9</lineNumber>
+                    <returnType>
+                        <int/>
+                    </returnType>
+                    <name>test</name>
+                    <formals>
+                        <formal>
+                            <lineNumber>9</lineNumber>
+                            <type>
+<ref>
+    <id>A</id>
+</ref>
+                            </type>
+                            <name>a</name>
+                        </formal>
+                    </formals>
+                    <vardecls/>
+                    <body/>
+                    <ret>
+                        <int-literal>
+                            <num>5</num>
+                        </int-literal>
+                    </ret>
+                </methoddecl>
+            </methoddecls>
+        </classdecl>
+        <classdecl>
+            <name>B</name>
+            <superName>A</superName>
+            <fields>
+                <field>
+                    <lineNumber>15</lineNumber>
+                    <type>
+                        <ref>
+                            <id>A</id>
+                        </ref>
+                    </type>
+                    <name>a</name>
+                </field>
+            </fields>
+            <methoddecls>
+                <methoddecl>
+                    <lineNumber>16</lineNumber>
+                    <returnType>
+                        <int/>
+                    </returnType>
+                    <name>test</name>
+                    <formals>
+                        <formal>
+                            <lineNumber>16</lineNumber>
+                            <type>
+<ref>
+    <id>B</id>
+</ref>
+                            </type>
+                            <name>b</name>
+                        </formal>
+                    </formals>
+                    <vardecls>
+                        <vardecl>
+                            <lineNumber>17</lineNumber>
+                            <type>
+<int/>
+                            </type>
+                            <name>res</name>
+                        </vardecl>
+                    </vardecls>
+                    <body>
+                        <assign>
+                            <lv>res</lv>
+                            <rv>
+<call>
+    <ownerExpr>
+        <new-object>
+            <classId>Fake</classId>
+        </new-object>
+    </ownerExpr>
+    <methodId>test</methodId>
+    <actuals/>
+</call>
+                            </rv>
+                        </assign>
+                    </body>
+                    <ret>
+                        <int-literal>
+                            <num>3</num>
+                        </int-literal>
+                    </ret>
+                </methoddecl>
+            </methoddecls>
+        </classdecl>
+    </classdecls>
+</program>

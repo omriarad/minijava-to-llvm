@@ -1,0 +1,787 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<program>
+    <mainclass>
+        <name>Main</name>
+        <argsName>args</argsName>
+        <mainStatement>
+            <sysout>
+                <arg>
+                    <call>
+                        <ownerExpr>
+                            <new-object>
+<classId>Test</classId>
+                            </new-object>
+                        </ownerExpr>
+                        <methodId>test</methodId>
+                        <actuals/>
+                    </call>
+                </arg>
+            </sysout>
+        </mainStatement>
+    </mainclass>
+    <classdecls>
+        <classdecl>
+            <name>Test</name>
+            <fields/>
+            <methoddecls>
+                <methoddecl>
+                    <lineNumber>8</lineNumber>
+                    <returnType>
+                        <int/>
+                    </returnType>
+                    <name>test</name>
+                    <formals/>
+                    <vardecls>
+                        <vardecl>
+                            <lineNumber>9</lineNumber>
+                            <type>
+<ref>
+    <id>A</id>
+</ref>
+                            </type>
+                            <name>a</name>
+                        </vardecl>
+                        <vardecl>
+                            <lineNumber>10</lineNumber>
+                            <type>
+<ref>
+    <id>B</id>
+</ref>
+                            </type>
+                            <name>b</name>
+                        </vardecl>
+                        <vardecl>
+                            <lineNumber>11</lineNumber>
+                            <type>
+<ref>
+    <id>C</id>
+</ref>
+                            </type>
+                            <name>c</name>
+                        </vardecl>
+                        <vardecl>
+                            <lineNumber>12</lineNumber>
+                            <type>
+<ref>
+    <id>D</id>
+</ref>
+                            </type>
+                            <name>d</name>
+                        </vardecl>
+                    </vardecls>
+                    <body>
+                        <assign>
+                            <lv>a</lv>
+                            <rv>
+<new-object>
+    <classId>A</classId>
+</new-object>
+                            </rv>
+                        </assign>
+                        <assign>
+                            <lv>b</lv>
+                            <rv>
+<new-object>
+    <classId>B</classId>
+</new-object>
+                            </rv>
+                        </assign>
+                        <assign>
+                            <lv>c</lv>
+                            <rv>
+<new-object>
+    <classId>C</classId>
+</new-object>
+                            </rv>
+                        </assign>
+                        <assign>
+                            <lv>d</lv>
+                            <rv>
+<new-object>
+    <classId>D</classId>
+</new-object>
+                            </rv>
+                        </assign>
+                        <sysout>
+                            <arg>
+<call>
+    <ownerExpr>
+        <ref-id>
+            <id>a</id>
+        </ref-id>
+    </ownerExpr>
+    <methodId>init</methodId>
+    <actuals/>
+</call>
+                            </arg>
+                        </sysout>
+                        <sysout>
+                            <arg>
+<call>
+    <ownerExpr>
+        <ref-id>
+            <id>b</id>
+        </ref-id>
+    </ownerExpr>
+    <methodId>init</methodId>
+    <actuals/>
+</call>
+                            </arg>
+                        </sysout>
+                        <sysout>
+                            <arg>
+<call>
+    <ownerExpr>
+        <ref-id>
+            <id>c</id>
+        </ref-id>
+    </ownerExpr>
+    <methodId>init</methodId>
+    <actuals/>
+</call>
+                            </arg>
+                        </sysout>
+                        <sysout>
+                            <arg>
+<call>
+    <ownerExpr>
+        <ref-id>
+            <id>d</id>
+        </ref-id>
+    </ownerExpr>
+    <methodId>init</methodId>
+    <actuals/>
+</call>
+                            </arg>
+                        </sysout>
+                    </body>
+                    <ret>
+                        <int-literal>
+                            <num>0</num>
+                        </int-literal>
+                    </ret>
+                </methoddecl>
+            </methoddecls>
+        </classdecl>
+        <classdecl>
+            <name>A</name>
+            <fields>
+                <field>
+                    <lineNumber>26</lineNumber>
+                    <type>
+                        <int/>
+                    </type>
+                    <name>intField</name>
+                </field>
+                <field>
+                    <lineNumber>27</lineNumber>
+                    <type>
+                        <bool/>
+                    </type>
+                    <name>boolField</name>
+                </field>
+            </fields>
+            <methoddecls>
+                <methoddecl>
+                    <lineNumber>29</lineNumber>
+                    <returnType>
+                        <int/>
+                    </returnType>
+                    <name>init</name>
+                    <formals/>
+                    <vardecls/>
+                    <body>
+                        <assign>
+                            <lv>intField</lv>
+                            <rv>
+<int-literal>
+    <num>1</num>
+</int-literal>
+                            </rv>
+                        </assign>
+                        <assign>
+                            <lv>boolField</lv>
+                            <rv>
+<true/>
+                            </rv>
+                        </assign>
+                    </body>
+                    <ret>
+                        <ref-id>
+                            <id>intField</id>
+                        </ref-id>
+                    </ret>
+                </methoddecl>
+            </methoddecls>
+        </classdecl>
+        <classdecl>
+            <name>B</name>
+            <superName>A</superName>
+            <fields>
+                <field>
+                    <lineNumber>37</lineNumber>
+                    <type>
+                        <int-array/>
+                    </type>
+                    <name>arrField</name>
+                </field>
+            </fields>
+            <methoddecls>
+                <methoddecl>
+                    <lineNumber>39</lineNumber>
+                    <returnType>
+                        <int/>
+                    </returnType>
+                    <name>init</name>
+                    <formals/>
+                    <vardecls/>
+                    <body>
+                        <assign>
+                            <lv>intField</lv>
+                            <rv>
+<int-literal>
+    <num>2</num>
+</int-literal>
+                            </rv>
+                        </assign>
+                        <assign>
+                            <lv>boolField</lv>
+                            <rv>
+<true/>
+                            </rv>
+                        </assign>
+                        <assign>
+                            <lv>arrField</lv>
+                            <rv>
+<new-int-array>
+    <lengthExpr>
+        <int-literal>
+            <num>2</num>
+        </int-literal>
+    </lengthExpr>
+</new-int-array>
+                            </rv>
+                        </assign>
+                        <assign-array>
+                            <lv>arrField</lv>
+                            <index>
+<int-literal>
+    <num>0</num>
+</int-literal>
+                            </index>
+                            <rv>
+<int-literal>
+    <num>3</num>
+</int-literal>
+                            </rv>
+                        </assign-array>
+                        <assign-array>
+                            <lv>arrField</lv>
+                            <index>
+<int-literal>
+    <num>1</num>
+</int-literal>
+                            </index>
+                            <rv>
+<int-literal>
+    <num>4</num>
+</int-literal>
+                            </rv>
+                        </assign-array>
+                    </body>
+                    <ret>
+                        <add>
+                            <e1>
+<ref-id>
+    <id>intField</id>
+</ref-id>
+                            </e1>
+                            <e2>
+<add>
+    <e1>
+        <array-access>
+            <arrayExpr>
+                <ref-id>
+                    <id>arrField</id>
+                </ref-id>
+            </arrayExpr>
+            <indexExpr>
+                <int-literal>
+                    <num>0</num>
+                </int-literal>
+            </indexExpr>
+        </array-access>
+    </e1>
+    <e2>
+        <array-access>
+            <arrayExpr>
+                <ref-id>
+                    <id>arrField</id>
+                </ref-id>
+            </arrayExpr>
+            <indexExpr>
+                <int-literal>
+                    <num>1</num>
+                </int-literal>
+            </indexExpr>
+        </array-access>
+    </e2>
+</add>
+                            </e2>
+                        </add>
+                    </ret>
+                </methoddecl>
+            </methoddecls>
+        </classdecl>
+        <classdecl>
+            <name>C</name>
+            <superName>B</superName>
+            <fields>
+                <field>
+                    <lineNumber>51</lineNumber>
+                    <type>
+                        <ref>
+                            <id>D</id>
+                        </ref>
+                    </type>
+                    <name>objField</name>
+                </field>
+            </fields>
+            <methoddecls>
+                <methoddecl>
+                    <lineNumber>53</lineNumber>
+                    <returnType>
+                        <int/>
+                    </returnType>
+                    <name>init</name>
+                    <formals/>
+                    <vardecls>
+                        <vardecl>
+                            <lineNumber>54</lineNumber>
+                            <type>
+<int/>
+                            </type>
+                            <name>dNum</name>
+                        </vardecl>
+                    </vardecls>
+                    <body>
+                        <assign>
+                            <lv>intField</lv>
+                            <rv>
+<int-literal>
+    <num>5</num>
+</int-literal>
+                            </rv>
+                        </assign>
+                        <assign>
+                            <lv>boolField</lv>
+                            <rv>
+<true/>
+                            </rv>
+                        </assign>
+                        <assign>
+                            <lv>arrField</lv>
+                            <rv>
+<new-int-array>
+    <lengthExpr>
+        <int-literal>
+            <num>2</num>
+        </int-literal>
+    </lengthExpr>
+</new-int-array>
+                            </rv>
+                        </assign>
+                        <assign-array>
+                            <lv>arrField</lv>
+                            <index>
+<int-literal>
+    <num>0</num>
+</int-literal>
+                            </index>
+                            <rv>
+<int-literal>
+    <num>6</num>
+</int-literal>
+                            </rv>
+                        </assign-array>
+                        <assign-array>
+                            <lv>arrField</lv>
+                            <index>
+<int-literal>
+    <num>1</num>
+</int-literal>
+                            </index>
+                            <rv>
+<int-literal>
+    <num>7</num>
+</int-literal>
+                            </rv>
+                        </assign-array>
+                        <assign>
+                            <lv>objField</lv>
+                            <rv>
+<new-object>
+    <classId>D</classId>
+</new-object>
+                            </rv>
+                        </assign>
+                        <assign>
+                            <lv>dNum</lv>
+                            <rv>
+<call>
+    <ownerExpr>
+        <ref-id>
+            <id>objField</id>
+        </ref-id>
+    </ownerExpr>
+    <methodId>getNumber</methodId>
+    <actuals>
+        <actual>
+            <ref-id>
+                <id>boolField</id>
+            </ref-id>
+        </actual>
+    </actuals>
+</call>
+                            </rv>
+                        </assign>
+                    </body>
+                    <ret>
+                        <add>
+                            <e1>
+<ref-id>
+    <id>intField</id>
+</ref-id>
+                            </e1>
+                            <e2>
+<add>
+    <e1>
+        <array-access>
+            <arrayExpr>
+                <ref-id>
+                    <id>arrField</id>
+                </ref-id>
+            </arrayExpr>
+            <indexExpr>
+                <int-literal>
+                    <num>0</num>
+                </int-literal>
+            </indexExpr>
+        </array-access>
+    </e1>
+    <e2>
+        <add>
+            <e1>
+                <array-access>
+                    <arrayExpr>
+                        <ref-id>
+                            <id>arrField</id>
+                        </ref-id>
+                    </arrayExpr>
+                    <indexExpr>
+                        <int-literal>
+                            <num>1</num>
+                        </int-literal>
+                    </indexExpr>
+                </array-access>
+            </e1>
+            <e2>
+                <ref-id>
+                    <id>dNum</id>
+                </ref-id>
+            </e2>
+        </add>
+    </e2>
+</add>
+                            </e2>
+                        </add>
+                    </ret>
+                </methoddecl>
+                <methoddecl>
+                    <lineNumber>65</lineNumber>
+                    <returnType>
+                        <int/>
+                    </returnType>
+                    <name>getNumber</name>
+                    <formals>
+                        <formal>
+                            <lineNumber>65</lineNumber>
+                            <type>
+<bool/>
+                            </type>
+                            <name>bool</name>
+                        </formal>
+                    </formals>
+                    <vardecls>
+                        <vardecl>
+                            <lineNumber>66</lineNumber>
+                            <type>
+<int/>
+                            </type>
+                            <name>res</name>
+                        </vardecl>
+                    </vardecls>
+                    <body>
+                        <if>
+                            <cond>
+<ref-id>
+    <id>bool</id>
+</ref-id>
+                            </cond>
+                            <thencase>
+<assign>
+    <lv>res</lv>
+    <rv>
+        <int-literal>
+            <num>13</num>
+        </int-literal>
+    </rv>
+</assign>
+                            </thencase>
+                            <elsecase>
+<assign>
+    <lv>res</lv>
+    <rv>
+        <int-literal>
+            <num>14</num>
+        </int-literal>
+    </rv>
+</assign>
+                            </elsecase>
+                        </if>
+                    </body>
+                    <ret>
+                        <ref-id>
+                            <id>res</id>
+                        </ref-id>
+                    </ret>
+                </methoddecl>
+            </methoddecls>
+        </classdecl>
+        <classdecl>
+            <name>D</name>
+            <superName>B</superName>
+            <fields>
+                <field>
+                    <lineNumber>78</lineNumber>
+                    <type>
+                        <ref>
+                            <id>C</id>
+                        </ref>
+                    </type>
+                    <name>objField</name>
+                </field>
+            </fields>
+            <methoddecls>
+                <methoddecl>
+                    <lineNumber>80</lineNumber>
+                    <returnType>
+                        <int/>
+                    </returnType>
+                    <name>init</name>
+                    <formals/>
+                    <vardecls>
+                        <vardecl>
+                            <lineNumber>81</lineNumber>
+                            <type>
+<int/>
+                            </type>
+                            <name>cNum</name>
+                        </vardecl>
+                    </vardecls>
+                    <body>
+                        <assign>
+                            <lv>intField</lv>
+                            <rv>
+<int-literal>
+    <num>10</num>
+</int-literal>
+                            </rv>
+                        </assign>
+                        <assign>
+                            <lv>boolField</lv>
+                            <rv>
+<false/>
+                            </rv>
+                        </assign>
+                        <assign>
+                            <lv>arrField</lv>
+                            <rv>
+<new-int-array>
+    <lengthExpr>
+        <int-literal>
+            <num>2</num>
+        </int-literal>
+    </lengthExpr>
+</new-int-array>
+                            </rv>
+                        </assign>
+                        <assign-array>
+                            <lv>arrField</lv>
+                            <index>
+<int-literal>
+    <num>0</num>
+</int-literal>
+                            </index>
+                            <rv>
+<int-literal>
+    <num>11</num>
+</int-literal>
+                            </rv>
+                        </assign-array>
+                        <assign-array>
+                            <lv>arrField</lv>
+                            <index>
+<int-literal>
+    <num>1</num>
+</int-literal>
+                            </index>
+                            <rv>
+<int-literal>
+    <num>12</num>
+</int-literal>
+                            </rv>
+                        </assign-array>
+                        <assign>
+                            <lv>objField</lv>
+                            <rv>
+<new-object>
+    <classId>C</classId>
+</new-object>
+                            </rv>
+                        </assign>
+                        <assign>
+                            <lv>cNum</lv>
+                            <rv>
+<call>
+    <ownerExpr>
+        <ref-id>
+            <id>objField</id>
+        </ref-id>
+    </ownerExpr>
+    <methodId>getNumber</methodId>
+    <actuals>
+        <actual>
+            <ref-id>
+                <id>boolField</id>
+            </ref-id>
+        </actual>
+    </actuals>
+</call>
+                            </rv>
+                        </assign>
+                    </body>
+                    <ret>
+                        <add>
+                            <e1>
+<ref-id>
+    <id>intField</id>
+</ref-id>
+                            </e1>
+                            <e2>
+<add>
+    <e1>
+        <array-access>
+            <arrayExpr>
+                <ref-id>
+                    <id>arrField</id>
+                </ref-id>
+            </arrayExpr>
+            <indexExpr>
+                <int-literal>
+                    <num>0</num>
+                </int-literal>
+            </indexExpr>
+        </array-access>
+    </e1>
+    <e2>
+        <add>
+            <e1>
+                <array-access>
+                    <arrayExpr>
+                        <ref-id>
+                            <id>arrField</id>
+                        </ref-id>
+                    </arrayExpr>
+                    <indexExpr>
+                        <int-literal>
+                            <num>1</num>
+                        </int-literal>
+                    </indexExpr>
+                </array-access>
+            </e1>
+            <e2>
+                <ref-id>
+                    <id>cNum</id>
+                </ref-id>
+            </e2>
+        </add>
+    </e2>
+</add>
+                            </e2>
+                        </add>
+                    </ret>
+                </methoddecl>
+                <methoddecl>
+                    <lineNumber>65</lineNumber>
+                    <returnType>
+                        <int/>
+                    </returnType>
+                    <name>getNumber</name>
+                    <formals>
+                        <formal>
+                            <lineNumber>92</lineNumber>
+                            <type>
+<bool/>
+                            </type>
+                            <name>bool</name>
+                        </formal>
+                    </formals>
+                    <vardecls>
+                        <vardecl>
+                            <lineNumber>93</lineNumber>
+                            <type>
+<int/>
+                            </type>
+                            <name>res</name>
+                        </vardecl>
+                    </vardecls>
+                    <body>
+                        <if>
+                            <cond>
+<ref-id>
+    <id>bool</id>
+</ref-id>
+                            </cond>
+                            <thencase>
+<assign>
+    <lv>res</lv>
+    <rv>
+        <int-literal>
+            <num>8</num>
+        </int-literal>
+    </rv>
+</assign>
+                            </thencase>
+                            <elsecase>
+<assign>
+    <lv>res</lv>
+    <rv>
+        <int-literal>
+            <num>9</num>
+        </int-literal>
+    </rv>
+</assign>
+                            </elsecase>
+                        </if>
+                    </body>
+                    <ret>
+                        <ref-id>
+                            <id>res</id>
+                        </ref-id>
+                    </ret>
+                </methoddecl>
+            </methoddecls>
+        </classdecl>
+    </classdecls>
+</program>
