@@ -84,9 +84,3 @@ EndOfLineComment = "//" {InputCharacter}*
 {white_space}		{ /* ignore */ }
 {EndOfLineComment}	{ /* ignore */ }
 "/*" ~ "*/"		{ /* ignore */ }
-
-/* error fallback */
-[^]|\n	{  /* throw new Error("Illegal character <"+ yytext()+">");*/
-		System.err.println("Illegal character <"+ yytext()+">");
-		System.exit(1);
-	}
