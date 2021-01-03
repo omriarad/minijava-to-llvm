@@ -154,7 +154,7 @@ varDecl ::= INT LBRACKET RBRACKET IDENTIFIER:name SEMICOLON {: RESULT = new VarD
 
 statement ::= LBRACE statements:sl RBRACE			{: RESULT = new BlockStatement(sl); :}
 		| PRINT:p LPAREN expr:e RPAREN SEMICOLON	{: RESULT = new SysoutStatement(e); :}
-		| IDENTIFIER:rv EQUAL:eq expr:lv SEMICOLON 			{: RESULT = new AssignStatement(rv, lv); :}
+		| IDENTIFIER:lv EQUAL:eq expr:rv SEMICOLON 			{: RESULT = new AssignStatement(lv, rv); :}
 		| WHILE LPAREN expr:e RPAREN statement:body {: RESULT = new WhileStatement(e, body); :}
 		| IF LPAREN expr:e RPAREN statement:true_statement ELSE statement:false_statement
 				{: RESULT = new IfStatement(e, true_statement, false_statement); :}
