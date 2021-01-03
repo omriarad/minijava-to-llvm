@@ -32,7 +32,7 @@ class D extends C {
 		return (max)[(new D()).Start()];
 	}
 
-	public null Start() {
+	public D Start() {
 		return new D();
 	}
 

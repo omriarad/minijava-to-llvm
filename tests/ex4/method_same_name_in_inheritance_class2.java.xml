@@ -75,7 +75,9 @@
                 <methoddecl>
                     <lineNumber>22</lineNumber>
                     <returnType>
-                        <ref/>
+<ref>
+    <id>Example</id>
+</ref>
                     </returnType>
                     <name>run</name>
                     <formals/>

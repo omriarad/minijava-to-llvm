@@ -162,7 +162,9 @@
                 <methoddecl>
                     <lineNumber>70</lineNumber>
                     <returnType>
-                        <ref/>
+<ref>
+    <id>D</id>
+</ref>
                     </returnType>
                     <name>Start</name>
                     <formals/>

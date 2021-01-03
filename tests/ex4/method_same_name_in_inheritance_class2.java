@@ -14,7 +14,7 @@ class Example {
 }
 
 class A extends Example {
-	public null run() {
+	public Example run() {
 		Example s;
 		s = new Example();
 		return s;
