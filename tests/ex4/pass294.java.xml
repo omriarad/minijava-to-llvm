@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<program>
+    <mainclass>
+        <name>A</name>
+        <argsName>args</argsName>
+        <mainStatement>
+            <sysout>
+                <arg>
+                    <ref-id>
+                        <id>hello</id>
+                    </ref-id>
+                </arg>
+            </sysout>
+        </mainStatement>
+    </mainclass>
+    <classdecls>
+        <classdecl>
+            <name>This</name>
+            <fields/>
+            <methoddecls>
+                <methoddecl>
+                    <lineNumber>6</lineNumber>
+                    <returnType>
+                        <ref>
+                            <id>stTTTic</id>
+                        </ref>
+                    </returnType>
+                    <name>p</name>
+                    <formals/>
+                    <vardecls/>
+                    <body>
+                        <assign>
+                            <lv>identifier</lv>
+                            <rv>
+<ref-id>
+    <id>that</id>
+</ref-id>
+                            </rv>
+                        </assign>
+                    </body>
+                    <ret>
+                        <this/>
+                    </ret>
+                </methoddecl>
+            </methoddecls>
+        </classdecl>
+    </classdecls>
+</program>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<program>
+    <mainclass>
+        <name>Main</name>
+        <argsName>args</argsName>
+        <mainStatement>
+            <assign>
+                <lv>defuq</lv>
+                <rv>
+                    <ref-id>
+                        <id>imdoing52234_</id>
+                    </ref-id>
+                </rv>
+            </assign>
+        </mainStatement>
+    </mainclass>
+    <classdecls>
+        <classdecl>
+            <name>id</name>
+            <fields/>
+            <methoddecls>
+                <methoddecl>
+                    <lineNumber>7</lineNumber>
+                    <returnType>
+                        <ref>
+                            <id>a1</id>
+                        </ref>
+                    </returnType>
+                    <name>p</name>
+                    <formals/>
+                    <vardecls>
+                        <vardecl>
+                            <lineNumber>8</lineNumber>
+                            <type>
+<int/>
+                            </type>
+                            <name>x</name>
+                        </vardecl>
+                        <vardecl>
+                            <lineNumber>9</lineNumber>
+                            <type>
+<bool/>
+                            </type>
+                            <name>y</name>
+                        </vardecl>
+                    </vardecls>
+                    <body>
+                        <assign>
+                            <lv>x</lv>
+                            <rv>
+<subtract>
+    <e1>
+        <int-literal>
+            <num>0</num>
+        </int-literal>
+    </e1>
+    <e2>
+        <ref-id>
+            <id>b</id>
+        </ref-id>
+    </e2>
+</subtract>
+                            </rv>
+                        </assign>
+                        <assign>
+                            <lv>y</lv>
+                            <rv>
+<not>
+    <e>
+        <ref-id>
+            <id>y</id>
+        </ref-id>
+    </e>
+</not>
+                            </rv>
+                        </assign>
+                    </body>
+                    <ret>
+                        <call>
+                            <ownerExpr>
+<ref-id>
+    <id>obj</id>
+</ref-id>
+                            </ownerExpr>
+                            <methodId>func</methodId>
+                            <actuals>
+<actual>
+    <ref-id>
+        <id>arg1</id>
+    </ref-id>
+</actual>
+<actual>
+    <ref-id>
+        <id>arg2</id>
+    </ref-id>
+</actual>
+<actual>
+    <new-object>
+        <classId>A</classId>
+    </new-object>
+</actual>
+<actual>
+    <this/>
+</actual>
+<actual>
+    <subtract>
+        <e1>
+            <int-literal>
+                <num>0</num>
+            </int-literal>
+        </e1>
+        <e2>
+            <int-literal>
+                <num>9</num>
+            </int-literal>
+        </e2>
+    </subtract>
+</actual>
+                            </actuals>
+                        </call>
+                    </ret>
+                </methoddecl>
+            </methoddecls>
+        </classdecl>
+    </classdecls>
+</program>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<program>
+    <mainclass>
+        <name>THeeMainnnCLASASSDAS222</name>
+        <argsName>puppies</argsName>
+        <mainStatement>
+            <sysout>
+                <arg>
+                    <add>
+                        <e1>
+                            <ref-id>
+<id>hello</id>
+                            </ref-id>
+                        </e1>
+                        <e2>
+                            <ref-id>
+<id>world</id>
+                            </ref-id>
+                        </e2>
+                    </add>
+                </arg>
+            </sysout>
+        </mainStatement>
+    </mainclass>
+    <classdecls>
+        <classdecl>
+            <name>A</name>
+            <fields/>
+            <methoddecls>
+                <methoddecl>
+                    <lineNumber>7</lineNumber>
+                    <returnType>
+                        <int/>
+                    </returnType>
+                    <name>f</name>
+                    <formals/>
+                    <vardecls>
+                        <vardecl>
+                            <lineNumber>8</lineNumber>
+                            <type>
+<bool/>
+                            </type>
+                            <name>x</name>
+                        </vardecl>
+                    </vardecls>
+                    <body>
+                        <assign>
+                            <lv>x</lv>
+                            <rv>
+<and>
+    <e1>
+        <and>
+            <e1>
+                <false/>
+            </e1>
+            <e2>
+                <int-literal>
+                    <num>2</num>
+                </int-literal>
+            </e2>
+        </and>
+    </e1>
+    <e2>
+        <mult>
+            <e1>
+                <int-literal>
+                    <num>3</num>
+                </int-literal>
+            </e1>
+            <e2>
+                <true/>
+            </e2>
+        </mult>
+    </e2>
+</and>
+                            </rv>
+                        </assign>
+                    </body>
+                    <ret>
+                        <ref-id>
+                            <id>x</id>
+                        </ref-id>
+                    </ret>
+                </methoddecl>
+            </methoddecls>
+        </classdecl>
+    </classdecls>
+</program>

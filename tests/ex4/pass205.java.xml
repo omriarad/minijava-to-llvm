@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<program>
+    <mainclass>
+        <name>Main</name>
+        <argsName>args</argsName>
+        <mainStatement>
+            <sysout>
+                <arg>
+                    <int-literal>
+                        <num>42</num>
+                    </int-literal>
+                </arg>
+            </sysout>
+        </mainStatement>
+    </mainclass>
+    <classdecls>
+        <classdecl>
+            <name>A</name>
+            <fields/>
+            <methoddecls>
+                <methoddecl>
+                    <lineNumber>8</lineNumber>
+                    <returnType>
+                        <ref>
+                            <id>poop</id>
+                        </ref>
+                    </returnType>
+                    <name>p</name>
+                    <formals>
+                        <formal>
+                            <lineNumber>8</lineNumber>
+                            <type>
+<int-array/>
+                            </type>
+                            <name>s</name>
+                        </formal>
+                    </formals>
+                    <vardecls/>
+                    <body/>
+                    <ret>
+                        <ref-id>
+                            <id>poop</id>
+                        </ref-id>
+                    </ret>
+                </methoddecl>
+            </methoddecls>
+        </classdecl>
+    </classdecls>
+</program>

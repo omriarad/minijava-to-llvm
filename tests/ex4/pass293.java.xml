@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<program>
+    <mainclass>
+        <name>A</name>
+        <argsName>args</argsName>
+        <mainStatement>
+            <assign>
+                <lv>b</lv>
+                <rv>
+                    <and>
+                        <e1>
+                            <lt>
+<e1>
+    <add>
+        <e1>
+            <false/>
+        </e1>
+        <e2>
+            <mult>
+                <e1>
+                    <true/>
+                </e1>
+                <e2>
+                    <int-literal>
+                        <num>2</num>
+                    </int-literal>
+                </e2>
+            </mult>
+        </e2>
+    </add>
+</e1>
+<e2>
+    <add>
+        <e1>
+            <subtract>
+                <e1>
+                    <int-literal>
+                        <num>3</num>
+                    </int-literal>
+                </e1>
+                <e2>
+                    <int-literal>
+                        <num>4</num>
+                    </int-literal>
+                </e2>
+            </subtract>
+        </e1>
+        <e2>
+            <int-literal>
+                <num>5</num>
+            </int-literal>
+        </e2>
+    </add>
+</e2>
+                            </lt>
+                        </e1>
+                        <e2>
+                            <not>
+<e>
+    <not>
+        <e>
+            <not>
+                <e>
+                    <false/>
+                </e>
+            </not>
+        </e>
+    </not>
+</e>
+                            </not>
+                        </e2>
+                    </and>
+                </rv>
+            </assign>
+        </mainStatement>
+    </mainclass>
+    <classdecls>
+        <classdecl>
+            <name>Unprecedented</name>
+            <fields/>
+            <methoddecls>
+                <methoddecl>
+                    <lineNumber>10</lineNumber>
+                    <returnType>
+                        <int/>
+                    </returnType>
+                    <name>p</name>
+                    <formals/>
+                    <vardecls>
+                        <vardecl>
+                            <lineNumber>11</lineNumber>
+                            <type>
+<int/>
+                            </type>
+                            <name>x</name>
+                        </vardecl>
+                    </vardecls>
+                    <body>
+                        <assign>
+                            <lv>x</lv>
+                            <rv>
+<and>
+    <e1>
+        <and>
+            <e1>
+                <lt>
+                    <e1>
+                        <lt>
+                            <e1>
+<lt>
+    <e1>
+        <add>
+            <e1>
+                <subtract>
+                    <e1>
+                        <int-literal>
+                            <num>0</num>
+                        </int-literal>
+                    </e1>
+                    <e2>
+                        <int-literal>
+                            <num>1</num>
+                        </int-literal>
+                    </e2>
+                </subtract>
+            </e1>
+            <e2>
+                <mult>
+                    <e1>
+                        <mult>
+                            <e1>
+<int-literal>
+    <num>2</num>
+</int-literal>
+                            </e1>
+                            <e2>
+<int-literal>
+    <num>3</num>
+</int-literal>
+                            </e2>
+                        </mult>
+                    </e1>
+                    <e2>
+                        <int-literal>
+                            <num>4</num>
+                        </int-literal>
+                    </e2>
+                </mult>
+            </e2>
+        </add>
+    </e1>
+    <e2>
+        <int-literal>
+            <num>5</num>
+        </int-literal>
+    </e2>
+</lt>
+                            </e1>
+                            <e2>
+<int-literal>
+    <num>6</num>
+</int-literal>
+                            </e2>
+                        </lt>
+                    </e1>
+                    <e2>
+                        <int-literal>
+                            <num>7</num>
+                        </int-literal>
+                    </e2>
+                </lt>
+            </e1>
+            <e2>
+                <subtract>
+                    <e1>
+                        <int-literal>
+                            <num>8</num>
+                        </int-literal>
+                    </e1>
+                    <e2>
+                        <int-literal>
+                            <num>9</num>
+                        </int-literal>
+                    </e2>
+                </subtract>
+            </e2>
+        </and>
+    </e1>
+    <e2>
+        <not>
+            <e>
+                <not>
+                    <e>
+                        <add>
+                            <e1>
+<add>
+    <e1>
+        <false/>
+    </e1>
+    <e2>
+        <true/>
+    </e2>
+</add>
+                            </e1>
+                            <e2>
+<new-object>
+    <classId>Unprecedented</classId>
+</new-object>
+                            </e2>
+                        </add>
+                    </e>
+                </not>
+            </e>
+        </not>
+    </e2>
+</and>
+                            </rv>
+                        </assign>
+                    </body>
+                    <ret>
+                        <ref-id>
+                            <id>x</id>
+                        </ref-id>
+                    </ret>
+                </methoddecl>
+            </methoddecls>
+        </classdecl>
+    </classdecls>
+</program>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<program>
+    <mainclass>
+        <name>Main</name>
+        <argsName>args</argsName>
+        <mainStatement>
+            <assign>
+                <lv>x</lv>
+                <rv>
+                    <int-literal>
+                        <num>5</num>
+                    </int-literal>
+                </rv>
+            </assign>
+        </mainStatement>
+    </mainclass>
+    <classdecls>
+        <classdecl>
+            <name>A</name>
+            <fields/>
+            <methoddecls>
+                <methoddecl>
+                    <lineNumber>7</lineNumber>
+                    <returnType>
+                        <ref>
+                            <id>A</id>
+                        </ref>
+                    </returnType>
+                    <name>p</name>
+                    <formals/>
+                    <vardecls>
+                        <vardecl>
+                            <lineNumber>8</lineNumber>
+                            <type>
+<ref>
+    <id>A</id>
+</ref>
+                            </type>
+                            <name>a</name>
+                        </vardecl>
+                    </vardecls>
+                    <body>
+                        <assign>
+                            <lv>a</lv>
+                            <rv>
+<new-object>
+    <classId>A</classId>
+</new-object>
+                            </rv>
+                        </assign>
+                    </body>
+                    <ret>
+                        <ref-id>
+                            <id>a</id>
+                        </ref-id>
+                    </ret>
+                </methoddecl>
+            </methoddecls>
+        </classdecl>
+    </classdecls>
+</program>

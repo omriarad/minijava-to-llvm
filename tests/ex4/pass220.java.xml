@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<program>
+    <mainclass>
+        <name>Main</name>
+        <argsName>args</argsName>
+        <mainStatement>
+            <assign>
+                <lv>defuq</lv>
+                <rv>
+                    <ref-id>
+                        <id>imdoing52234_</id>
+                    </ref-id>
+                </rv>
+            </assign>
+        </mainStatement>
+    </mainclass>
+    <classdecls>
+        <classdecl>
+            <name>T</name>
+            <fields/>
+            <methoddecls>
+                <methoddecl>
+                    <lineNumber>7</lineNumber>
+                    <returnType>
+                        <ref>
+                            <id>sTaTic2_</id>
+                        </ref>
+                    </returnType>
+                    <name>foo</name>
+                    <formals/>
+                    <vardecls/>
+                    <body>
+                        <assign>
+                            <lv>x</lv>
+                            <rv>
+<call>
+    <ownerExpr>
+        <ref-id>
+            <id>x</id>
+        </ref-id>
+    </ownerExpr>
+    <methodId>foo</methodId>
+    <actuals>
+        <actual>
+            <int-literal>
+                <num>4</num>
+            </int-literal>
+        </actual>
+    </actuals>
+</call>
+                            </rv>
+                        </assign>
+                        <assign>
+                            <lv>l</lv>
+                            <rv>
+<call>
+    <ownerExpr>
+        <this/>
+    </ownerExpr>
+    <methodId>foo</methodId>
+    <actuals>
+        <actual>
+            <int-literal>
+                <num>5</num>
+            </int-literal>
+        </actual>
+    </actuals>
+</call>
+                            </rv>
+                        </assign>
+                    </body>
+                    <ret>
+                        <add>
+                            <e1>
+<array-access>
+    <arrayExpr>
+        <ref-id>
+            <id>p</id>
+        </ref-id>
+    </arrayExpr>
+    <indexExpr>
+        <int-literal>
+            <num>3</num>
+        </int-literal>
+    </indexExpr>
+</array-access>
+                            </e1>
+                            <e2>
+<call>
+    <ownerExpr>
+        <ref-id>
+            <id>a</id>
+        </ref-id>
+    </ownerExpr>
+    <methodId>b</methodId>
+    <actuals/>
+</call>
+                            </e2>
+                        </add>
+                    </ret>
+                </methoddecl>
+            </methoddecls>
+        </classdecl>
+    </classdecls>
+</program>

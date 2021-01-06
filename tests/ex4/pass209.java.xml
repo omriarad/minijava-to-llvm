@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<program>
+    <mainclass>
+        <name>Main</name>
+        <argsName>args</argsName>
+        <mainStatement>
+            <assign>
+                <lv>x</lv>
+                <rv>
+                    <int-literal>
+                        <num>5</num>
+                    </int-literal>
+                </rv>
+            </assign>
+        </mainStatement>
+    </mainclass>
+    <classdecls>
+        <classdecl>
+            <name>A</name>
+            <fields/>
+            <methoddecls>
+                <methoddecl>
+                    <lineNumber>8</lineNumber>
+                    <returnType>
+                        <bool/>
+                    </returnType>
+                    <name>p</name>
+                    <formals/>
+                    <vardecls/>
+                    <body>
+                        <assign-array>
+                            <lv>x</lv>
+                            <index>
+<int-literal>
+    <num>2</num>
+</int-literal>
+                            </index>
+                            <rv>
+<int-literal>
+    <num>3</num>
+</int-literal>
+                            </rv>
+                        </assign-array>
+                    </body>
+                    <ret>
+                        <this/>
+                    </ret>
+                </methoddecl>
+            </methoddecls>
+        </classdecl>
+    </classdecls>
+</program>

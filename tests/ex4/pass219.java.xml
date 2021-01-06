@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<program>
+    <mainclass>
+        <name>Main</name>
+        <argsName>args</argsName>
+        <mainStatement>
+            <assign>
+                <lv>defuq</lv>
+                <rv>
+                    <ref-id>
+                        <id>imdoing52234_</id>
+                    </ref-id>
+                </rv>
+            </assign>
+        </mainStatement>
+    </mainclass>
+    <classdecls>
+        <classdecl>
+            <name>id</name>
+            <fields/>
+            <methoddecls>
+                <methoddecl>
+                    <lineNumber>7</lineNumber>
+                    <returnType>
+                        <bool/>
+                    </returnType>
+                    <name>p</name>
+                    <formals/>
+                    <vardecls>
+                        <vardecl>
+                            <lineNumber>8</lineNumber>
+                            <type>
+<bool/>
+                            </type>
+                            <name>x</name>
+                        </vardecl>
+                    </vardecls>
+                    <body>
+                        <assign>
+                            <lv>x</lv>
+                            <rv>
+<and>
+    <e1>
+        <and>
+            <e1>
+                <true/>
+            </e1>
+            <e2>
+                <false/>
+            </e2>
+        </and>
+    </e1>
+    <e2>
+        <not>
+            <e>
+                <ref-id>
+                    <id>x</id>
+                </ref-id>
+            </e>
+        </not>
+    </e2>
+</and>
+                            </rv>
+                        </assign>
+                    </body>
+                    <ret>
+                        <true/>
+                    </ret>
+                </methoddecl>
+            </methoddecls>
+        </classdecl>
+    </classdecls>
+</program>

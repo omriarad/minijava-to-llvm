@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<program>
+    <mainclass>
+        <name>A</name>
+        <argsName>args</argsName>
+        <mainStatement>
+            <assign>
+                <lv>b</lv>
+                <rv>
+                    <and>
+                        <e1>
+                            <lt>
+<e1>
+    <false/>
+</e1>
+<e2>
+    <mult>
+        <e1>
+            <true/>
+        </e1>
+        <e2>
+            <lt>
+                <e1>
+                    <int-literal>
+                        <num>2</num>
+                    </int-literal>
+                </e1>
+                <e2>
+                    <subtract>
+                        <e1>
+                            <subtract>
+<e1>
+    <int-literal>
+        <num>0</num>
+    </int-literal>
+</e1>
+<e2>
+    <int-literal>
+        <num>3</num>
+    </int-literal>
+</e2>
+                            </subtract>
+                        </e1>
+                        <e2>
+                            <mult>
+<e1>
+    <int-literal>
+        <num>4</num>
+    </int-literal>
+</e1>
+<e2>
+    <int-literal>
+        <num>5</num>
+    </int-literal>
+</e2>
+                            </mult>
+                        </e2>
+                    </subtract>
+                </e2>
+            </lt>
+        </e2>
+    </mult>
+</e2>
+                            </lt>
+                        </e1>
+                        <e2>
+                            <not>
+<e>
+    <not>
+        <e>
+            <false/>
+        </e>
+    </not>
+</e>
+                            </not>
+                        </e2>
+                    </and>
+                </rv>
+            </assign>
+        </mainStatement>
+    </mainclass>
+    <classdecls/>
+</program>

@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<program>
+    <mainclass>
+        <name>A</name>
+        <argsName>args</argsName>
+        <mainStatement>
+            <assign>
+                <lv>b</lv>
+                <rv>
+                    <and>
+                        <e1>
+                            <lt>
+<e1>
+    <add>
+        <e1>
+            <false/>
+        </e1>
+        <e2>
+            <mult>
+                <e1>
+                    <true/>
+                </e1>
+                <e2>
+                    <int-literal>
+                        <num>2</num>
+                    </int-literal>
+                </e2>
+            </mult>
+        </e2>
+    </add>
+</e1>
+<e2>
+    <add>
+        <e1>
+            <subtract>
+                <e1>
+                    <int-literal>
+                        <num>3</num>
+                    </int-literal>
+                </e1>
+                <e2>
+                    <int-literal>
+                        <num>4</num>
+                    </int-literal>
+                </e2>
+            </subtract>
+        </e1>
+        <e2>
+            <int-literal>
+                <num>5</num>
+            </int-literal>
+        </e2>
+    </add>
+</e2>
+                            </lt>
+                        </e1>
+                        <e2>
+                            <not>
+<e>
+    <not>
+        <e>
+            <not>
+                <e>
+                    <false/>
+                </e>
+            </not>
+        </e>
+    </not>
+</e>
+                            </not>
+                        </e2>
+                    </and>
+                </rv>
+            </assign>
+        </mainStatement>
+    </mainclass>
+    <classdecls>
+        <classdecl>
+            <name>Refs</name>
+            <fields/>
+            <methoddecls>
+                <methoddecl>
+                    <lineNumber>11</lineNumber>
+                    <returnType>
+                        <ref>
+                            <id>bool</id>
+                        </ref>
+                    </returnType>
+                    <name>p</name>
+                    <formals/>
+                    <vardecls>
+                        <vardecl>
+                            <lineNumber>12</lineNumber>
+                            <type>
+<int-array/>
+                            </type>
+                            <name>af</name>
+                        </vardecl>
+                        <vardecl>
+                            <lineNumber>13</lineNumber>
+                            <type>
+<bool/>
+                            </type>
+                            <name>x</name>
+                        </vardecl>
+                    </vardecls>
+                    <body>
+                        <assign>
+                            <lv>a</lv>
+                            <rv>
+<add>
+    <e1>
+        <add>
+            <e1>
+                <int-literal>
+                    <num>1</num>
+                </int-literal>
+            </e1>
+            <e2>
+                <int-literal>
+                    <num>2</num>
+                </int-literal>
+            </e2>
+        </add>
+    </e1>
+    <e2>
+        <int-literal>
+            <num>3</num>
+        </int-literal>
+    </e2>
+</add>
+                            </rv>
+                        </assign>
+                        <assign>
+                            <lv>x</lv>
+                            <rv>
+<call>
+    <ownerExpr>
+        <ref-id>
+            <id>a</id>
+        </ref-id>
+    </ownerExpr>
+    <methodId>b</methodId>
+    <actuals>
+        <actual>
+            <int-literal>
+                <num>4</num>
+            </int-literal>
+        </actual>
+    </actuals>
+</call>
+                            </rv>
+                        </assign>
+                        <assign>
+                            <lv>x</lv>
+                            <rv>
+<call>
+    <ownerExpr>
+        <call>
+            <ownerExpr>
+                <ref-id>
+                    <id>a</id>
+                </ref-id>
+            </ownerExpr>
+            <methodId>b</methodId>
+            <actuals>
+                <actual>
+                    <int-literal>
+                        <num>5</num>
+                    </int-literal>
+                </actual>
+            </actuals>
+        </call>
+    </ownerExpr>
+    <methodId>c</methodId>
+    <actuals>
+        <actual>
+            <int-literal>
+                <num>5</num>
+            </int-literal>
+        </actual>
+    </actuals>
+</call>
+                            </rv>
+                        </assign>
+                        <assign>
+                            <lv>that</lv>
+                            <rv>
+<int-literal>
+    <num>6</num>
+</int-literal>
+                            </rv>
+                        </assign>
+                        <assign>
+                            <lv>x</lv>
+                            <rv>
+<array-access>
+    <arrayExpr>
+        <ref-id>
+            <id>a</id>
+        </ref-id>
+    </arrayExpr>
+    <indexExpr>
+        <int-literal>
+            <num>7</num>
+        </int-literal>
+    </indexExpr>
+</array-access>
+                            </rv>
+                        </assign>
+                        <assign-array>
+                            <lv>a</lv>
+                            <index>
+<int-literal>
+    <num>8</num>
+</int-literal>
+                            </index>
+                            <rv>
+<ref-id>
+    <id>c</id>
+</ref-id>
+                            </rv>
+                        </assign-array>
+                        <assign>
+                            <lv>a</lv>
+                            <rv>
+<call>
+    <ownerExpr>
+        <ref-id>
+            <id>c</id>
+        </ref-id>
+    </ownerExpr>
+    <methodId>p</methodId>
+    <actuals>
+        <actual>
+            <int-literal>
+                <num>9</num>
+            </int-literal>
+        </actual>
+    </actuals>
+</call>
+                            </rv>
+                        </assign>
+                        <assign>
+                            <lv>x</lv>
+                            <rv>
+<call>
+    <ownerExpr>
+        <call>
+            <ownerExpr>
+                <call>
+                    <ownerExpr>
+                        <ref-id>
+                            <id>a</id>
+                        </ref-id>
+                    </ownerExpr>
+                    <methodId>b</methodId>
+                    <actuals/>
+                </call>
+            </ownerExpr>
+            <methodId>c</methodId>
+            <actuals/>
+        </call>
+    </ownerExpr>
+    <methodId>d</methodId>
+    <actuals/>
+</call>
+                            </rv>
+                        </assign>
+                        <assign>
+                            <lv>af</lv>
+                            <rv>
+<new-int-array>
+    <lengthExpr>
+        <int-literal>
+            <num>10</num>
+        </int-literal>
+    </lengthExpr>
+</new-int-array>
+                            </rv>
+                        </assign>
+                        <assign>
+                            <lv>that</lv>
+                            <rv>
+<new-object>
+    <classId>Test</classId>
+</new-object>
+                            </rv>
+                        </assign>
+                    </body>
+                    <ret>
+                        <ref-id>
+                            <id>that</id>
+                        </ref-id>
+                    </ret>
+                </methoddecl>
+            </methoddecls>
+        </classdecl>
+    </classdecls>
+</program>

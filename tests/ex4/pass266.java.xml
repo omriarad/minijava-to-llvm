@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<program>
+    <mainclass>
+        <name>THeeMainnnCLASASSDAS222</name>
+        <argsName>puppies</argsName>
+        <mainStatement>
+            <sysout>
+                <arg>
+                    <add>
+                        <e1>
+                            <ref-id>
+<id>hello</id>
+                            </ref-id>
+                        </e1>
+                        <e2>
+                            <ref-id>
+<id>world</id>
+                            </ref-id>
+                        </e2>
+                    </add>
+                </arg>
+            </sysout>
+        </mainStatement>
+    </mainclass>
+    <classdecls>
+        <classdecl>
+            <name>B</name>
+            <fields/>
+            <methoddecls>
+                <methoddecl>
+                    <lineNumber>7</lineNumber>
+                    <returnType>
+                        <bool/>
+                    </returnType>
+                    <name>foo</name>
+                    <formals/>
+                    <vardecls/>
+                    <body>
+                        <if>
+                            <cond>
+<ref-id>
+    <id>b</id>
+</ref-id>
+                            </cond>
+                            <thencase>
+<if>
+    <cond>
+        <ref-id>
+            <id>c</id>
+        </ref-id>
+    </cond>
+    <thencase>
+        <assign>
+            <lv>x</lv>
+            <rv>
+                <int-literal>
+                    <num>1</num>
+                </int-literal>
+            </rv>
+        </assign>
+    </thencase>
+    <elsecase>
+        <assign>
+            <lv>x</lv>
+            <rv>
+                <int-literal>
+                    <num>2</num>
+                </int-literal>
+            </rv>
+        </assign>
+    </elsecase>
+</if>
+                            </thencase>
+                            <elsecase>
+<if>
+    <cond>
+        <ref-id>
+            <id>d</id>
+        </ref-id>
+    </cond>
+    <thencase>
+        <assign>
+            <lv>x</lv>
+            <rv>
+                <int-literal>
+                    <num>11</num>
+                </int-literal>
+            </rv>
+        </assign>
+    </thencase>
+    <elsecase>
+        <assign>
+            <lv>x</lv>
+            <rv>
+                <int-literal>
+                    <num>22</num>
+                </int-literal>
+            </rv>
+        </assign>
+    </elsecase>
+</if>
+                            </elsecase>
+                        </if>
+                        <if>
+                            <cond>
+<true/>
+                            </cond>
+                            <thencase>
+<if>
+    <cond>
+        <false/>
+    </cond>
+    <thencase>
+        <assign>
+            <lv>x</lv>
+            <rv>
+                <int-literal>
+                    <num>3</num>
+                </int-literal>
+            </rv>
+        </assign>
+    </thencase>
+    <elsecase>
+        <assign>
+            <lv>x</lv>
+            <rv>
+                <int-literal>
+                    <num>4</num>
+                </int-literal>
+            </rv>
+        </assign>
+    </elsecase>
+</if>
+                            </thencase>
+                            <elsecase>
+<assign>
+    <lv>x</lv>
+    <rv>
+        <int-literal>
+            <num>5</num>
+        </int-literal>
+    </rv>
+</assign>
+                            </elsecase>
+                        </if>
+                        <if>
+                            <cond>
+<not>
+    <e>
+        <true/>
+    </e>
+</not>
+                            </cond>
+                            <thencase>
+<assign>
+    <lv>x</lv>
+    <rv>
+        <int-literal>
+            <num>33</num>
+        </int-literal>
+    </rv>
+</assign>
+                            </thencase>
+                            <elsecase>
+<if>
+    <cond>
+        <not>
+            <e>
+                <false/>
+            </e>
+        </not>
+    </cond>
+    <thencase>
+        <assign>
+            <lv>x</lv>
+            <rv>
+                <int-literal>
+                    <num>44</num>
+                </int-literal>
+            </rv>
+        </assign>
+    </thencase>
+    <elsecase>
+        <assign>
+            <lv>x</lv>
+            <rv>
+                <int-literal>
+                    <num>55</num>
+                </int-literal>
+            </rv>
+        </assign>
+    </elsecase>
+</if>
+                            </elsecase>
+                        </if>
+                    </body>
+                    <ret>
+                        <ref-id>
+                            <id>x</id>
+                        </ref-id>
+                    </ret>
+                </methoddecl>
+            </methoddecls>
+        </classdecl>
+    </classdecls>
+</program>

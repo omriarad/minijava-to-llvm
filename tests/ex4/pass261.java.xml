@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<program>
+    <mainclass>
+        <name>THeeMainnnCLASASSDAS222</name>
+        <argsName>puppies</argsName>
+        <mainStatement>
+            <sysout>
+                <arg>
+                    <add>
+                        <e1>
+                            <ref-id>
+<id>hello</id>
+                            </ref-id>
+                        </e1>
+                        <e2>
+                            <ref-id>
+<id>world</id>
+                            </ref-id>
+                        </e2>
+                    </add>
+                </arg>
+            </sysout>
+        </mainStatement>
+    </mainclass>
+    <classdecls>
+        <classdecl>
+            <name>A</name>
+            <fields/>
+            <methoddecls>
+                <methoddecl>
+                    <lineNumber>7</lineNumber>
+                    <returnType>
+                        <int/>
+                    </returnType>
+                    <name>f</name>
+                    <formals/>
+                    <vardecls>
+                        <vardecl>
+                            <lineNumber>8</lineNumber>
+                            <type>
+<bool/>
+                            </type>
+                            <name>x</name>
+                        </vardecl>
+                    </vardecls>
+                    <body>
+                        <assign>
+                            <lv>x</lv>
+                            <rv>
+<and>
+    <e1>
+        <lt>
+            <e1>
+                <int-literal>
+                    <num>2</num>
+                </int-literal>
+            </e1>
+            <e2>
+                <int-literal>
+                    <num>1</num>
+                </int-literal>
+            </e2>
+        </lt>
+    </e1>
+    <e2>
+        <lt>
+            <e1>
+                <int-literal>
+                    <num>3</num>
+                </int-literal>
+            </e1>
+            <e2>
+                <int-literal>
+                    <num>4</num>
+                </int-literal>
+            </e2>
+        </lt>
+    </e2>
+</and>
+                            </rv>
+                        </assign>
+                        <if>
+                            <cond>
+<ref-id>
+    <id>x</id>
+</ref-id>
+                            </cond>
+                            <thencase>
+<assign>
+    <lv>y</lv>
+    <rv>
+        <ref-id>
+            <id>y</id>
+        </ref-id>
+    </rv>
+</assign>
+                            </thencase>
+                            <elsecase>
+<assign>
+    <lv>z</lv>
+    <rv>
+        <ref-id>
+            <id>z</id>
+        </ref-id>
+    </rv>
+</assign>
+                            </elsecase>
+                        </if>
+                    </body>
+                    <ret>
+                        <true/>
+                    </ret>
+                </methoddecl>
+            </methoddecls>
+        </classdecl>
+    </classdecls>
+</program>
