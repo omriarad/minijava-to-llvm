@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<program>
+    <mainclass>
+        <name>IDENTIFER_</name>
+        <argsName>args</argsName>
+        <mainStatement>
+            <block>
+                <statements/>
+            </block>
+        </mainStatement>
+    </mainclass>
+    <classdecls>
+        <classdecl>
+            <name>Test</name>
+            <fields/>
+            <methoddecls>
+                <methoddecl>
+                    <lineNumber>5</lineNumber>
+                    <returnType>
+                        <ref>
+                            <id>Poid</id>
+                        </ref>
+                    </returnType>
+                    <name>p</name>
+                    <formals/>
+                    <vardecls>
+                        <vardecl>
+                            <lineNumber>6</lineNumber>
+                            <type>
+<int-array/>
+                            </type>
+                            <name>foo</name>
+                        </vardecl>
+                    </vardecls>
+                    <body>
+                        <assign>
+                            <lv>x</lv>
+                            <rv>
+<array-access>
+    <arrayExpr>
+        <new-object>
+            <classId>Foo</classId>
+        </new-object>
+    </arrayExpr>
+    <indexExpr>
+        <int-literal>
+            <num>10</num>
+        </int-literal>
+    </indexExpr>
+</array-access>
+                            </rv>
+                        </assign>
+                    </body>
+                    <ret>
+                        <ref-id>
+                            <id>helo</id>
+                        </ref-id>
+                    </ret>
+                </methoddecl>
+            </methoddecls>
+        </classdecl>
+    </classdecls>
+</program>

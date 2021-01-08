@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<program>
+    <mainclass>
+        <name>IDENTIFER_</name>
+        <argsName>args</argsName>
+        <mainStatement>
+            <block>
+                <statements/>
+            </block>
+        </mainStatement>
+    </mainclass>
+    <classdecls>
+        <classdecl>
+            <name>id</name>
+            <fields/>
+            <methoddecls>
+                <methoddecl>
+                    <lineNumber>2</lineNumber>
+                    <returnType>
+                        <int/>
+                    </returnType>
+                    <name>p</name>
+                    <formals/>
+                    <vardecls>
+                        <vardecl>
+                            <lineNumber>3</lineNumber>
+                            <type>
+<int/>
+                            </type>
+                            <name>x</name>
+                        </vardecl>
+                        <vardecl>
+                            <lineNumber>4</lineNumber>
+                            <type>
+<bool/>
+                            </type>
+                            <name>y</name>
+                        </vardecl>
+                    </vardecls>
+                    <body>
+                        <assign>
+                            <lv>x</lv>
+                            <rv>
+<subtract>
+    <e1>
+        <int-literal>
+            <num>0</num>
+        </int-literal>
+    </e1>
+    <e2>
+        <ref-id>
+            <id>b</id>
+        </ref-id>
+    </e2>
+</subtract>
+                            </rv>
+                        </assign>
+                        <assign>
+                            <lv>y</lv>
+                            <rv>
+<not>
+    <e>
+        <ref-id>
+            <id>y</id>
+        </ref-id>
+    </e>
+</not>
+                            </rv>
+                        </assign>
+                    </body>
+                    <ret>
+                        <int-literal>
+                            <num>5</num>
+                        </int-literal>
+                    </ret>
+                </methoddecl>
+            </methoddecls>
+        </classdecl>
+    </classdecls>
+</program>

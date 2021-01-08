@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<program>
+    <mainclass>
+        <name>Class</name>
+        <argsName>args</argsName>
+        <mainStatement>
+            <block>
+                <statements/>
+            </block>
+        </mainStatement>
+    </mainclass>
+    <classdecls/>
+</program>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<program>
+    <mainclass>
+        <name>MainClass</name>
+        <argsName>args</argsName>
+        <mainStatement>
+            <block>
+                <statements/>
+            </block>
+        </mainStatement>
+    </mainclass>
+    <classdecls>
+        <classdecl>
+            <name>OfItsOwn</name>
+            <fields>
+                <field>
+                    <lineNumber>6</lineNumber>
+                    <type>
+                        <int/>
+                    </type>
+                    <name>A_01</name>
+                </field>
+            </fields>
+            <methoddecls/>
+        </classdecl>
+    </classdecls>
+</program>

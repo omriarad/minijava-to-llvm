@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<program>
+    <mainclass>
+        <name>IDENTIFER_</name>
+        <argsName>args</argsName>
+        <mainStatement>
+            <block>
+                <statements/>
+            </block>
+        </mainStatement>
+    </mainclass>
+    <classdecls>
+        <classdecl>
+            <name>Test</name>
+            <fields/>
+            <methoddecls>
+                <methoddecl>
+                    <lineNumber>5</lineNumber>
+                    <returnType>
+                        <ref>
+                            <id>Void</id>
+                        </ref>
+                    </returnType>
+                    <name>p</name>
+                    <formals/>
+                    <vardecls>
+                        <vardecl>
+                            <lineNumber>6</lineNumber>
+                            <type>
+<ref>
+    <id>A</id>
+</ref>
+                            </type>
+                            <name>a</name>
+                        </vardecl>
+                        <vardecl>
+                            <lineNumber>6</lineNumber>
+                            <type>
+<bool/>
+                            </type>
+                            <name>b</name>
+                        </vardecl>
+                    </vardecls>
+                    <body>
+                        <assign>
+                            <lv>a</lv>
+                            <rv>
+<int-literal>
+    <num>23</num>
+</int-literal>
+                            </rv>
+                        </assign>
+                        <assign>
+                            <lv>x</lv>
+                            <rv>
+<ref-id>
+    <id>c</id>
+</ref-id>
+                            </rv>
+                        </assign>
+                    </body>
+                    <ret>
+                        <ref-id>
+                            <id>plz_end_this_misery</id>
+                        </ref-id>
+                    </ret>
+                </methoddecl>
+            </methoddecls>
+        </classdecl>
+    </classdecls>
+</program>

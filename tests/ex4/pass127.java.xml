@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<program>
+    <mainclass>
+        <name>IDENTIFER_</name>
+        <argsName>args</argsName>
+        <mainStatement>
+            <block>
+                <statements/>
+            </block>
+        </mainStatement>
+    </mainclass>
+    <classdecls>
+        <classdecl>
+            <name>id</name>
+            <fields/>
+            <methoddecls>
+                <methoddecl>
+                    <lineNumber>4</lineNumber>
+                    <returnType>
+                        <ref>
+                            <id>Void</id>
+                        </ref>
+                    </returnType>
+                    <name>p</name>
+                    <formals/>
+                    <vardecls>
+                        <vardecl>
+                            <lineNumber>5</lineNumber>
+                            <type>
+<int/>
+                            </type>
+                            <name>y</name>
+                        </vardecl>
+                    </vardecls>
+                    <body>
+                        <assign>
+                            <lv>y</lv>
+                            <rv>
+<subtract>
+    <e1>
+        <subtract>
+            <e1>
+                <int-literal>
+                    <num>0</num>
+                </int-literal>
+            </e1>
+            <e2>
+                <int-literal>
+                    <num>0</num>
+                </int-literal>
+            </e2>
+        </subtract>
+    </e1>
+    <e2>
+        <ref-id>
+            <id>y</id>
+        </ref-id>
+    </e2>
+</subtract>
+                            </rv>
+                        </assign>
+                    </body>
+                    <ret>
+                        <ref-id>
+                            <id>y</id>
+                        </ref-id>
+                    </ret>
+                </methoddecl>
+            </methoddecls>
+        </classdecl>
+    </classdecls>
+</program>

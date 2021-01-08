@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<program>
+    <mainclass>
+        <name>MainClass</name>
+        <argsName>args</argsName>
+        <mainStatement>
+            <block>
+                <statements/>
+            </block>
+        </mainStatement>
+    </mainclass>
+    <classdecls>
+        <classdecl>
+            <name>Foo</name>
+            <fields/>
+            <methoddecls>
+                <methoddecl>
+                    <lineNumber>6</lineNumber>
+                    <returnType>
+                        <ref>
+                            <id>X</id>
+                        </ref>
+                    </returnType>
+                    <name>bar</name>
+                    <formals/>
+                    <vardecls>
+                        <vardecl>
+                            <lineNumber>7</lineNumber>
+                            <type>
+<int-array/>
+                            </type>
+                            <name>arr</name>
+                        </vardecl>
+                        <vardecl>
+                            <lineNumber>8</lineNumber>
+                            <type>
+<int-array/>
+                            </type>
+                            <name>foo</name>
+                        </vardecl>
+                    </vardecls>
+                    <body>
+                        <assign>
+                            <lv>arr</lv>
+                            <rv>
+<add>
+    <e1>
+        <new-int-array>
+            <lengthExpr>
+                <int-literal>
+                    <num>20</num>
+                </int-literal>
+            </lengthExpr>
+        </new-int-array>
+    </e1>
+    <e2>
+        <int-literal>
+            <num>1</num>
+        </int-literal>
+    </e2>
+</add>
+                            </rv>
+                        </assign>
+                        <assign>
+                            <lv>foo</lv>
+                            <rv>
+<add>
+    <e1>
+        <int-literal>
+            <num>2</num>
+        </int-literal>
+    </e1>
+    <e2>
+        <array-access>
+            <arrayExpr>
+                <ref-id>
+                    <id>Foo</id>
+                </ref-id>
+            </arrayExpr>
+            <indexExpr>
+                <int-literal>
+                    <num>30</num>
+                </int-literal>
+            </indexExpr>
+        </array-access>
+    </e2>
+</add>
+                            </rv>
+                        </assign>
+                    </body>
+                    <ret>
+                        <ref-id>
+                            <id>s</id>
+                        </ref-id>
+                    </ret>
+                </methoddecl>
+            </methoddecls>
+        </classdecl>
+    </classdecls>
+</program>

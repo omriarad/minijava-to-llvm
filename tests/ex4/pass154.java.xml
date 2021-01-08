@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<program>
+    <mainclass>
+        <name>MainClass</name>
+        <argsName>args</argsName>
+        <mainStatement>
+            <block>
+                <statements/>
+            </block>
+        </mainStatement>
+    </mainclass>
+    <classdecls>
+        <classdecl>
+            <name>SuperClass</name>
+            <fields/>
+            <methoddecls>
+                <methoddecl>
+                    <lineNumber>7</lineNumber>
+                    <returnType>
+                        <ref>
+                            <id>Void</id>
+                        </ref>
+                    </returnType>
+                    <name>setWorth</name>
+                    <formals>
+                        <formal>
+                            <lineNumber>7</lineNumber>
+                            <type>
+<int/>
+                            </type>
+                            <name>worth</name>
+                        </formal>
+                    </formals>
+                    <vardecls/>
+                    <body>
+                        <assign>
+                            <lv>integer</lv>
+                            <rv>
+<ref-id>
+    <id>worth</id>
+</ref-id>
+                            </rv>
+                        </assign>
+                    </body>
+                    <ret>
+                        <ref-id>
+                            <id>x</id>
+                        </ref-id>
+                    </ret>
+                </methoddecl>
+                <methoddecl>
+                    <lineNumber>12</lineNumber>
+                    <returnType>
+                        <int/>
+                    </returnType>
+                    <name>getWorth</name>
+                    <formals/>
+                    <vardecls/>
+                    <body/>
+                    <ret>
+                        <call>
+                            <ownerExpr>
+<this/>
+                            </ownerExpr>
+                            <methodId>integer</methodId>
+                            <actuals/>
+                        </call>
+                    </ret>
+                </methoddecl>
+                <methoddecl>
+                    <lineNumber>16</lineNumber>
+                    <returnType>
+                        <ref>
+                            <id>Void</id>
+                        </ref>
+                    </returnType>
+                    <name>setTruth</name>
+                    <formals>
+                        <formal>
+                            <lineNumber>16</lineNumber>
+                            <type>
+<bool/>
+                            </type>
+                            <name>truth</name>
+                        </formal>
+                    </formals>
+                    <vardecls/>
+                    <body>
+                        <assign>
+                            <lv>bool</lv>
+                            <rv>
+<ref-id>
+    <id>truth</id>
+</ref-id>
+                            </rv>
+                        </assign>
+                    </body>
+                    <ret>
+                        <ref-id>
+                            <id>x</id>
+                        </ref-id>
+                    </ret>
+                </methoddecl>
+                <methoddecl>
+                    <lineNumber>21</lineNumber>
+                    <returnType>
+                        <int/>
+                    </returnType>
+                    <name>getTruth</name>
+                    <formals/>
+                    <vardecls/>
+                    <body/>
+                    <ret>
+                        <call>
+                            <ownerExpr>
+<this/>
+                            </ownerExpr>
+                            <methodId>bool</methodId>
+                            <actuals/>
+                        </call>
+                    </ret>
+                </methoddecl>
+            </methoddecls>
+        </classdecl>
+    </classdecls>
+</program>

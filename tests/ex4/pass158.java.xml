@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<program>
+    <mainclass>
+        <name>IDENTIFER_</name>
+        <argsName>args</argsName>
+        <mainStatement>
+            <block>
+                <statements/>
+            </block>
+        </mainStatement>
+    </mainclass>
+    <classdecls>
+        <classdecl>
+            <name>Test</name>
+            <fields/>
+            <methoddecls>
+                <methoddecl>
+                    <lineNumber>5</lineNumber>
+                    <returnType>
+                        <ref>
+                            <id>Void</id>
+                        </ref>
+                    </returnType>
+                    <name>p</name>
+                    <formals/>
+                    <vardecls/>
+                    <body>
+                        <assign>
+                            <lv>a</lv>
+                            <rv>
+<true/>
+                            </rv>
+                        </assign>
+                        <assign-array>
+                            <lv>a</lv>
+                            <index>
+<ref-id>
+    <id>b</id>
+</ref-id>
+                            </index>
+                            <rv>
+<ref-id>
+    <id>c</id>
+</ref-id>
+                            </rv>
+                        </assign-array>
+                        <assign>
+                            <lv>a</lv>
+                            <rv>
+<call>
+    <ownerExpr>
+        <ref-id>
+            <id>a</id>
+        </ref-id>
+    </ownerExpr>
+    <methodId>p</methodId>
+    <actuals/>
+</call>
+                            </rv>
+                        </assign>
+                        <assign>
+                            <lv>ID</lv>
+                            <rv>
+<ref-id>
+    <id>d</id>
+</ref-id>
+                            </rv>
+                        </assign>
+                        <assign>
+                            <lv>ID</lv>
+                            <rv>
+<call>
+    <ownerExpr>
+        <ref-id>
+            <id>c</id>
+        </ref-id>
+    </ownerExpr>
+    <methodId>p</methodId>
+    <actuals>
+        <actual>
+            <ref-id>
+                <id>e</id>
+            </ref-id>
+        </actual>
+    </actuals>
+</call>
+                            </rv>
+                        </assign>
+                    </body>
+                    <ret>
+                        <ref-id>
+                            <id>x</id>
+                        </ref-id>
+                    </ret>
+                </methoddecl>
+            </methoddecls>
+        </classdecl>
+    </classdecls>
+</program>

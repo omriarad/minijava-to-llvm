@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<program>
+    <mainclass>
+        <name>MainClass</name>
+        <argsName>args</argsName>
+        <mainStatement>
+            <sysout>
+                <arg>
+                    <ref-id>
+                        <id>lol</id>
+                    </ref-id>
+                </arg>
+            </sysout>
+        </mainStatement>
+    </mainclass>
+    <classdecls>
+        <classdecl>
+            <name>SuperClass</name>
+            <fields/>
+            <methoddecls>
+                <methoddecl>
+                    <lineNumber>8</lineNumber>
+                    <returnType>
+                        <ref>
+                            <id>Void</id>
+                        </ref>
+                    </returnType>
+                    <name>fillup</name>
+                    <formals>
+                        <formal>
+                            <lineNumber>8</lineNumber>
+                            <type>
+<bool/>
+                            </type>
+                            <name>open</name>
+                        </formal>
+                        <formal>
+                            <lineNumber>8</lineNumber>
+                            <type>
+<int-array/>
+                            </type>
+                            <name>jar</name>
+                        </formal>
+                        <formal>
+                            <lineNumber>8</lineNumber>
+                            <type>
+<int/>
+                            </type>
+                            <name>marble</name>
+                        </formal>
+                        <formal>
+                            <lineNumber>8</lineNumber>
+                            <type>
+<int/>
+                            </type>
+                            <name>upto</name>
+                        </formal>
+                    </formals>
+                    <vardecls>
+                        <vardecl>
+                            <lineNumber>10</lineNumber>
+                            <type>
+<int/>
+                            </type>
+                            <name>index</name>
+                        </vardecl>
+                    </vardecls>
+                    <body>
+                        <assign>
+                            <lv>index</lv>
+                            <rv>
+<int-literal>
+    <num>0</num>
+</int-literal>
+                            </rv>
+                        </assign>
+                        <if>
+                            <cond>
+<add>
+    <e1>
+        <ref-id>
+            <id>open</id>
+        </ref-id>
+    </e1>
+    <e2>
+        <true/>
+    </e2>
+</add>
+                            </cond>
+                            <thencase>
+<block>
+    <statements>
+        <while>
+            <cond>
+                <lt>
+                    <e1>
+                        <ref-id>
+                            <id>index</id>
+                        </ref-id>
+                    </e1>
+                    <e2>
+                        <ref-id>
+                            <id>upto</id>
+                        </ref-id>
+                    </e2>
+                </lt>
+            </cond>
+            <body>
+                <block>
+                    <statements>
+                        <assign-array>
+                            <lv>ownjar</lv>
+                            <index>
+<ref-id>
+    <id>index</id>
+</ref-id>
+                            </index>
+                            <rv>
+<array-access>
+    <arrayExpr>
+        <ref-id>
+            <id>jar</id>
+        </ref-id>
+    </arrayExpr>
+    <indexExpr>
+        <ref-id>
+            <id>index</id>
+        </ref-id>
+    </indexExpr>
+</array-access>
+                            </rv>
+                        </assign-array>
+                        <assign-array>
+                            <lv>jar</lv>
+                            <index>
+<ref-id>
+    <id>index</id>
+</ref-id>
+                            </index>
+                            <rv>
+<ref-id>
+    <id>marble</id>
+</ref-id>
+                            </rv>
+                        </assign-array>
+                    </statements>
+                </block>
+            </body>
+        </while>
+    </statements>
+</block>
+                            </thencase>
+                            <elsecase>
+<block>
+    <statements/>
+</block>
+                            </elsecase>
+                        </if>
+                    </body>
+                    <ret>
+                        <ref-id>
+                            <id>x</id>
+                        </ref-id>
+                    </ret>
+                </methoddecl>
+            </methoddecls>
+        </classdecl>
+    </classdecls>
+</program>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<program>
+    <mainclass>
+        <name>IDENTIFER_</name>
+        <argsName>args</argsName>
+        <mainStatement>
+            <block>
+                <statements/>
+            </block>
+        </mainStatement>
+    </mainclass>
+    <classdecls>
+        <classdecl>
+            <name>Test</name>
+            <fields>
+                <field>
+                    <lineNumber>5</lineNumber>
+                    <type>
+                        <int-array/>
+                    </type>
+                    <name>a</name>
+                </field>
+                <field>
+                    <lineNumber>6</lineNumber>
+                    <type>
+                        <ref>
+                            <id>A</id>
+                        </ref>
+                    </type>
+                    <name>t</name>
+                </field>
+            </fields>
+            <methoddecls>
+                <methoddecl>
+                    <lineNumber>8</lineNumber>
+                    <returnType>
+                        <int/>
+                    </returnType>
+                    <name>p</name>
+                    <formals/>
+                    <vardecls/>
+                    <body>
+                        <assign-array>
+                            <lv>t</lv>
+                            <index>
+<ref-id>
+    <id>e</id>
+</ref-id>
+                            </index>
+                            <rv>
+<add>
+    <e1>
+        <this/>
+    </e1>
+    <e2>
+        <int-literal>
+            <num>1</num>
+        </int-literal>
+    </e2>
+</add>
+                            </rv>
+                        </assign-array>
+                    </body>
+                    <ret>
+                        <ref-id>
+                            <id>thsi</id>
+                        </ref-id>
+                    </ret>
+                </methoddecl>
+            </methoddecls>
+        </classdecl>
+    </classdecls>
+</program>

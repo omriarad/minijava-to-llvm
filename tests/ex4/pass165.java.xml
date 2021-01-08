@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<program>
+    <mainclass>
+        <name>IDENTIFER_</name>
+        <argsName>args</argsName>
+        <mainStatement>
+            <block>
+                <statements/>
+            </block>
+        </mainStatement>
+    </mainclass>
+    <classdecls>
+        <classdecl>
+            <name>Test</name>
+            <fields/>
+            <methoddecls>
+                <methoddecl>
+                    <lineNumber>5</lineNumber>
+                    <returnType>
+                        <ref>
+                            <id>XXX</id>
+                        </ref>
+                    </returnType>
+                    <name>p</name>
+                    <formals>
+                        <formal>
+                            <lineNumber>5</lineNumber>
+                            <type>
+<int/>
+                            </type>
+                            <name>a</name>
+                        </formal>
+                    </formals>
+                    <vardecls>
+                        <vardecl>
+                            <lineNumber>6</lineNumber>
+                            <type>
+<ref>
+    <id>C</id>
+</ref>
+                            </type>
+                            <name>cls</name>
+                        </vardecl>
+                    </vardecls>
+                    <body>
+                        <assign>
+                            <lv>x</lv>
+                            <rv>
+<new-object>
+    <classId>C</classId>
+</new-object>
+                            </rv>
+                        </assign>
+                        <assign>
+                            <lv>y</lv>
+                            <rv>
+<call>
+    <ownerExpr>
+        <ref-id>
+            <id>p</id>
+        </ref-id>
+    </ownerExpr>
+    <methodId>p</methodId>
+    <actuals/>
+</call>
+                            </rv>
+                        </assign>
+                        <assign>
+                            <lv>x</lv>
+                            <rv>
+<add>
+    <e1>
+        <call>
+            <ownerExpr>
+                <ref-id>
+                    <id>c</id>
+                </ref-id>
+            </ownerExpr>
+            <methodId>p</methodId>
+            <actuals>
+                <actual>
+                    <int-literal>
+                        <num>2</num>
+                    </int-literal>
+                </actual>
+                <actual>
+                    <int-literal>
+                        <num>3</num>
+                    </int-literal>
+                </actual>
+            </actuals>
+        </call>
+    </e1>
+    <e2>
+        <array-access>
+            <arrayExpr>
+                <ref-id>
+                    <id>x</id>
+                </ref-id>
+            </arrayExpr>
+            <indexExpr>
+                <int-literal>
+                    <num>2</num>
+                </int-literal>
+            </indexExpr>
+        </array-access>
+    </e2>
+</add>
+                            </rv>
+                        </assign>
+                    </body>
+                    <ret>
+                        <ref-id>
+                            <id>RETURN</id>
+                        </ref-id>
+                    </ret>
+                </methoddecl>
+            </methoddecls>
+        </classdecl>
+    </classdecls>
+</program>

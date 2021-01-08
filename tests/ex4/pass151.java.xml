@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<program>
+    <mainclass>
+        <name>MainClass</name>
+        <argsName>args</argsName>
+        <mainStatement>
+            <block>
+                <statements/>
+            </block>
+        </mainStatement>
+    </mainclass>
+    <classdecls>
+        <classdecl>
+            <name>Keywords</name>
+            <fields/>
+            <methoddecls>
+                <methoddecl>
+                    <lineNumber>7</lineNumber>
+                    <returnType>
+                        <ref>
+                            <id>Void</id>
+                        </ref>
+                    </returnType>
+                    <name>p</name>
+                    <formals/>
+                    <vardecls>
+                        <vardecl>
+                            <lineNumber>8</lineNumber>
+                            <type>
+<int/>
+                            </type>
+                            <name>format</name>
+                        </vardecl>
+                        <vardecl>
+                            <lineNumber>9</lineNumber>
+                            <type>
+<int/>
+                            </type>
+                            <name>Int</name>
+                        </vardecl>
+                    </vardecls>
+                    <body>
+                        <assign>
+                            <lv>Int</lv>
+                            <rv>
+<ref-id>
+    <id>New</id>
+</ref-id>
+                            </rv>
+                        </assign>
+                        <assign>
+                            <lv>format</lv>
+                            <rv>
+<ref-id>
+    <id>while_1</id>
+</ref-id>
+                            </rv>
+                        </assign>
+                        <assign>
+                            <lv>For</lv>
+                            <rv>
+<ref-id>
+    <id>Class</id>
+</ref-id>
+                            </rv>
+                        </assign>
+                        <assign>
+                            <lv>FOR</lv>
+                            <rv>
+<ref-id>
+    <id>RETURN</id>
+</ref-id>
+                            </rv>
+                        </assign>
+                    </body>
+                    <ret>
+                        <ref-id>
+                            <id>RETURN</id>
+                        </ref-id>
+                    </ret>
+                </methoddecl>
+                <methoddecl>
+                    <lineNumber>17</lineNumber>
+                    <returnType>
+                        <int/>
+                    </returnType>
+                    <name>declare</name>
+                    <formals/>
+                    <vardecls>
+                        <vardecl>
+                            <lineNumber>18</lineNumber>
+                            <type>
+<bool/>
+                            </type>
+                            <name>iF</name>
+                        </vardecl>
+                        <vardecl>
+                            <lineNumber>19</lineNumber>
+                            <type>
+<bool/>
+                            </type>
+                            <name>else1</name>
+                        </vardecl>
+                        <vardecl>
+                            <lineNumber>20</lineNumber>
+                            <type>
+<bool/>
+                            </type>
+                            <name>Then</name>
+                        </vardecl>
+                    </vardecls>
+                    <body>
+                        <assign>
+                            <lv>iF</lv>
+                            <rv>
+<true/>
+                            </rv>
+                        </assign>
+                        <assign>
+                            <lv>Then</lv>
+                            <rv>
+<false/>
+                            </rv>
+                        </assign>
+                        <assign>
+                            <lv>else1</lv>
+                            <rv>
+<false/>
+                            </rv>
+                        </assign>
+                        <if>
+                            <cond>
+<lt>
+    <e1>
+        <true/>
+    </e1>
+    <e2>
+        <false/>
+    </e2>
+</lt>
+                            </cond>
+                            <thencase>
+<block>
+    <statements>
+        <assign>
+            <lv>else1</lv>
+            <rv>
+                <and>
+                    <e1>
+                        <ref-id>
+                            <id>iF</id>
+                        </ref-id>
+                    </e1>
+                    <e2>
+                        <ref-id>
+                            <id>Then</id>
+                        </ref-id>
+                    </e2>
+                </and>
+            </rv>
+        </assign>
+    </statements>
+</block>
+                            </thencase>
+                            <elsecase>
+<block>
+    <statements>
+        <assign>
+            <lv>else1</lv>
+            <rv>
+                <and>
+                    <e1>
+                        <ref-id>
+                            <id>iF</id>
+                        </ref-id>
+                    </e1>
+                    <e2>
+                        <ref-id>
+                            <id>Then</id>
+                        </ref-id>
+                    </e2>
+                </and>
+            </rv>
+        </assign>
+    </statements>
+</block>
+                            </elsecase>
+                        </if>
+                    </body>
+                    <ret>
+                        <ref-id>
+                            <id>re</id>
+                        </ref-id>
+                    </ret>
+                </methoddecl>
+            </methoddecls>
+        </classdecl>
+    </classdecls>
+</program>

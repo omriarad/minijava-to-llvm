@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<program>
+    <mainclass>
+        <name>MainClass</name>
+        <argsName>args</argsName>
+        <mainStatement>
+            <assign>
+                <lv>statement</lv>
+                <rv>
+                    <add>
+                        <e1>
+                            <ref-id>
+<id>statement</id>
+                            </ref-id>
+                        </e1>
+                        <e2>
+                            <ref-id>
+<id>statement</id>
+                            </ref-id>
+                        </e2>
+                    </add>
+                </rv>
+            </assign>
+        </mainStatement>
+    </mainclass>
+    <classdecls/>
+</program>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<program>
+    <mainclass>
+        <name>IDENTIFER_</name>
+        <argsName>args</argsName>
+        <mainStatement>
+            <block>
+                <statements/>
+            </block>
+        </mainStatement>
+    </mainclass>
+    <classdecls>
+        <classdecl>
+            <name>id</name>
+            <fields>
+                <field>
+                    <lineNumber>4</lineNumber>
+                    <type>
+                        <ref>
+                            <id>Type</id>
+                        </ref>
+                    </type>
+                    <name>x</name>
+                </field>
+            </fields>
+            <methoddecls/>
+        </classdecl>
+    </classdecls>
+</program>

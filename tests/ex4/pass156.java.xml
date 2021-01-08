@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<program>
+    <mainclass>
+        <name>IDENTIFER_</name>
+        <argsName>args</argsName>
+        <mainStatement>
+            <block>
+                <statements/>
+            </block>
+        </mainStatement>
+    </mainclass>
+    <classdecls>
+        <classdecl>
+            <name>id</name>
+            <fields/>
+            <methoddecls>
+                <methoddecl>
+                    <lineNumber>4</lineNumber>
+                    <returnType>
+                        <ref>
+                            <id>Void</id>
+                        </ref>
+                    </returnType>
+                    <name>p</name>
+                    <formals/>
+                    <vardecls>
+                        <vardecl>
+                            <lineNumber>5</lineNumber>
+                            <type>
+<int/>
+                            </type>
+                            <name>y</name>
+                        </vardecl>
+                        <vardecl>
+                            <lineNumber>6</lineNumber>
+                            <type>
+<int/>
+                            </type>
+                            <name>x</name>
+                        </vardecl>
+                        <vardecl>
+                            <lineNumber>7</lineNumber>
+                            <type>
+<int/>
+                            </type>
+                            <name>z</name>
+                        </vardecl>
+                        <vardecl>
+                            <lineNumber>8</lineNumber>
+                            <type>
+<bool/>
+                            </type>
+                            <name>a</name>
+                        </vardecl>
+                        <vardecl>
+                            <lineNumber>9</lineNumber>
+                            <type>
+<bool/>
+                            </type>
+                            <name>b</name>
+                        </vardecl>
+                    </vardecls>
+                    <body>
+                        <assign>
+                            <lv>x</lv>
+                            <rv>
+<add>
+    <e1>
+        <int-literal>
+            <num>1</num>
+        </int-literal>
+    </e1>
+    <e2>
+        <int-literal>
+            <num>2</num>
+        </int-literal>
+    </e2>
+</add>
+                            </rv>
+                        </assign>
+                        <assign>
+                            <lv>y</lv>
+                            <rv>
+<mult>
+    <e1>
+        <ref-id>
+            <id>x</id>
+        </ref-id>
+    </e1>
+    <e2>
+        <int-literal>
+            <num>3</num>
+        </int-literal>
+    </e2>
+</mult>
+                            </rv>
+                        </assign>
+                        <assign>
+                            <lv>z</lv>
+                            <rv>
+<subtract>
+    <e1>
+        <ref-id>
+            <id>y</id>
+        </ref-id>
+    </e1>
+    <e2>
+        <not>
+            <e>
+                <int-literal>
+                    <num>4</num>
+                </int-literal>
+            </e>
+        </not>
+    </e2>
+</subtract>
+                            </rv>
+                        </assign>
+                        <assign>
+                            <lv>a</lv>
+                            <rv>
+<mult>
+    <e1>
+        <ref-id>
+            <id>z</id>
+        </ref-id>
+    </e1>
+    <e2>
+        <int-literal>
+            <num>5</num>
+        </int-literal>
+    </e2>
+</mult>
+                            </rv>
+                        </assign>
+                        <assign>
+                            <lv>b</lv>
+                            <rv>
+<mult>
+    <e1>
+        <ref-id>
+            <id>y</id>
+        </ref-id>
+    </e1>
+    <e2>
+        <int-literal>
+            <num>6</num>
+        </int-literal>
+    </e2>
+</mult>
+                            </rv>
+                        </assign>
+                        <assign>
+                            <lv>c</lv>
+                            <rv>
+<lt>
+    <e1>
+        <ref-id>
+            <id>x</id>
+        </ref-id>
+    </e1>
+    <e2>
+        <int-literal>
+            <num>7</num>
+        </int-literal>
+    </e2>
+</lt>
+                            </rv>
+                        </assign>
+                        <assign>
+                            <lv>v</lv>
+                            <rv>
+<lt>
+    <e1>
+        <ref-id>
+            <id>x</id>
+        </ref-id>
+    </e1>
+    <e2>
+        <int-literal>
+            <num>8</num>
+        </int-literal>
+    </e2>
+</lt>
+                            </rv>
+                        </assign>
+                        <assign>
+                            <lv>w</lv>
+                            <rv>
+<add>
+    <e1>
+        <ref-id>
+            <id>d</id>
+        </ref-id>
+    </e1>
+    <e2>
+        <int-literal>
+            <num>9</num>
+        </int-literal>
+    </e2>
+</add>
+                            </rv>
+                        </assign>
+                        <assign>
+                            <lv>d</lv>
+                            <rv>
+<and>
+    <e1>
+        <ref-id>
+            <id>a</id>
+        </ref-id>
+    </e1>
+    <e2>
+        <false/>
+    </e2>
+</and>
+                            </rv>
+                        </assign>
+                        <assign>
+                            <lv>r</lv>
+                            <rv>
+<and>
+    <e1>
+        <ref-id>
+            <id>d</id>
+        </ref-id>
+    </e1>
+    <e2>
+        <true/>
+    </e2>
+</and>
+                            </rv>
+                        </assign>
+                    </body>
+                    <ret>
+                        <ref-id>
+                            <id>RETURN</id>
+                        </ref-id>
+                    </ret>
+                </methoddecl>
+            </methoddecls>
+        </classdecl>
+    </classdecls>
+</program>
