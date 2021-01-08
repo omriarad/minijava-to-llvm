@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<program>
+    <mainclass>
+        <name>Main</name>
+        <argsName>args</argsName>
+        <mainStatement>
+            <sysout>
+                <arg>
+                    <add>
+                        <e1>
+                            <ref-id>
+<id>hello</id>
+                            </ref-id>
+                        </e1>
+                        <e2>
+                            <ref-id>
+<id>omri</id>
+                            </ref-id>
+                        </e2>
+                    </add>
+                </arg>
+            </sysout>
+        </mainStatement>
+    </mainclass>
+    <classdecls>
+        <classdecl>
+            <name>id</name>
+            <fields>
+                <field>
+                    <lineNumber>9</lineNumber>
+                    <type>
+                        <ref>
+                            <id>Type</id>
+                        </ref>
+                    </type>
+                    <name>x</name>
+                </field>
+            </fields>
+            <methoddecls/>
+        </classdecl>
+    </classdecls>
+</program>
