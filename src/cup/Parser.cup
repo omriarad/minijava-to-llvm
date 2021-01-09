@@ -100,10 +100,10 @@ non terminal LinkedList<Expr> commaActuals;
 /***********************/
 precedence right EQUAL;
 precedence left AND;
-precedence right NOT;
 precedence left LESSTHAN;
 precedence left PLUS, MINUS;
 precedence left MULT;
+precedence right NOT;
 precedence left LBRACKET, RBRACKET;
 precedence left DOT;
 

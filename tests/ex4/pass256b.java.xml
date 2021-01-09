@@ -47,18 +47,18 @@
                         <assign>
                             <lv>x</lv>
                             <rv>
-<lt>
-    <e1>
-        <not>
-            <e>
+<not>
+    <e>
+        <lt>
+            <e1>
                 <true/>
-            </e>
-        </not>
-    </e1>
-    <e2>
-        <false/>
-    </e2>
-</lt>
+            </e1>
+            <e2>
+                <false/>
+            </e2>
+        </lt>
+    </e>
+</not>
                             </rv>
                         </assign>
                     </body>
