@@ -5,108 +5,66 @@ import java.util.Map;
 import java.util.Set;
 
 public class Main {
-    public static void main(String[] args) {
+    private static Map<String,Map<String,SymbolTable>> verify(Program prog, PrintWriter outFile) {
+        SymbolTableVisitor sv;
+        boolean erroneous = false;
+
         try {
-            var inputMethod = args[0];
-            var action = args[1];
-            var filename = args[args.length - 2];
-            var outfilename = args[args.length - 1];
+            sv = new SymbolTableVisitor(prog, "", 0);
+            sv.visit(prog);
+            var vv = new VerifierVisitor(sv.getSymbolTables());
+            vv.visit(prog);
+            var iv = new InitializationVisitor(sv.getSymbolTables());
+            iv.visit(prog);
+        } catch(AssertionError e) {
+            erroneous = true;
+            outFile.write("ERROR\n");
+            throw e;
+        }
 
+        if (!erroneous) {
+            outFile.write("OK\n");
+        }
+
+        return sv.getSymbolTables();
+    }
+
+    public static void main(String[] args) throws FileNotFoundException {
+        var action = args[0];
+        var filename = args[args.length - 2];
+        var outfilename = args[args.length - 1];
+        var outFile = new PrintWriter(outfilename);
+
+        try {
             Program prog;
+            Parser parser_obj = new Parser(new Lexer(new FileReader(filename)));
+            var parse_tree = parser_obj.parse();
+            prog = (Program)parse_tree.value;
 
-            if (inputMethod.equals("parse")) {
-                Parser parser_obj = new Parser(new Lexer(new FileReader(filename)));
-                var parse_tree = parser_obj.parse();
-                prog = (Program)parse_tree.value;
-            } else if (inputMethod.equals("unmarshal")) {
+            if (action.equals("--marshal")) {
                 AstXMLSerializer xmlSerializer = new AstXMLSerializer();
-                prog = xmlSerializer.deserialize(new File(filename));
-            } else {
-                throw new UnsupportedOperationException("unknown input method " + inputMethod);
+                xmlSerializer.serialize(prog, outfilename);
+                return;
             }
 
-            var outFile = new PrintWriter(outfilename);
-            try {
-
-                if (action.equals("marshal")) {
-                    AstXMLSerializer xmlSerializer = new AstXMLSerializer();
-                    xmlSerializer.serialize(prog, outfilename);
-                } else if (action.equals("print")) {
-                    AstPrintVisitor astPrinter = new AstPrintVisitor();
-                    astPrinter.visit(prog);
-                    outFile.write(astPrinter.getString());
-
-                } else if (action.equals("semantic")) {
-                    boolean erroneous = false;
-                    try {
-                        var fv = new FinderVisitor(prog, "", 0);
-                        fv.visit(prog);
-                        var vv = new VerifierVisitor(fv.getClassToScopes());
-                        vv.visit(prog);
-                        var isInit = new IsInitVisitor(fv.getClassToScopes());
-                        isInit.visit(prog);
-                    } catch(AssertionError e) {
-                        erroneous = true;
-                        //System.out.println(e);
-                        outFile.write("ERROR\n");
-                    }
-
-                    if (!erroneous) {
-                        outFile.write("OK\n");
-                    }
-
-                } else if (action.equals("compile")) {
-                    var fv = new FinderVisitor(prog, "", 0);
-                    fv.visit(prog);
-                    var compiler = new LLVMVisitor(fv.getClassToScopes());
-                    compiler.visit(prog);
-                    outFile.write(compiler.getCode());
-                } else if (action.equals("rename")) {
-                    var type = args[2];
-                    var originalName = args[3];
-                    var originalLine = args[4];
-                    var newName = args[5];
-
-                    boolean isMethod;
-                    if (type.equals("var")) {
-                        isMethod = false;
-                        FinderVisitor fv = new FinderVisitor(prog,originalName,Integer.valueOf(originalLine));
-                        fv.visit(prog);
-                        var classToScopes = fv.getClassToScopes();
-                        var foundSymbolTable= fv.getFoundSymbolTable();
-                        var visitor = new VariableRenamingVisitor(originalName, newName, classToScopes, foundSymbolTable);
-                        visitor.visit(prog);
-
-                    } else if (type.equals("method")) {
-                        isMethod = true;
-                        // Example of using MethodFinderVisitor
-                        FinderVisitor fv = new FinderVisitor(prog,originalName,Integer.valueOf(originalLine));
-                        fv.visit(prog);
-                        // imported Set
-                        Set<String> sus = fv.getSusClasses();
-                        var classToScopes = fv.getClassToScopes();
-                        var susClass = fv.getFoundClass();
-                        var visitor = new MethodRenamingVisitor(originalName, newName, sus, susClass, classToScopes);
-                        visitor.visit(prog);
-                    } else {
-                        throw new IllegalArgumentException("unknown rename type " + type);
-                    }
-                    AstXMLSerializer xmlSerializer = new AstXMLSerializer();
-                    xmlSerializer.serialize(prog, outfilename);
-                } else {
-                    throw new IllegalArgumentException("unknown command line action " + action);
-                }
-            } finally {
-                outFile.flush();
-                outFile.close();
+            var symbolTables = verify(prog, outFile);
+            if (action.equals("--semantic")) {
+                return;
             }
 
-        } catch (FileNotFoundException e) {
-            System.out.println("Error reading file: " + e);
+            outFile = new PrintWriter(outfilename);
+            var compiler = new LLVMVisitor(symbolTables);
+            compiler.visit(prog);
+            outFile.write(compiler.getCode());
+        } catch (AssertionError e) {
+            System.out.println("Semantic error: " + e);
             e.printStackTrace();
         } catch (Exception e) {
             System.out.println("General error: " + e);
             e.printStackTrace();
+        } finally {
+            outFile.flush();
+            outFile.close();
         }
     }
 }

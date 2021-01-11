@@ -50,34 +50,27 @@
         <delete file="${src}/Parser.java"/>
     </target>
 
-    <target name="test1" depends="dist">
+    <target name="llvm" depends="dist">
         <exec executable="/bin/sh">
             <arg value="-c"/>
-            <arg value="make -C tests/ex1/"/>
+            <arg value="make -C tests/llvm/"/>
         </exec>
     </target>
 
-    <target name="test2" depends="dist">
+    <target name="semantic" depends="dist">
         <exec executable="/bin/sh">
             <arg value="-c"/>
-            <arg value="make -C tests/ex2/"/>
+            <arg value="make -C tests/semantic/"/>
         </exec>
     </target>
 
-    <target name="test3" depends="dist">
+    <target name="parser" depends="dist">
         <exec executable="/bin/sh">
             <arg value="-c"/>
-            <arg value="make -C tests/ex3/"/>
+            <arg value="make -C tests/parser/"/>
         </exec>
     </target>
 
-    <target name="test4" depends="dist">
-        <exec executable="/bin/sh">
-            <arg value="-c"/>
-            <arg value="make -C tests/ex4/"/>
-        </exec>
-    </target>
-
-    <target name="test" depends="test1,test2,test3,test4">
+    <target name="test" depends="parser,semantic,llvm">
     </target>
 </project>
