@@ -2,12 +2,10 @@ package ast;
 
 public class BoolAstType extends AstType {
 
-    public BoolAstType() {
-    }
+  public BoolAstType() {}
 
-    @Override
-    public void accept(Visitor v) {
-        v.visit(this);
-    }
+  @Override
+  public void accept(Visitor v) {
+    v.visit(this);
+  }
 }
-

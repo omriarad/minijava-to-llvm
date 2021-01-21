@@ -3,34 +3,34 @@ package ast;
 import javax.xml.bind.annotation.XmlElement;
 
 public class AssignStatement extends Statement {
-    @XmlElement(required = true)
-    private String lv;
-    @XmlElement(required = true)
-    private ExprWrapper rv;
+  @XmlElement(required = true)
+  private String lv;
 
-    // for deserialization only!
-    public AssignStatement() {
-    }
+  @XmlElement(required = true)
+  private ExprWrapper rv;
 
-    public AssignStatement(String lv, Expr rv) {
-        this.lv = lv;
-        this.rv = new ExprWrapper(rv);
-    }
+  // for deserialization only!
+  public AssignStatement() {}
 
-    @Override
-    public void accept(Visitor v) {
-        v.visit(this);
-    }
+  public AssignStatement(String lv, Expr rv) {
+    this.lv = lv;
+    this.rv = new ExprWrapper(rv);
+  }
 
-    public String lv() {
-        return lv;
-    }
+  @Override
+  public void accept(Visitor v) {
+    v.visit(this);
+  }
 
-    public void setLv(String lv) {
-        this.lv = lv;
-    }
+  public String lv() {
+    return lv;
+  }
 
-    public Expr rv() {
-        return rv.e;
-    }
+  public void setLv(String lv) {
+    this.lv = lv;
+  }
+
+  public Expr rv() {
+    return rv.e;
+  }
 }

@@ -3,30 +3,30 @@ package ast;
 import javax.xml.bind.annotation.XmlElement;
 
 public class ArrayAccessExpr extends Expr {
-    @XmlElement(required = true)
-    private ExprWrapper arrayExpr;
-    @XmlElement(required = true)
-    private ExprWrapper indexExpr;
+  @XmlElement(required = true)
+  private ExprWrapper arrayExpr;
 
-    // for deserialization only!
-    public ArrayAccessExpr() {
-    }
+  @XmlElement(required = true)
+  private ExprWrapper indexExpr;
 
-    public ArrayAccessExpr(Expr arrayExpr, Expr indexExpr) {
-        this.arrayExpr = new ExprWrapper(arrayExpr);
-        this.indexExpr = new ExprWrapper(indexExpr);
-    }
+  // for deserialization only!
+  public ArrayAccessExpr() {}
 
-    @Override
-    public void accept(Visitor v) {
-        v.visit(this);
-    }
+  public ArrayAccessExpr(Expr arrayExpr, Expr indexExpr) {
+    this.arrayExpr = new ExprWrapper(arrayExpr);
+    this.indexExpr = new ExprWrapper(indexExpr);
+  }
 
-    public Expr arrayExpr() {
-        return arrayExpr.e;
-    }
+  @Override
+  public void accept(Visitor v) {
+    v.visit(this);
+  }
 
-    public Expr indexExpr() {
-        return indexExpr.e;
-    }
+  public Expr arrayExpr() {
+    return arrayExpr.e;
+  }
+
+  public Expr indexExpr() {
+    return indexExpr.e;
+  }
 }

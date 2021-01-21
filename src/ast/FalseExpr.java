@@ -1,11 +1,10 @@
 package ast;
 
 public class FalseExpr extends Expr {
-    public FalseExpr() {
-    }
+  public FalseExpr() {}
 
-    @Override
-    public void accept(Visitor v) {
-        v.visit(this);
-    }
+  @Override
+  public void accept(Visitor v) {
+    v.visit(this);
+  }
 }

@@ -2,11 +2,10 @@ package ast;
 
 public class TrueExpr extends Expr {
 
-    public TrueExpr() {
-    }
+  public TrueExpr() {}
 
-    @Override
-    public void accept(Visitor v) {
-        v.visit(this);
-    }
+  @Override
+  public void accept(Visitor v) {
+    v.visit(this);
+  }
 }

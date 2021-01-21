@@ -3,23 +3,22 @@ package ast;
 import javax.xml.bind.annotation.XmlElement;
 
 public class NotExpr extends Expr {
-    @XmlElement(required = true)
-    private ExprWrapper e;
+  @XmlElement(required = true)
+  private ExprWrapper e;
 
-    // for deserialization only!
-    public NotExpr() {
-    }
+  // for deserialization only!
+  public NotExpr() {}
 
-    public NotExpr(Expr e) {
-        this.e = new ExprWrapper(e);
-    }
+  public NotExpr(Expr e) {
+    this.e = new ExprWrapper(e);
+  }
 
-    @Override
-    public void accept(Visitor v) {
-        v.visit(this);
-    }
+  @Override
+  public void accept(Visitor v) {
+    v.visit(this);
+  }
 
-    public Expr e() {
-        return e.e;
-    }
+  public Expr e() {
+    return e.e;
+  }
 }

@@ -2,11 +2,10 @@ package ast;
 
 public class IntArrayAstType extends AstType {
 
-    public IntArrayAstType() {
-    }
+  public IntArrayAstType() {}
 
-    @Override
-    public void accept(Visitor v) {
-        v.visit(this);
-    }
+  @Override
+  public void accept(Visitor v) {
+    v.visit(this);
+  }
 }

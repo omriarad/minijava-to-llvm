@@ -5,30 +5,30 @@ import javax.xml.bind.annotation.XmlSeeAlso;
 
 @XmlSeeAlso({VarDecl.class, FormalArg.class})
 public abstract class VariableIntroduction extends AstNode {
-    @XmlElement(required = true)
-    private AstTypeWrapper type;
-    @XmlElement(required = true)
-    private String name;
+  @XmlElement(required = true)
+  private AstTypeWrapper type;
 
-    // for deserialization only!
-    public VariableIntroduction() {
-    }
+  @XmlElement(required = true)
+  private String name;
 
-    public VariableIntroduction(AstType type, String name, int lineNumber) {
-        super(lineNumber);
-        this.type = new AstTypeWrapper(type);
-        this.name = name;
-    }
+  // for deserialization only!
+  public VariableIntroduction() {}
 
-    public AstType type() {
-        return type.t;
-    }
+  public VariableIntroduction(AstType type, String name, int lineNumber) {
+    super(lineNumber);
+    this.type = new AstTypeWrapper(type);
+    this.name = name;
+  }
 
-    public String name() {
-        return name;
-    }
+  public AstType type() {
+    return type.t;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public String name() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
 }

@@ -3,41 +3,42 @@ package ast;
 import javax.xml.bind.annotation.XmlElement;
 
 public class AssignArrayStatement extends Statement {
-    @XmlElement(required = true)
-    private String lv;
-    @XmlElement(required = true)
-    private ExprWrapper index;
-    @XmlElement(required = true)
-    private ExprWrapper rv;
+  @XmlElement(required = true)
+  private String lv;
 
-    // for deserialization only!
-    public AssignArrayStatement() {
-    }
+  @XmlElement(required = true)
+  private ExprWrapper index;
 
-    public AssignArrayStatement(String lv, Expr index, Expr rv) {
-        this.lv = lv;
-        this.index = new ExprWrapper(index);
-        this.rv = new ExprWrapper(rv);
-    }
+  @XmlElement(required = true)
+  private ExprWrapper rv;
 
-    @Override
-    public void accept(Visitor v) {
-        v.visit(this);
-    }
+  // for deserialization only!
+  public AssignArrayStatement() {}
 
-    public String lv() {
-        return lv;
-    }
+  public AssignArrayStatement(String lv, Expr index, Expr rv) {
+    this.lv = lv;
+    this.index = new ExprWrapper(index);
+    this.rv = new ExprWrapper(rv);
+  }
 
-    public void setLv(String lv) {
-        this.lv = lv;
-    }
+  @Override
+  public void accept(Visitor v) {
+    v.visit(this);
+  }
 
-    public Expr index() {
-        return index.e;
-    }
+  public String lv() {
+    return lv;
+  }
 
-    public Expr rv() {
-        return rv.e;
-    }
+  public void setLv(String lv) {
+    this.lv = lv;
+  }
+
+  public Expr index() {
+    return index.e;
+  }
+
+  public Expr rv() {
+    return rv.e;
+  }
 }
