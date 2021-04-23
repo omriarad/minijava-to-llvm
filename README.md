@@ -1,7 +1,11 @@
-Welcome to the compiler project 2020 starter kit!
+This is a joint project by Omri Arad, Tal Trotskovsky and Guy Haviv that implements a compiler from an object-oriented language called MiniJava into LLVM assembly/IR as part of the 2020 TAU compilation course.
 
-=== Structure ===
+MiniJava is (almost exactly) a subset of Java, defined in the Appendix of Appel and Palsberg's Modern Compiler Implementation in Java, 2nd edition and described on the MiniJava web site (http://www.cambridge.org/resources/052182060X/).
 
+The provided build settings (in build.xml) are intended for Ubuntu 18.04 and Java 11, It works using Apache Ant.
+
+## Project Structure
+```
 build.xml
 	(directives for compiling the project using 'ant')
 
@@ -12,73 +16,49 @@ examples/
 	ast/
 		(examples of AST XMLs representing Java programs)
 
-	(more examples to come for each exercise)
-
 schema/
 	ast.xsd
 		(XML schema for ASTs)
 
 src/
-	(where all your stuff is going to go)
+	project source files
 
-	ast/*
-		(Java representation of AST, including XML marshaling & unmarshaling, Visitor interface, and printing to Java. Some files to note:)
+tools/
+	(third party JARs for lexing & parsing and XML manipulation + scripts)
 
-		AstXMLSerializer.java
-			(for converting ASTs between XML <-> Java classes)
+tests/
+	test pool with expected outcomes and scripts to test the various stages (parsing, semantic checking and LLVM/IR translation)
+```
 
-		AstPrintVisitor.java
-			(printing AST as a Java program)
+## Run dependencies for your OS
 
-		Visitor.java
-			(visitor interface)
+``` bash
+sudo apt install openjdk-11-jdk
+sudo apt install llvm
+sudo apt install ant
+# for running the tests
+pip3 install lxml
+```
 
-		Program.java
-			(the root of the AST)
+## How to Build
 
-	cup/
-		Parser.cup
-		(directives for CUP - to be used in ex4)
+Check out source (for example public version):
 
-	jflex/
-		Scanner.jfled
-		(directives for JFlex - to be used in ex4)
-
-	Main.java
-		(main file, including a skeleton for the command line arguments we will use in the exercises. already does XML marshaling and unarmshaling and printing to Java)
-
-	Lexer.java
-		(generated when you build - to be used in ex4)
-
-	Parser.java
-		(generated when you build - to be used in ex4)
-
-	sym.java
-		(generated when you build - to be used in ex4)	
-
-tools/*
-	(third party JARs for lexing & parsing (ex4) and XML manipulation)
-
-mjava.jar
-	(*the* build)
-
-README.md
-	(<-- you are here)
-
-
-=== All those things with ex4?? ===
-Ignore them (for now; you know, Chekhov's gun and the like).
-
-=== Compiling the project ===
+``` bash
+git clone https://github.com/omriarad/minijava-to-llvm
+cd minijava-to-llvm
 ant
+```
 
-=== Cleaning ===
-ant clean
+## How to Run
+``` bash
+java -jar mjavac.jar [minijava_src_file.java] [output.ll]
+```
 
-=== From AST XML to Java program ===
-java -jar mjavac.jar unmarshal print examples/BinaryTree.xml res.java
-
-=== From AST XML to... AST XML ===
-java -jar mjavac.jar unmarshal marshal examples/BinaryTree.xml res.xml
-
-(you will use the code for this "marhsal" option when generating ASTs in ex1,ex4)
+## How to Run tests
+```bash
+ant test # Will run all testing stages
+ant parser # Will run parser tests
+ant semantic # Will run semantic check tests
+ant llvm # Will run LLVM translation tests
+```
