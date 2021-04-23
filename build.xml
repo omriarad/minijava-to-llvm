@@ -51,23 +51,23 @@
     </target>
 
     <target name="llvm" depends="dist">
-        <exec executable="/bin/sh">
+        <exec executable="/bin/bash">
             <arg value="-c"/>
-            <arg value="make -C tests/llvm/"/>
+            <arg value="tests/llvm/test.sh"/>
         </exec>
     </target>
 
     <target name="semantic" depends="dist">
-        <exec executable="/bin/sh">
+        <exec executable="/bin/bash">
             <arg value="-c"/>
-            <arg value="make -C tests/semantic/"/>
+            <arg value="tests/semantic/test.sh"/>
         </exec>
     </target>
 
     <target name="parser" depends="dist">
-        <exec executable="/bin/sh">
+        <exec executable="/bin/bash">
             <arg value="-c"/>
-            <arg value="make -C tests/parser/"/>
+            <arg value="tests/parser/test.sh"/>
         </exec>
     </target>
 
